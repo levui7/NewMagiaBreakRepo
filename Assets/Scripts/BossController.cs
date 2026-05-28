@@ -365,6 +365,15 @@ public class BossController : MonoBehaviour
         isDead = true;
         rb.linearVelocity = Vector2.zero;
         DamagePopup2D.SpawnText(transform.position + Vector3.up * 1.1f, "Босс побеждён", Color.green);
+        LootDropper2D lootDropper = GetComponent<LootDropper2D>();
+
+        if (lootDropper != null)
+            lootDropper.DropLoot();
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+
+        if (MaterialsHUD2D.Instance != null)
+            MaterialsHUD2D.Instance.Refresh();
         Destroy(gameObject, 0.2f);
     }
 }

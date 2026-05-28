@@ -170,6 +170,11 @@ public class Enemy : MonoBehaviour
         if (roomManager != null)
             roomManager.EnemyDied();
 
+        LootDropper2D lootDropper = GetComponent<LootDropper2D>();
+
+        if (lootDropper != null)
+            lootDropper.DropLoot();
+
         Destroy(gameObject);
     }
 }

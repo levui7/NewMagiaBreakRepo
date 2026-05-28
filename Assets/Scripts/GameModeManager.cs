@@ -48,18 +48,28 @@ public class GameModeManager : MonoBehaviour
     {
         GameObject playerObject = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 
+        PlayerController player = playerObject.GetComponent<PlayerController>();
+
+        if (PlayerProgressManager.Instance != null)
+            PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);
+
         // Важно: если сам prefab Player был сохранён выключенным в Project/Prefabs,
         // Unity создаёт его тоже выключенным. Из-за этого игрок виден в иерархии серым.
         if (!playerObject.activeSelf)
             playerObject.SetActive(true);
 
-        PlayerController player = playerObject.GetComponent<PlayerController>();
+        // PlayerController player = playerObject.GetComponent<PlayerController>();
 
         if (player == null)
         {
             Debug.LogError($"GameModeManager: на префабе игрока нет PlayerController. Объект: {playerObject.name}");
             return;
         }
+
+        WeaponManager weapon = playerObject.GetComponent<WeaponManager>();
+
+        if (weapon != null && PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.LoadToWeapon(weapon);
 
         player.playerID = playerID;
 

@@ -42,9 +42,9 @@ public class WeaponManager : MonoBehaviour
     public int ReserveAmmo => reserveAmmo;
     public int FireAmmo => fireAmmo;
     public int WaterAmmo => waterAmmo;
-
-    // Оставлено для совместимости со старым UI.
     public bool IsReloading => false;
+
+    private bool loadedFromInventory;
 
     private void Awake()
     {
@@ -63,20 +63,39 @@ public class WeaponManager : MonoBehaviour
             fireAmmo = Mathf.Max(fireAmmo, 20);
             waterAmmo = Mathf.Max(waterAmmo, 20);
         }
+    }
+
+    private void Start()
+    {
+        LoadInventoryIfPossible();
 
         AutoRefillFromReserve();
+        ValidateElementAfterLoad();
         RefreshUI();
     }
 
     private void Update()
     {
-        HandleElementSwitch();
+        LoadInventoryIfPossible();
+        HandleElementCycle();
 
         if (autoRefillMagazine)
             AutoRefillFromReserve();
     }
 
-    private void HandleElementSwitch()
+    private void LoadInventoryIfPossible()
+    {
+        if (loadedFromInventory)
+            return;
+
+        if (PlayerInventoryManager.Instance == null)
+            return;
+
+        PlayerInventoryManager.Instance.LoadToWeapon(this);
+        loadedFromInventory = true;
+    }
+
+    private void HandleElementCycle()
     {
         Keyboard keyboard = Keyboard.current;
 
@@ -87,26 +106,49 @@ public class WeaponManager : MonoBehaviour
 
         if (id == 2)
         {
-            if (keyboard.numpad1Key.wasPressedThisFrame)
-                SetElement(Element.Physical);
-
-            if (keyboard.numpad2Key.wasPressedThisFrame)
-                SetElement(Element.Fire);
-
-            if (keyboard.numpad3Key.wasPressedThisFrame)
-                SetElement(Element.Water);
+            if (keyboard.numpadPlusKey.wasPressedThisFrame)
+                CycleElement();
         }
         else
         {
-            if (keyboard.digit1Key.wasPressedThisFrame)
-                SetElement(Element.Physical);
-
-            if (keyboard.digit2Key.wasPressedThisFrame)
-                SetElement(Element.Fire);
-
-            if (keyboard.digit3Key.wasPressedThisFrame)
-                SetElement(Element.Water);
+            if (keyboard.qKey.wasPressedThisFrame)
+                CycleElement();
         }
+    }
+
+    public void CycleElement()
+    {
+        if (currentElement == Element.Physical)
+        {
+            if (fireAmmo > 0)
+            {
+                SetElement(Element.Fire);
+                return;
+            }
+
+            if (waterAmmo > 0)
+            {
+                SetElement(Element.Water);
+                return;
+            }
+
+            SetElement(Element.Physical);
+            return;
+        }
+
+        if (currentElement == Element.Fire)
+        {
+            if (waterAmmo > 0)
+            {
+                SetElement(Element.Water);
+                return;
+            }
+
+            SetElement(Element.Physical);
+            return;
+        }
+
+        SetElement(Element.Physical);
     }
 
     public void SetElement(Element newElement)
@@ -114,6 +156,7 @@ public class WeaponManager : MonoBehaviour
         if (newElement == Element.Fire && fireAmmo <= 0)
         {
             currentElement = Element.Physical;
+            SaveInventory();
             RefreshUI();
             return;
         }
@@ -121,12 +164,23 @@ public class WeaponManager : MonoBehaviour
         if (newElement == Element.Water && waterAmmo <= 0)
         {
             currentElement = Element.Physical;
+            SaveInventory();
             RefreshUI();
             return;
         }
 
         currentElement = newElement;
+        SaveInventory();
         RefreshUI();
+    }
+
+    public void ValidateElementAfterLoad()
+    {
+        if (currentElement == Element.Fire && fireAmmo <= 0)
+            currentElement = Element.Physical;
+
+        if (currentElement == Element.Water && waterAmmo <= 0)
+            currentElement = Element.Physical;
     }
 
     public bool CanShoot()
@@ -182,17 +236,14 @@ public class WeaponManager : MonoBehaviour
                 break;
         }
 
+        SaveInventory();
         RefreshUI();
     }
 
-    /// <summary>
-    /// Полностью убираем ручную перезарядку.
-    /// Метод оставлен, чтобы старые скрипты не ломались,
-    /// но теперь он просто автоматически пополняет магазин из запаса.
-    /// </summary>
     public void Reload()
     {
         AutoRefillFromReserve();
+        SaveInventory();
         RefreshUI();
     }
 
@@ -237,19 +288,16 @@ public class WeaponManager : MonoBehaviour
         if (amount <= 0)
             return;
 
-        // Если игрок был на элементе без патронов, возвращаем обычный режим.
         if (currentElement == Element.Fire && fireAmmo <= 0)
             currentElement = Element.Physical;
 
         if (currentElement == Element.Water && waterAmmo <= 0)
             currentElement = Element.Physical;
 
-        // Сначала добавляем в запас.
         reserveAmmo += amount;
-
-        // Потом сразу автоматически пополняем магазин.
         AutoRefillFromReserve();
 
+        SaveInventory();
         RefreshUI();
     }
 
@@ -271,12 +319,16 @@ public class WeaponManager : MonoBehaviour
     public void AddFireAmmo(int amount)
     {
         fireAmmo += Mathf.Max(0, amount);
+
+        SaveInventory();
         RefreshUI();
     }
 
     public void AddWaterAmmo(int amount)
     {
         waterAmmo += Mathf.Max(0, amount);
+
+        SaveInventory();
         RefreshUI();
     }
 
@@ -300,6 +352,7 @@ public class WeaponManager : MonoBehaviour
                 return;
         }
 
+        SaveInventory();
         RefreshUI();
     }
 
@@ -327,7 +380,18 @@ public class WeaponManager : MonoBehaviour
 
     public string GetAmmoText()
     {
-        return $"Патроны: {currentAmmo}/{magazineSize} | Запас: {reserveAmmo} | Огонь: {fireAmmo} | Вода: {waterAmmo}";
+        return $"Патроны: {currentAmmo}/{magazineSize} | Запас: {reserveAmmo} | Огонь: {fireAmmo} | Вода: {waterAmmo} | Перекл.: {(playerController != null && playerController.playerID == 2 ? "RShift" : "Q")}";
+    }
+
+    private void SaveInventory()
+    {
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveFromWeapon(this);
+    }
+
+    public void RefreshUIFromOutside()
+    {
+        RefreshUI();
     }
 
     private void RefreshUI()
