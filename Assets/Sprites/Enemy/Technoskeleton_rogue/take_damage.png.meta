@@ -1,0 +1,322 @@
+fileFormatVersion: 2
+guid: d041985d9a854304dbc445c6e3e6dd97
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -385867246967894706
+    second: take_damage_0
+  - first:
+      213: -6476250973125256214
+    second: take_damage_1
+  - first:
+      213: 5282128433855826470
+    second: take_damage_2
+  - first:
+      213: -6633866882886953190
+    second: take_damage_3
+  - first:
+      213: 1832376883139662670
+    second: take_damage_4
+  - first:
+      213: 7203418177483166017
+    second: take_damage_5
+  - first:
+      213: -6909523980370502791
+    second: take_damage_6
+  - first:
+      213: 8259687636599841309
+    second: take_damage_7
+  - first:
+      213: 5422335624321544100
+    second: take_damage_8
+  - first:
+      213: 1214715684837707477
+    second: take_damage_9
+  - first:
+      213: 2146837196790930158
+    second: take_damage_10
+  - first:
+      213: -6863000411737406738
+    second: take_damage_11
+  - first:
+      213: -8350716624687906851
+    second: take_damage_12
+  - first:
+      213: -634981849798625730
+    second: take_damage_13
+  - first:
+      213: 3280668953089900239
+    second: take_damage_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: take_damage_0
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 1026
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4d450688cf15aaf0800000000000000
+      internalID: -385867246967894706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: take_damage_1
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 145
+        width: 946
+        height: 764
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeb57967d0cbf16a0800000000000000
+      internalID: -6476250973125256214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: take_damage_3
+      rect:
+        serializedVersion: 2
+        x: 2353
+        y: 169
+        width: 767
+        height: 718
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a179b4eb735cfe3a0800000000000000
+      internalID: -6633866882886953190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: take_damage_4
+      rect:
+        serializedVersion: 2
+        x: 3393
+        y: 150
+        width: 653
+        height: 768
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e435d2e1119ed6910800000000000000
+      internalID: 1832376883139662670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: take_damage_5
+      rect:
+        serializedVersion: 2
+        x: 4195
+        y: 2
+        width: 949
+        height: 848
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 141d975caaea7f360800000000000000
+      internalID: 7203418177483166017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: take_damage_6
+      rect:
+        serializedVersion: 2
+        x: 5182
+        y: 177
+        width: 932
+        height: 688
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97b19fe4c807c10a0800000000000000
+      internalID: -6909523980370502791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 69d46a93634513142883711932df0e73
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      take_damage_0: -385867246967894706
+      take_damage_1: -6476250973125256214
+      take_damage_10: 2146837196790930158
+      take_damage_11: -6863000411737406738
+      take_damage_12: -8350716624687906851
+      take_damage_13: -634981849798625730
+      take_damage_14: 3280668953089900239
+      take_damage_2: 5282128433855826470
+      take_damage_3: -6633866882886953190
+      take_damage_4: 1832376883139662670
+      take_damage_5: 7203418177483166017
+      take_damage_6: -6909523980370502791
+      take_damage_7: 8259687636599841309
+      take_damage_8: 5422335624321544100
+      take_damage_9: 1214715684837707477
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
