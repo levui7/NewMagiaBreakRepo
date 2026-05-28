@@ -1,0 +1,458 @@
+fileFormatVersion: 2
+guid: 64d4deaf2589d0b419d029f6a93b3408
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1961623791515478358
+    second: Water_resistance_beer_asset_0
+  - first:
+      213: -541913724678187232
+    second: Water_resistance_beer_asset_1
+  - first:
+      213: -645649508940062905
+    second: Water_resistance_beer_asset_2
+  - first:
+      213: -1997773476448712439
+    second: Water_resistance_beer_asset_3
+  - first:
+      213: 2619446757874721881
+    second: Water_resistance_beer_asset_4
+  - first:
+      213: -6637116125842771699
+    second: Water_resistance_beer_asset_5
+  - first:
+      213: 6620453127681207755
+    second: Water_resistance_beer_asset_6
+  - first:
+      213: -7727601868304560514
+    second: Water_resistance_beer_asset_7
+  - first:
+      213: 2122273028135284192
+    second: Water_resistance_beer_asset_8
+  - first:
+      213: 3455657869163765209
+    second: Water_resistance_beer_asset_9
+  - first:
+      213: -2252411273802524679
+    second: Water_resistance_beer_asset_10
+  - first:
+      213: 733331046499742524
+    second: Water_resistance_beer_asset_11
+  - first:
+      213: -3017988680461394238
+    second: Water_resistance_beer_asset_12
+  - first:
+      213: -6663465294757372525
+    second: Water_resistance_beer_asset_13
+  - first:
+      213: -1944330046923498451
+    second: Water_resistance_beer_asset_14
+  - first:
+      213: 7801645288357238495
+    second: Water_resistance_beer_asset_15
+  - first:
+      213: -3699268504297308710
+    second: Water_resistance_beer_asset_16
+  - first:
+      213: 861826850653471078
+    second: Water_resistance_beer_asset_17
+  - first:
+      213: -6536021429691017072
+    second: Water_resistance_beer_asset_18
+  - first:
+      213: 5134415784094427542
+    second: Water_resistance_beer_asset_19
+  - first:
+      213: 2303498380603220010
+    second: Water_resistance_beer_asset_20
+  - first:
+      213: -2502766109240470421
+    second: Water_resistance_beer_asset_21
+  - first:
+      213: -3723326268441210641
+    second: Water_resistance_beer_asset_22
+  - first:
+      213: 8838627377609636341
+    second: Water_resistance_beer_asset_23
+  - first:
+      213: 2397202705133640523
+    second: Water_resistance_beer_asset_24
+  - first:
+      213: 3989936786023970031
+    second: Water_resistance_beer_asset_25
+  - first:
+      213: 331821483116893511
+    second: Water_resistance_beer_asset_26
+  - first:
+      213: 8640066056140276841
+    second: Water_resistance_beer_asset_27
+  - first:
+      213: 2741529496609235639
+    second: Water_resistance_beer_asset_28
+  - first:
+      213: 1547420372120029100
+    second: Water_resistance_beer_asset_29
+  - first:
+      213: -3703538324226098285
+    second: Water_resistance_beer_asset_30
+  - first:
+      213: 6635813292935565689
+    second: Water_resistance_beer_asset_31
+  - first:
+      213: 6372922174255759716
+    second: Water_resistance_beer_asset_32
+  - first:
+      213: -8311312219809179999
+    second: Water_resistance_beer_asset_33
+  - first:
+      213: 3419596622497878633
+    second: Water_resistance_beer_asset_34
+  - first:
+      213: 4561593477355941527
+    second: Water_resistance_beer_asset_35
+  - first:
+      213: -1168557801614906860
+    second: Water_resistance_beer_asset_36
+  - first:
+      213: 3537429398764936902
+    second: Water_resistance_beer_asset_37
+  - first:
+      213: 5635732603330797871
+    second: Water_resistance_beer_asset_38
+  - first:
+      213: -6054639143559707534
+    second: Water_resistance_beer_asset_39
+  - first:
+      213: -7233654723870155203
+    second: Water_resistance_beer_asset_40
+  - first:
+      213: 5929336827932964746
+    second: Water_resistance_beer_asset_41
+  - first:
+      213: 3506364060066162292
+    second: Water_resistance_beer_asset_42
+  - first:
+      213: 396156943949958346
+    second: Water_resistance_beer_asset_43
+  - first:
+      213: -6759632734575631741
+    second: Water_resistance_beer_asset_44
+  - first:
+      213: 8936923641733189091
+    second: Water_resistance_beer_asset_45
+  - first:
+      213: 3514807895681925202
+    second: Water_resistance_beer_asset_46
+  - first:
+      213: 7743799917411064802
+    second: Water_resistance_beer_asset_47
+  - first:
+      213: 4410262391346361917
+    second: Water_resistance_beer_asset_48
+  - first:
+      213: 7957765357354691617
+    second: Water_resistance_beer_asset_49
+  - first:
+      213: -3574815267242866856
+    second: Water_resistance_beer_asset_50
+  - first:
+      213: -6126638120297879952
+    second: Water_resistance_beer_asset_51
+  - first:
+      213: 8139729140632030521
+    second: Water_resistance_beer_asset_52
+  - first:
+      213: -2555435264985557648
+    second: Water_resistance_beer_asset_53
+  - first:
+      213: -6676862212798066990
+    second: Water_resistance_beer_asset_54
+  - first:
+      213: -2790822429309782332
+    second: Water_resistance_beer_asset_55
+  - first:
+      213: -1987441672656384639
+    second: Water_resistance_beer_asset_56
+  - first:
+      213: -7870786864450250451
+    second: Water_resistance_beer_asset_57
+  - first:
+      213: 8647056232069056477
+    second: Water_resistance_beer_asset_58
+  - first:
+      213: -3123854824771970546
+    second: Water_resistance_beer_asset_59
+  - first:
+      213: -8978289283213052239
+    second: Water_resistance_beer_asset_60
+  - first:
+      213: -1288081003327539156
+    second: Water_resistance_beer_asset_61
+  - first:
+      213: 9022027867352394380
+    second: Water_resistance_beer_asset_62
+  - first:
+      213: -3889330225860945639
+    second: Water_resistance_beer_asset_63
+  - first:
+      213: -1707617460568234282
+    second: Water_resistance_beer_asset_64
+  - first:
+      213: -7275459928424274783
+    second: Water_resistance_beer_asset_65
+  - first:
+      213: -4907834536838571648
+    second: Water_resistance_beer_asset_66
+  - first:
+      213: -7512090682804974424
+    second: Water_resistance_beer_asset_67
+  - first:
+      213: -444141350500229421
+    second: Water_resistance_beer_asset_68
+  - first:
+      213: 7079079643619747157
+    second: Water_resistance_beer_asset_69
+  - first:
+      213: -5532111115519610106
+    second: Water_resistance_beer_asset_70
+  - first:
+      213: 3116035868249280665
+    second: Water_resistance_beer_asset_71
+  - first:
+      213: -5091179723967715169
+    second: Water_resistance_beer_asset_72
+  - first:
+      213: -3565410573881257214
+    second: Water_resistance_beer_asset_73
+  - first:
+      213: -5067009510764520486
+    second: Water_resistance_beer_asset_74
+  - first:
+      213: -6217995757167439504
+    second: Water_resistance_beer_asset_75
+  - first:
+      213: 5374424431698240521
+    second: Water_resistance_beer_asset_76
+  - first:
+      213: -1676935484412137740
+    second: Water_resistance_beer_asset_77
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Water_resistance_beer_asset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa6d3c30e89e6c4e0800000000000000
+      internalID: -1961623791515478358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water_resistance_beer_asset_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 027d5ada65cba78f0800000000000000
+      internalID: -541913724678187232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water_resistance_beer_asset_2
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74fd83241313a07f0800000000000000
+      internalID: -645649508940062905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water_resistance_beer_asset_3
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 909c39a9b9b7644e0800000000000000
+      internalID: -1997773476448712439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 36587878f008584469a70ed7c1b5b635
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":1024.0,"y":1024.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Water_resistance_beer_asset_0: -1961623791515478358
+      Water_resistance_beer_asset_1: -541913724678187232
+      Water_resistance_beer_asset_2: -645649508940062905
+      Water_resistance_beer_asset_3: -1997773476448712439
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

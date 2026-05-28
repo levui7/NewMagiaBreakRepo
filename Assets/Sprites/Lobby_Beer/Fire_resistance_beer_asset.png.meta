@@ -1,0 +1,302 @@
+fileFormatVersion: 2
+guid: 0cdfabeae0be5c241b23130a87b45cf5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2812247724919177071
+    second: Fire_resistance_beer_asset_0
+  - first:
+      213: 6068817759720929507
+    second: Fire_resistance_beer_asset_1
+  - first:
+      213: -7741705636075693478
+    second: Fire_resistance_beer_asset_2
+  - first:
+      213: 5509995418670120338
+    second: Fire_resistance_beer_asset_3
+  - first:
+      213: -3905300434145209803
+    second: Fire_resistance_beer_asset_4
+  - first:
+      213: -9017314929146695367
+    second: Fire_resistance_beer_asset_5
+  - first:
+      213: -3510774172383615888
+    second: Fire_resistance_beer_asset_6
+  - first:
+      213: 6905692647904989618
+    second: Fire_resistance_beer_asset_7
+  - first:
+      213: -1224041436962680340
+    second: Fire_resistance_beer_asset_8
+  - first:
+      213: 2113805289967736959
+    second: Fire_resistance_beer_asset_9
+  - first:
+      213: -3091306893232100512
+    second: Fire_resistance_beer_asset_10
+  - first:
+      213: 6625124939714370721
+    second: Fire_resistance_beer_asset_11
+  - first:
+      213: -7863890946237874496
+    second: Fire_resistance_beer_asset_12
+  - first:
+      213: -5344980585358288809
+    second: Fire_resistance_beer_asset_13
+  - first:
+      213: 6807480193294810801
+    second: Fire_resistance_beer_asset_14
+  - first:
+      213: 4673218284095936563
+    second: Fire_resistance_beer_asset_15
+  - first:
+      213: 8929415403262832146
+    second: Fire_resistance_beer_asset_16
+  - first:
+      213: 7022520299680325398
+    second: Fire_resistance_beer_asset_17
+  - first:
+      213: -4081135038063179671
+    second: Fire_resistance_beer_asset_18
+  - first:
+      213: 8021996671317951599
+    second: Fire_resistance_beer_asset_19
+  - first:
+      213: 2807814224520445303
+    second: Fire_resistance_beer_asset_20
+  - first:
+      213: 7735220896304450749
+    second: Fire_resistance_beer_asset_21
+  - first:
+      213: 6400308546350707578
+    second: Fire_resistance_beer_asset_22
+  - first:
+      213: -502432503650421343
+    second: Fire_resistance_beer_asset_23
+  - first:
+      213: -2344455915406934711
+    second: Fire_resistance_beer_asset_24
+  - first:
+      213: -7703820652679143057
+    second: Fire_resistance_beer_asset_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Fire_resistance_beer_asset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 190cac71893e8f8d0800000000000000
+      internalID: -2812247724919177071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_resistance_beer_asset_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e87fb63995c83450800000000000000
+      internalID: 6068817759720929507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_resistance_beer_asset_2
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5a9116cdbfef8490800000000000000
+      internalID: -7741705636075693478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_resistance_beer_asset_3
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29dbcdbd3af677c40800000000000000
+      internalID: 5509995418670120338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 18bab2c8046fe7c48b73ead3f3990e22
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":1024.0,"y":1024.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Fire_resistance_beer_asset_0: -2812247724919177071
+      Fire_resistance_beer_asset_1: 6068817759720929507
+      Fire_resistance_beer_asset_2: -7741705636075693478
+      Fire_resistance_beer_asset_3: 5509995418670120338
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

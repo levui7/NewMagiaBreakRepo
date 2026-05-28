@@ -1,0 +1,368 @@
+fileFormatVersion: 2
+guid: f0be3fd9dc520e54195971ceb1ab596b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2064600298287850997
+    second: Health_beer_asset_0
+  - first:
+      213: -2589534214075310980
+    second: Health_beer_asset_1
+  - first:
+      213: -3516382216145336713
+    second: Health_beer_asset_2
+  - first:
+      213: 4718972704750325277
+    second: Health_beer_asset_3
+  - first:
+      213: 8475876678938054989
+    second: Health_beer_asset_4
+  - first:
+      213: -4560696463861894089
+    second: Health_beer_asset_5
+  - first:
+      213: 276147085384171562
+    second: Health_beer_asset_6
+  - first:
+      213: 3632017054275939590
+    second: Health_beer_asset_7
+  - first:
+      213: -1423850127875399485
+    second: Health_beer_asset_8
+  - first:
+      213: -795147790516390242
+    second: Health_beer_asset_9
+  - first:
+      213: 996533517101748777
+    second: Health_beer_asset_10
+  - first:
+      213: 3139559604963182846
+    second: Health_beer_asset_11
+  - first:
+      213: 1812194116786546727
+    second: Health_beer_asset_12
+  - first:
+      213: 68252698455322185
+    second: Health_beer_asset_13
+  - first:
+      213: -5029766902521542604
+    second: Health_beer_asset_14
+  - first:
+      213: 2987729465309476767
+    second: Health_beer_asset_15
+  - first:
+      213: -6587036608757415973
+    second: Health_beer_asset_16
+  - first:
+      213: 4340322695370022874
+    second: Health_beer_asset_17
+  - first:
+      213: 1520958803529681556
+    second: Health_beer_asset_18
+  - first:
+      213: 5788427781071829002
+    second: Health_beer_asset_19
+  - first:
+      213: 392263871086695721
+    second: Health_beer_asset_20
+  - first:
+      213: -5258009840581046024
+    second: Health_beer_asset_21
+  - first:
+      213: -8984117752278162047
+    second: Health_beer_asset_22
+  - first:
+      213: 778953131809258948
+    second: Health_beer_asset_23
+  - first:
+      213: 4155017990121029409
+    second: Health_beer_asset_24
+  - first:
+      213: 8089264603755435493
+    second: Health_beer_asset_25
+  - first:
+      213: 1031272617616406304
+    second: Health_beer_asset_26
+  - first:
+      213: -8739373988401184934
+    second: Health_beer_asset_27
+  - first:
+      213: -3211692334384497211
+    second: Health_beer_asset_28
+  - first:
+      213: 1212419369805374077
+    second: Health_beer_asset_29
+  - first:
+      213: -5799206020485337726
+    second: Health_beer_asset_30
+  - first:
+      213: 8047547346946781669
+    second: Health_beer_asset_31
+  - first:
+      213: -3678273579200893506
+    second: Health_beer_asset_32
+  - first:
+      213: -3700170459582983385
+    second: Health_beer_asset_33
+  - first:
+      213: 701612105243080378
+    second: Health_beer_asset_34
+  - first:
+      213: 7891811938309448145
+    second: Health_beer_asset_35
+  - first:
+      213: 2460027707401954538
+    second: Health_beer_asset_36
+  - first:
+      213: -6068997670084805791
+    second: Health_beer_asset_37
+  - first:
+      213: -3934771390901498876
+    second: Health_beer_asset_38
+  - first:
+      213: -8267310638356334683
+    second: Health_beer_asset_39
+  - first:
+      213: -2044770105887724872
+    second: Health_beer_asset_40
+  - first:
+      213: 1081725145701869688
+    second: Health_beer_asset_41
+  - first:
+      213: 3840584681837554657
+    second: Health_beer_asset_42
+  - first:
+      213: 8955324570327205868
+    second: Health_beer_asset_43
+  - first:
+      213: -4995257318600384515
+    second: Health_beer_asset_44
+  - first:
+      213: 1682838879885409998
+    second: Health_beer_asset_45
+  - first:
+      213: -6347082500864024181
+    second: Health_beer_asset_46
+  - first:
+      213: -3957755425064863965
+    second: Health_beer_asset_47
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Health_beer_asset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0a1369a7f01953e0800000000000000
+      internalID: -2064600298287850997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Health_beer_asset_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7c125c2a50201cd0800000000000000
+      internalID: -2589534214075310980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Health_beer_asset_2
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7760828410d433fc0800000000000000
+      internalID: -3516382216145336713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Health_beer_asset_3
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1e486b3ca82d7140800000000000000
+      internalID: 4718972704750325277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ded59d12c75e9b843ab9bfa3df75e3ad
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":1024.0,"y":1024.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Health_beer_asset_0: -2064600298287850997
+      Health_beer_asset_1: -2589534214075310980
+      Health_beer_asset_2: -3516382216145336713
+      Health_beer_asset_3: 4718972704750325277
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
