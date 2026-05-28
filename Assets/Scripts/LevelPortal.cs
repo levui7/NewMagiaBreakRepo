@@ -41,6 +41,8 @@ public class LevelPortal : MonoBehaviour
         }
 
         PlayerPrefs.Save();
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
         SceneManager.LoadScene(nextSceneName);
     }
 }
