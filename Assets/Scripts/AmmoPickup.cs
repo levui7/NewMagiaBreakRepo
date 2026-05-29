@@ -11,6 +11,8 @@ public class AmmoPickup : MonoBehaviour
         if (player == null)
             return;
 
+        //Debug.Log("!!!ЗАШЕЛ ИГРОК!!!");
+
         WeaponManager weapon = player.GetComponent<WeaponManager>();
 
         if (weapon == null)
