@@ -141,6 +141,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: d0eae1d31ac233e4a91b80e09b919027, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3631343848832571987}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: d0eae1d31ac233e4a91b80e09b919027, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1567360416402925296}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: d0eae1d31ac233e4a91b80e09b919027, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3068231434550878167}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: d0eae1d31ac233e4a91b80e09b919027, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6796153519826024055}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: d0eae1d31ac233e4a91b80e09b919027, type: 3}
 --- !u!1 &5322234878189894154 stripped
 GameObject:
@@ -231,3 +240,74 @@ MonoBehaviour:
   player1UsesMouseAim: 1
   characterAnimation: {fileID: 0}
   deathAnimationDuration: 1.2
+--- !u!114 &-1567360416402925296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322234878189894154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9f1f5e5992c044dae46758babb508e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  playerController: {fileID: 0}
+  currentElement: 0
+  magazineSize: 6
+  currentAmmo: 6
+  reserveAmmo: 24
+  fireAmmo: 0
+  waterAmmo: 0
+  physicalDamage: 10
+  fireDamage: 8
+  waterDamage: 8
+  autoRefillMagazine: 1
+  autoFillAmmoOnStart: 0
+--- !u!114 &-3068231434550878167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322234878189894154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7b1fc111262a745b4f66aecb305c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectController
+  hasWater: 0
+  hasFire: 0
+  hasSteam: 0
+  hasSmoldering: 0
+  waterDuration: 3
+  fireDuration: 3
+  steamDuration: 5
+  smolderingDuration: 10
+  waterSlowMultiplier: 0.5
+  steamSlowMultiplier: 0.45
+  fireTickDamage: 1
+  smolderingTickDamage: 1
+  tickInterval: 1
+  waterOverlay: {fileID: 0}
+  fireOverlay: {fileID: 0}
+  steamOverlay: {fileID: 0}
+  smolderingOverlay: {fileID: 0}
+--- !u!114 &-6796153519826024055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322234878189894154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68531b5dc57a0194bb526ce5780e146c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimation2D
+  animator: {fileID: 0}
+  speedParameter: Speed
+  attackTrigger: Attack
+  takeDamageTrigger: TakeDamage
+  dieTrigger: Die
+  useLocalAnimatorIfEmpty: 1
