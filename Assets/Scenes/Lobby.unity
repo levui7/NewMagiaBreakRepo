@@ -1068,6 +1068,8 @@ MonoBehaviour:
   damageBonusPerLevel: 2
   healthBonusPerLevel: 20
   speedBonusPerLevel: 0.35
+  loadOnAwake: 1
+  saveOnEveryChange: 1
 --- !u!1 &1720538384
 GameObject:
   m_ObjectHideFlags: 0
