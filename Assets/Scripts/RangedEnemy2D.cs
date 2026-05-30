@@ -68,6 +68,9 @@ public class RangedEnemy2D : Enemy
 
         nextFireTime = Time.time + fireCooldown;
 
+        if (characterAnimation != null)
+            characterAnimation.PlayAttack();
+
         GameObject projectile = Instantiate(enemyProjectilePrefab, firePoint.position, Quaternion.identity);
         PlayerController.RotateTransformToDirection2D(projectile.transform, direction);
 

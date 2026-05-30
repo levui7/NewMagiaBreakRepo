@@ -350,6 +350,8 @@ GameObject:
   - component: {fileID: 5884816401582286935}
   - component: {fileID: 6115276770587559969}
   - component: {fileID: 1673468880770330484}
+  - component: {fileID: 5754211051708579057}
+  - component: {fileID: 6616482853330528960}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -450,20 +452,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e4d448f6eeba745a263eb34172de26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  playerID: 1
   moveSpeed: 5
   dashSpeed: 15
   dashDuration: 0.2
   dashCooldown: 1
-  playerID: 1
-  weaponPivot: {fileID: 8516599306693330822}
-  projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
-  firePoint: {fileID: 2063608484051549086}
-  fireRate: 0.2
   maxHealth: 100
   currentHealth: 100
   godMode: 0
+  weaponPivot: {fileID: 8516599306693330822}
+  firePoint: {fileID: 2063608484051549086}
+  projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
+  fireRate: 0.2
   autoAimEnabled: 1
   autoAimRadius: 25
+  autoAimMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  includeBossInAutoAim: 1
+  searchAllLayersForAutoAim: 1
+  drawAutoAimGizmos: 1
+  player1UsesMouseAim: 1
+  characterAnimation: {fileID: 0}
+  deathAnimationDuration: 1.2
 --- !u!114 &6115276770587559969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,16 +487,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab9f1f5e5992c044dae46758babb508e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  playerController: {fileID: 0}
   currentElement: 0
   magazineSize: 6
   currentAmmo: 6
   reserveAmmo: 24
-  reloadTime: 1.2
+  fireAmmo: 0
+  waterAmmo: 0
   physicalDamage: 10
   fireDamage: 8
   waterDamage: 8
-  fireAmmo: 0
-  waterAmmo: 0
+  autoRefillMagazine: 1
+  autoFillAmmoOnStart: 0
 --- !u!114 &1673468880770330484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +528,46 @@ MonoBehaviour:
   fireOverlay: {fileID: 4253100191453288630}
   steamOverlay: {fileID: 4531339744782569062}
   smolderingOverlay: {fileID: 8914587603720922974}
+--- !u!114 &5754211051708579057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6452882675060723632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68531b5dc57a0194bb526ce5780e146c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimation2D
+  animator: {fileID: 6616482853330528960}
+  speedParameter: Speed
+  attackTrigger: Attack
+  takeDamageTrigger: takeDamage
+  dieTrigger: Die
+  useLocalAnimatorIfEmpty: 1
+--- !u!95 &6616482853330528960
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6452882675060723632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6542792665085693560
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,7 +30,17 @@ public class PlayerProgressManager : MonoBehaviour
     public float healthBonusPerLevel = 20f;
     public float speedBonusPerLevel = 0.35f;
 
+    [Header("Saving")]
+    public bool loadOnAwake = true;
+    public bool saveOnEveryChange = true;
+
     public event Action OnProgressChanged;
+
+    private const string CoinsKey = "Progress_Coins";
+    private const string CrystalsKey = "Progress_Crystals";
+    private const string DamageLevelKey = "Progress_DamageLevel";
+    private const string HealthLevelKey = "Progress_HealthLevel";
+    private const string SpeedLevelKey = "Progress_SpeedLevel";
 
     private void Awake()
     {
@@ -42,6 +52,9 @@ public class PlayerProgressManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (loadOnAwake)
+            LoadProgress();
     }
 
     public void AddMaterial(MaterialType type, int amount)
@@ -62,7 +75,13 @@ public class PlayerProgressManager : MonoBehaviour
                 break;
         }
 
+        if (saveOnEveryChange)
+            SaveProgress();
+
         OnProgressChanged?.Invoke();
+
+        if (MaterialsHUD2D.Instance != null)
+            MaterialsHUD2D.Instance.Refresh();
     }
 
     public bool TrySpend(int coinCost, int crystalCost)
@@ -79,7 +98,14 @@ public class PlayerProgressManager : MonoBehaviour
         coins -= coinCost;
         crystals -= crystalCost;
 
+        if (saveOnEveryChange)
+            SaveProgress();
+
         OnProgressChanged?.Invoke();
+
+        if (MaterialsHUD2D.Instance != null)
+            MaterialsHUD2D.Instance.Refresh();
+
         return true;
     }
 
@@ -97,7 +123,11 @@ public class PlayerProgressManager : MonoBehaviour
         damageLevel++;
         ApplyUpgradesToAllPlayers();
 
+        if (saveOnEveryChange)
+            SaveProgress();
+
         OnProgressChanged?.Invoke();
+
         return true;
     }
 
@@ -115,7 +145,11 @@ public class PlayerProgressManager : MonoBehaviour
         healthLevel++;
         ApplyUpgradesToAllPlayers();
 
+        if (saveOnEveryChange)
+            SaveProgress();
+
         OnProgressChanged?.Invoke();
+
         return true;
     }
 
@@ -133,7 +167,11 @@ public class PlayerProgressManager : MonoBehaviour
         speedLevel++;
         ApplyUpgradesToAllPlayers();
 
+        if (saveOnEveryChange)
+            SaveProgress();
+
         OnProgressChanged?.Invoke();
+
         return true;
     }
 
@@ -155,11 +193,11 @@ public class PlayerProgressManager : MonoBehaviour
 
         player.moveSpeed = 5f + speedLevel * speedBonusPerLevel;
 
-        float wasFullHealth = player.currentHealth >= player.maxHealth - 0.01f ? 1f : 0f;
+        bool wasFullHealth = player.currentHealth >= player.maxHealth - 0.01f;
 
         player.maxHealth = 100f + healthLevel * healthBonusPerLevel;
 
-        if (wasFullHealth > 0f)
+        if (wasFullHealth)
             player.currentHealth = player.maxHealth;
         else
             player.currentHealth = Mathf.Clamp(player.currentHealth, 0f, player.maxHealth);
@@ -246,6 +284,31 @@ public class PlayerProgressManager : MonoBehaviour
         return $"{GetSpeedCoinCost()} монет, {GetSpeedCrystalCost()} крист.";
     }
 
+    public void SaveProgress()
+    {
+        PlayerPrefs.SetInt(CoinsKey, coins);
+        PlayerPrefs.SetInt(CrystalsKey, crystals);
+        PlayerPrefs.SetInt(DamageLevelKey, damageLevel);
+        PlayerPrefs.SetInt(HealthLevelKey, healthLevel);
+        PlayerPrefs.SetInt(SpeedLevelKey, speedLevel);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadProgress()
+    {
+        coins = PlayerPrefs.GetInt(CoinsKey, coins);
+        crystals = PlayerPrefs.GetInt(CrystalsKey, crystals);
+
+        damageLevel = PlayerPrefs.GetInt(DamageLevelKey, damageLevel);
+        healthLevel = PlayerPrefs.GetInt(HealthLevelKey, healthLevel);
+        speedLevel = PlayerPrefs.GetInt(SpeedLevelKey, speedLevel);
+
+        OnProgressChanged?.Invoke();
+
+        if (MaterialsHUD2D.Instance != null)
+            MaterialsHUD2D.Instance.Refresh();
+    }
+
     public void ResetProgress()
     {
         coins = 0;
@@ -255,6 +318,22 @@ public class PlayerProgressManager : MonoBehaviour
         healthLevel = 0;
         speedLevel = 0;
 
+        SaveProgress();
+
         OnProgressChanged?.Invoke();
+
+        if (MaterialsHUD2D.Instance != null)
+            MaterialsHUD2D.Instance.Refresh();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+            SaveProgress();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveProgress();
     }
 }

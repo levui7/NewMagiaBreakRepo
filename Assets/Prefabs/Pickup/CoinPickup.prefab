@@ -289,3 +289,5 @@ MonoBehaviour:
   useMagnet: 1
   magnetRadius: 3
   magnetSpeed: 6
+  collectDistance: 0.35
+  debugPickup: 0

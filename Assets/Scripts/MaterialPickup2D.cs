@@ -12,7 +12,12 @@ public class MaterialPickup2D : MonoBehaviour
     public float magnetRadius = 3f;
     public float magnetSpeed = 6f;
 
+    [Header("Collect")]
+    public float collectDistance = 0.35f;
+    public bool debugPickup = false;
+
     private Transform targetPlayer;
+    private bool collected;
 
     private void Awake()
     {
@@ -22,7 +27,7 @@ public class MaterialPickup2D : MonoBehaviour
 
     private void Update()
     {
-        if (!useMagnet)
+        if (collected)
             return;
 
         FindNearestPlayer();
@@ -32,13 +37,25 @@ public class MaterialPickup2D : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, targetPlayer.position);
 
-        if (distance <= magnetRadius)
+        if (useMagnet && distance <= magnetRadius)
         {
             transform.position = Vector2.MoveTowards(
                 transform.position,
                 targetPlayer.position,
                 magnetSpeed * Time.deltaTime
             );
+        }
+
+        // Надёжный подбор без ожидания OnTriggerEnter2D.
+        if (distance <= collectDistance)
+        {
+            PlayerController player = targetPlayer.GetComponent<PlayerController>();
+
+            if (player == null)
+                player = targetPlayer.GetComponentInParent<PlayerController>();
+
+            if (player != null)
+                Collect(player);
         }
     }
 
@@ -71,18 +88,45 @@ public class MaterialPickup2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (collected)
+            return;
+
         PlayerController player = other.GetComponentInParent<PlayerController>();
 
         if (player == null)
             return;
 
-        if (PlayerProgressManager.Instance == null)
-        {
-            Debug.LogWarning("MaterialPickup2D: PlayerProgressManager не найден.");
+        Collect(player);
+    }
+
+    private void Collect(PlayerController player)
+    {
+        if (collected)
             return;
+
+        collected = true;
+
+        PlayerProgressManager progress = PlayerProgressManager.Instance;
+
+        // На случай, если уровень запущен напрямую, без Lobby.
+        if (progress == null)
+        {
+            GameObject progressObject = new GameObject("PlayerProgressManager_Runtime");
+            progress = progressObject.AddComponent<PlayerProgressManager>();
         }
 
-        PlayerProgressManager.Instance.AddMaterial(materialType, amount);
+        progress.AddMaterial(materialType, amount);
+
+        if (debugPickup)
+        {
+            Debug.Log(
+                $"MaterialPickup2D: collected {amount} {materialType}. Coins={progress.coins}, Crystals={progress.crystals}",
+                this
+            );
+        }
+
+        if (MaterialsHUD2D.Instance != null)
+            MaterialsHUD2D.Instance.Refresh();
 
         Destroy(gameObject);
     }

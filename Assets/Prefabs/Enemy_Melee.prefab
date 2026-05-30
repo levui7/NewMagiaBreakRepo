@@ -142,6 +142,8 @@ GameObject:
   - component: {fileID: 7482154599928070409}
   - component: {fileID: 7016264403506955723}
   - component: {fileID: 4572017115981756794}
+  - component: {fileID: 613100972865180135}
+  - component: {fileID: 146301559229038451}
   m_Layer: 0
   m_Name: Enemy_Melee
   m_TagString: Untagged
@@ -262,6 +264,8 @@ MonoBehaviour:
   stopDistance: 0.2
   damageNumberPrefab: {fileID: 0}
   healthBar: {fileID: 0}
+  characterAnimation: {fileID: 0}
+  deathAnimationDuration: 1
 --- !u!114 &7016264403506955723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +316,46 @@ MonoBehaviour:
   minCrystals: 1
   maxCrystals: 1
   scatterRadius: 0.6
+--- !u!114 &613100972865180135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4979015778380353260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68531b5dc57a0194bb526ce5780e146c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimation2D
+  animator: {fileID: 146301559229038451}
+  speedParameter: Speed
+  attackTrigger: Attack
+  takeDamageTrigger: takeDamage
+  dieTrigger: Die
+  useLocalAnimatorIfEmpty: 1
+--- !u!95 &146301559229038451
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4979015778380353260}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6143481496486381751
 GameObject:
   m_ObjectHideFlags: 0

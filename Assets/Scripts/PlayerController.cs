@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,6 +43,12 @@ public class PlayerController : MonoBehaviour
     [Header("Manual Aim")]
     public bool player1UsesMouseAim = true;
 
+    [Header("Animation")]
+    public CharacterAnimation2D characterAnimation;
+    public float deathAnimationDuration = 1.2f;
+
+    private bool isDead;
+
     private Rigidbody2D rb;
     private WeaponManager weaponManager;
 
@@ -60,6 +67,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         weaponManager = GetComponent<WeaponManager>();
 
+        if (characterAnimation == null)
+            characterAnimation = GetComponent<CharacterAnimation2D>();
+
+        if (characterAnimation == null)
+            characterAnimation = GetComponentInChildren<CharacterAnimation2D>();
+
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
 
@@ -73,6 +86,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead)
+            return;
+
         ReadInput();
         HandleAim();
         HandleFire();
@@ -84,6 +100,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         Move();
     }
 
@@ -98,35 +117,39 @@ public class PlayerController : MonoBehaviour
 
         if (playerID == 2)
         {
-            if (keyboard.iKey.isPressed || keyboard.numpad8Key.isPressed)
+            // »грок 2: I/J/K/L
+            if (keyboard.iKey.isPressed)
                 moveInput.y += 1f;
 
-            if (keyboard.kKey.isPressed || keyboard.numpad5Key.isPressed || keyboard.numpad2Key.isPressed)
+            if (keyboard.kKey.isPressed)
                 moveInput.y -= 1f;
 
-            if (keyboard.jKey.isPressed || keyboard.numpad4Key.isPressed)
+            if (keyboard.jKey.isPressed)
                 moveInput.x -= 1f;
 
-            if (keyboard.lKey.isPressed || keyboard.numpad6Key.isPressed)
+            if (keyboard.lKey.isPressed)
                 moveInput.x += 1f;
 
-            if ((keyboard.rightShiftKey.wasPressedThisFrame || keyboard.numpad0Key.wasPressedThisFrame) && dashCooldownTimer <= 0f)
+            // »грок 2: Right Shift Ч рывок
+            if (keyboard.rightShiftKey.wasPressedThisFrame && dashCooldownTimer <= 0f)
                 StartDash();
         }
         else
         {
-            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)
+            // »грок 1: W/A/S/D
+            if (keyboard.wKey.isPressed)
                 moveInput.y += 1f;
 
-            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed)
+            if (keyboard.sKey.isPressed)
                 moveInput.y -= 1f;
 
-            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)
+            if (keyboard.aKey.isPressed)
                 moveInput.x -= 1f;
 
-            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed)
+            if (keyboard.dKey.isPressed)
                 moveInput.x += 1f;
 
+            // »грок 1: Space Ч рывок
             if (keyboard.spaceKey.wasPressedThisFrame && dashCooldownTimer <= 0f)
                 StartDash();
         }
@@ -139,6 +162,9 @@ public class PlayerController : MonoBehaviour
     {
         float speed = isDashing ? dashSpeed : moveSpeed;
         rb.linearVelocity = moveInput * speed;
+
+        if (characterAnimation != null)
+            characterAnimation.SetSpeed(moveInput.magnitude);
     }
 
     private void HandleDashTimers()
@@ -300,22 +326,18 @@ public class PlayerController : MonoBehaviour
     private bool IsFirePressed()
     {
         Keyboard keyboard = Keyboard.current;
-        Mouse mouse = Mouse.current;
+
+        if (keyboard == null)
+            return false;
 
         if (playerID == 2)
         {
-            if (keyboard == null)
-                return false;
-
-            return keyboard.enterKey.isPressed ||
-                   keyboard.numpadEnterKey.isPressed ||
-                   keyboard.rightCtrlKey.isPressed;
+            // »грок 2: N Ч стрельба
+            return keyboard.nKey.isPressed;
         }
 
-        bool mouseFire = mouse != null && mouse.leftButton.isPressed;
-        bool keyboardFire = keyboard != null && keyboard.leftCtrlKey.isPressed;
-
-        return mouseFire || keyboardFire;
+        // »грок 1: Left Ctrl Ч стрельба
+        return keyboard.leftCtrlKey.isPressed;
     }
 
     private void Fire()
@@ -337,6 +359,9 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("PlayerController: CanShoot = false. " + weaponManager.GetAmmoText(), this);
             return;
         }
+
+        if (characterAnimation != null)
+            characterAnimation.PlayAttack();
 
         GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 
@@ -373,8 +398,14 @@ public class PlayerController : MonoBehaviour
         if (godMode)
             return;
 
+        if (isDead)
+            return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        if (characterAnimation != null && currentHealth > 0f)
+            characterAnimation.PlayTakeDamage();
 
         DamagePopup2D.SpawnDamage(transform.position, Mathf.CeilToInt(amount), element);
 
@@ -450,7 +481,19 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+        if (isDead)
+            return;
+
+        isDead = true;
+
         rb.linearVelocity = Vector2.zero;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
+
+        if (characterAnimation != null)
+            characterAnimation.PlayDeath();
 
         GameSessionManager session = GameSessionManager.Instance;
 
@@ -458,13 +501,16 @@ public class PlayerController : MonoBehaviour
             session = FindObjectOfType<GameSessionManager>();
 
         if (session != null)
-        {
             session.OnPlayerDied(this);
-        }
         else
-        {
             Debug.LogError("PlayerController: GameSessionManager не найден. Ёкран смерти не может быть загружен.");
-        }
+
+        StartCoroutine(DisableAfterDeathAnimation());
+    }
+
+    private IEnumerator DisableAfterDeathAnimation()
+    {
+        yield return new WaitForSeconds(deathAnimationDuration);
 
         gameObject.SetActive(false);
     }

@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 1975325445370006441}
   - component: {fileID: 847908313968328091}
   - component: {fileID: 1324170087554256102}
+  - component: {fileID: 7698149946184199035}
+  - component: {fileID: 8260892715036733909}
   m_Layer: 0
   m_Name: Enemy_Ranged
   m_TagString: Enemy
@@ -201,6 +203,8 @@ MonoBehaviour:
   stopDistance: 0.2
   damageNumberPrefab: {fileID: 0}
   healthBar: {fileID: 0}
+  characterAnimation: {fileID: 0}
+  deathAnimationDuration: 1
   enemyProjectilePrefab: {fileID: 3397092774052720460, guid: e9b09803d51483c4eaeb59020f309b5c, type: 3}
   firePoint: {fileID: 3873190295570296272}
   attackRange: 8
@@ -262,6 +266,46 @@ MonoBehaviour:
   minCrystals: 1
   maxCrystals: 1
   scatterRadius: 0.7
+--- !u!114 &7698149946184199035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081167472836189878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68531b5dc57a0194bb526ce5780e146c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimation2D
+  animator: {fileID: 8260892715036733909}
+  speedParameter: Speed
+  attackTrigger: Attack
+  takeDamageTrigger: takeDamage
+  dieTrigger: Die
+  useLocalAnimatorIfEmpty: 1
+--- !u!95 &8260892715036733909
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081167472836189878}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2202841763569766669
 GameObject:
   m_ObjectHideFlags: 0

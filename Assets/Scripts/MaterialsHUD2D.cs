@@ -14,6 +14,7 @@ public class MaterialsHUD2D : MonoBehaviour
     public TextMeshProUGUI materialsText;
 
     private Canvas canvas;
+    private float refreshTimer;
 
     private void Awake()
     {
@@ -25,16 +26,13 @@ public class MaterialsHUD2D : MonoBehaviour
 
     private void OnEnable()
     {
-        if (PlayerProgressManager.Instance != null)
-            PlayerProgressManager.Instance.OnProgressChanged += Refresh;
-
+        Subscribe();
         Refresh();
     }
 
     private void OnDisable()
     {
-        if (PlayerProgressManager.Instance != null)
-            PlayerProgressManager.Instance.OnProgressChanged -= Refresh;
+        Unsubscribe();
     }
 
     private void Start()
@@ -42,7 +40,34 @@ public class MaterialsHUD2D : MonoBehaviour
         if (autoCreateUI)
             EnsureUI();
 
+        Subscribe();
         Refresh();
+    }
+
+    private void Update()
+    {
+        refreshTimer -= Time.deltaTime;
+
+        if (refreshTimer <= 0f)
+        {
+            refreshTimer = 0.25f;
+            Refresh();
+        }
+    }
+
+    private void Subscribe()
+    {
+        if (PlayerProgressManager.Instance != null)
+        {
+            PlayerProgressManager.Instance.OnProgressChanged -= Refresh;
+            PlayerProgressManager.Instance.OnProgressChanged += Refresh;
+        }
+    }
+
+    private void Unsubscribe()
+    {
+        if (PlayerProgressManager.Instance != null)
+            PlayerProgressManager.Instance.OnProgressChanged -= Refresh;
     }
 
     private void EnsureUI()
@@ -74,7 +99,7 @@ public class MaterialsHUD2D : MonoBehaviour
         rect.anchorMax = new Vector2(0f, 1f);
         rect.pivot = new Vector2(0f, 1f);
         rect.anchoredPosition = topLeftOffset;
-        rect.sizeDelta = new Vector2(800f, 100f);
+        rect.sizeDelta = new Vector2(850f, 110f);
 
         materialsText = textObject.AddComponent<TextMeshProUGUI>();
         materialsText.fontSize = fontSize;
@@ -85,6 +110,9 @@ public class MaterialsHUD2D : MonoBehaviour
 
     public void Refresh()
     {
+        if (autoCreateUI)
+            EnsureUI();
+
         if (materialsText == null)
             return;
 

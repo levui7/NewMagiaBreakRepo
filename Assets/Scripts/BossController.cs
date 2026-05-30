@@ -51,6 +51,10 @@ public class BossController : MonoBehaviour
     [Header("UI")]
     public EnemyHealthBar healthBar;
 
+    [Header("Animation")]
+    public CharacterAnimation2D characterAnimation;
+    public float deathAnimationDuration = 1.5f;
+
     private Rigidbody2D rb;
     private Collider2D bossCollider;
     private StatusEffectController statusEffects;
@@ -78,6 +82,12 @@ public class BossController : MonoBehaviour
             fp.transform.localPosition = new Vector3(0.75f, 0f, 0f);
             firePoint = fp.transform;
         }
+
+        if (characterAnimation == null)
+            characterAnimation = GetComponent<CharacterAnimation2D>();
+
+        if (characterAnimation == null)
+            characterAnimation = GetComponentInChildren<CharacterAnimation2D>();
     }
 
     private void Start()
@@ -193,6 +203,10 @@ public class BossController : MonoBehaviour
         if (distance < 0.01f)
         {
             rb.linearVelocity = Vector2.zero;
+
+            if (characterAnimation != null)
+                characterAnimation.SetSpeed(0f);
+
             return;
         }
 
@@ -208,6 +222,9 @@ public class BossController : MonoBehaviour
 
         rb.linearVelocity = moveDirection * GetCurrentMoveSpeed();
         RotateToDirection(directionToTarget);
+
+        if (characterAnimation != null)
+            characterAnimation.SetSpeed(rb.linearVelocity.magnitude);
     }
 
     private float GetCurrentMoveSpeed()
@@ -235,10 +252,18 @@ public class BossController : MonoBehaviour
 
     private void ShootAtTarget()
     {
-        if (target == null) return;
+        if (target == null)
+            return;
 
-        Vector2 direction = (target.position - firePoint.position).normalized;
-        SpawnProjectile(direction, projectileElement, projectileDamage);
+        if (characterAnimation != null)
+            characterAnimation.PlayAttack();
+
+        Vector2 direction =
+            (target.position - firePoint.position).normalized;
+
+        SpawnProjectile(direction,
+            projectileElement,
+            projectileDamage);
     }
 
     private void RadialAttack()
@@ -344,6 +369,9 @@ public class BossController : MonoBehaviour
 
         DamagePopup2D.SpawnDamage(transform.position, amount, element);
 
+        if (characterAnimation != null && currentHealth > 0)
+            characterAnimation.PlayTakeDamage();
+
         if (statusEffects != null)
             statusEffects.ApplyElementStatus(element);
 
@@ -374,6 +402,17 @@ public class BossController : MonoBehaviour
 
         if (MaterialsHUD2D.Instance != null)
             MaterialsHUD2D.Instance.Refresh();
-        Destroy(gameObject, 0.2f);
+
+        if (characterAnimation != null)
+            characterAnimation.PlayDeath();
+
+        StartCoroutine(LoadVictoryAfterDeath());
+    }
+
+    private IEnumerator LoadVictoryAfterDeath()
+    {
+        yield return new WaitForSeconds(deathAnimationDuration);
+
+        Destroy(gameObject);
     }
 }

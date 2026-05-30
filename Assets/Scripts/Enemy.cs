@@ -20,12 +20,24 @@ public class Enemy : MonoBehaviour
     public GameObject damageNumberPrefab;
     public EnemyHealthBar healthBar;
 
+    [Header("Animation")]
+    public CharacterAnimation2D characterAnimation;
+    public float deathAnimationDuration = 1.0f;
+
+    private bool isDead;
+
     protected Rigidbody2D rb;
     protected StatusEffectController statusEffects;
     protected float lastContactDamageTime;
 
     protected virtual void Awake()
     {
+        if (characterAnimation == null)
+            characterAnimation = GetComponent<CharacterAnimation2D>();
+
+        if (characterAnimation == null)
+            characterAnimation = GetComponentInChildren<CharacterAnimation2D>();
+
         rb = GetComponent<Rigidbody2D>();
         statusEffects = GetComponent<StatusEffectController>();
 
@@ -91,6 +103,12 @@ public class Enemy : MonoBehaviour
         float speedMultiplier = statusEffects != null ? statusEffects.GetSpeedMultiplier() : 1f;
         rb.linearVelocity = dir * moveSpeed * speedMultiplier;
         PlayerController.RotateTransformToDirection2D(transform, dir);
+
+        if (characterAnimation != null)
+            characterAnimation.SetSpeed(dir.magnitude);
+
+        //if (characterAnimation != null)
+        //    characterAnimation.SetSpeed(0f);
     }
 
     public virtual void TakeDamage(int amount, WeaponManager.Element element)
@@ -104,7 +122,15 @@ public class Enemy : MonoBehaviour
         if (statusEffects != null)
             statusEffects.ApplyElementStatus(element);
 
-        if (currentHealth <= 0)
+        if (isDead)
+            return;
+
+        currentHealth -= amount;
+
+        if (characterAnimation != null && currentHealth > 0f)
+            characterAnimation.PlayTakeDamage();
+
+        if (currentHealth <= 0f)
             Die();
     }
 
@@ -161,6 +187,10 @@ public class Enemy : MonoBehaviour
             return;
 
         lastContactDamageTime = Time.time;
+
+        if (characterAnimation != null)
+            characterAnimation.PlayAttack();
+
         player.TakeDamage(contactDamage, contactElement);
     }
 
@@ -170,11 +200,27 @@ public class Enemy : MonoBehaviour
         if (roomManager != null)
             roomManager.EnemyDied();
 
+        if (isDead)
+            return;
+
+        isDead = true;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
+
         LootDropper2D lootDropper = GetComponent<LootDropper2D>();
 
         if (lootDropper != null)
             lootDropper.DropLoot();
 
-        Destroy(gameObject);
+        if (characterAnimation != null)
+            characterAnimation.PlayDeath();
+
+        Destroy(gameObject, deathAnimationDuration);
     }
 }

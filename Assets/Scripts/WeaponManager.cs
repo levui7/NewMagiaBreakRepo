@@ -106,11 +106,13 @@ public class WeaponManager : MonoBehaviour
 
         if (id == 2)
         {
-            if (keyboard.numpadPlusKey.wasPressedThisFrame)
+            // Игрок 2: U — переключение типа снаряда
+            if (keyboard.uKey.wasPressedThisFrame)
                 CycleElement();
         }
         else
         {
+            // Игрок 1: Q — переключение типа снаряда
             if (keyboard.qKey.wasPressedThisFrame)
                 CycleElement();
         }
