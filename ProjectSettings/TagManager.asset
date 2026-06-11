@@ -12,6 +12,10 @@ TagManager:
   - Pickup
   - Boss
   - Obstacle
+  - Block
+  - Breakable_Wall
+  - RoomPoint
+  - Rooms
   layers:
   - Default
   - TransparentFX

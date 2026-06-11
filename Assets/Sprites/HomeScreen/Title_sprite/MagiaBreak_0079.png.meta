@@ -1,0 +1,377 @@
+fileFormatVersion: 2
+guid: 8421bdfc1d6636848991717cc9bce894
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7164698754473182541
+    second: MagiaBreak_0079_0
+  - first:
+      213: 3832134022991169913
+    second: MagiaBreak_0079_1
+  - first:
+      213: -4100146205028221757
+    second: MagiaBreak_0079_2
+  - first:
+      213: -2964821434053964907
+    second: MagiaBreak_0079_3
+  - first:
+      213: 7226563888077517246
+    second: MagiaBreak_0079_4
+  - first:
+      213: 5875838082341028079
+    second: MagiaBreak_0079_5
+  - first:
+      213: 554440433257272166
+    second: MagiaBreak_0079_6
+  - first:
+      213: 7058937885019293898
+    second: MagiaBreak_0079_7
+  - first:
+      213: 291111255561030040
+    second: MagiaBreak_0079_8
+  - first:
+      213: -3530643940966907920
+    second: MagiaBreak_0079_9
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MagiaBreak_0079_0
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 1020
+        width: 612
+        height: 604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45ce079e8f1e6360800000000000000
+      internalID: 7164698754473182541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_1
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 1020
+        width: 504
+        height: 604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 979c31427997e2530800000000000000
+      internalID: 3832134022991169913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_2
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 1020
+        width: 504
+        height: 604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cc702200ca5917c0800000000000000
+      internalID: -4100146205028221757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_3
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 1020
+        width: 178
+        height: 604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59bcfb03d96dad6d0800000000000000
+      internalID: -2964821434053964907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_4
+      rect:
+        serializedVersion: 2
+        x: 2341
+        y: 1020
+        width: 504
+        height: 604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb1b6877199e94460800000000000000
+      internalID: 7226563888077517246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_5
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 366
+        width: 469
+        height: 561
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe046a7ba9b2b8150800000000000000
+      internalID: 5875838082341028079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_6
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 366
+        width: 469
+        height: 561
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 663d961f2a4c1b700800000000000000
+      internalID: 554440433257272166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_7
+      rect:
+        serializedVersion: 2
+        x: 1334
+        y: 366
+        width: 469
+        height: 561
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac84f184b9266f160800000000000000
+      internalID: 7058937885019293898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_8
+      rect:
+        serializedVersion: 2
+        x: 1856
+        y: 366
+        width: 469
+        height: 561
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89945d1052c3a0400800000000000000
+      internalID: 291111255561030040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MagiaBreak_0079_9
+      rect:
+        serializedVersion: 2
+        x: 2378
+        y: 366
+        width: 469
+        height: 561
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ff3846ba02a00fc0800000000000000
+      internalID: -3530643940966907920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MagiaBreak_0079_0: 7164698754473182541
+      MagiaBreak_0079_1: 3832134022991169913
+      MagiaBreak_0079_2: -4100146205028221757
+      MagiaBreak_0079_3: -2964821434053964907
+      MagiaBreak_0079_4: 7226563888077517246
+      MagiaBreak_0079_5: 5875838082341028079
+      MagiaBreak_0079_6: 554440433257272166
+      MagiaBreak_0079_7: 7058937885019293898
+      MagiaBreak_0079_8: 291111255561030040
+      MagiaBreak_0079_9: -3530643940966907920
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

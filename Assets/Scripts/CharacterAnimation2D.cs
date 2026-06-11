@@ -8,7 +8,7 @@ public class CharacterAnimation2D : MonoBehaviour
     [Header("Parameter Names")]
     public string speedParameter = "Speed";
     public string attackTrigger = "Attack";
-    public string takeDamageTrigger = "takeDamage";
+    public string takeDamageTrigger = "TakeDamage";
     public string dieTrigger = "Die";
 
     [Header("Settings")]

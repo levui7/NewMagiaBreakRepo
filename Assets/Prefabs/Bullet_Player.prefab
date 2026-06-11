@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -206,7 +206,8 @@ MonoBehaviour:
   damage: 10
   element: 0
   isAoE: 0
-  AoERadius: 3
-  aoeTargetMask:
+  aoeRadius: 2.5
+  damageMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
+  owner: {fileID: 0}

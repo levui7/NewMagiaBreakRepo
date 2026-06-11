@@ -114,6 +114,9 @@ MonoBehaviour:
   lifeTime: 4
   damage: 5
   element: 2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &6222587815077989106
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +199,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.5471698, g: 0.36391956, b: 0.36391956, a: 1}
+  m_Color: {r: 0, g: 0.34212565, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

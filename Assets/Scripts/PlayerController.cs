@@ -344,19 +344,19 @@ public class PlayerController : MonoBehaviour
     {
         if (projectilePrefab == null)
         {
-            Debug.LogWarning("PlayerController: Projectile Prefab не назначен.", this);
+            Debug.LogError("PlayerController: Projectile Prefab не назначен.", this);
             return;
         }
 
         if (firePoint == null)
         {
-            Debug.LogWarning("PlayerController: Fire Point не назначен.", this);
+            Debug.LogError("PlayerController: Fire Point не назначен.", this);
             return;
         }
 
         if (weaponManager != null && !weaponManager.CanShoot())
         {
-            Debug.LogWarning("PlayerController: CanShoot = false. " + weaponManager.GetAmmoText(), this);
+            Debug.LogError("PlayerController: CanShoot = false. " + weaponManager.GetAmmoText(), this);
             return;
         }
 
