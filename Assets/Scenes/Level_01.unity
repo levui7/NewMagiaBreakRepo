@@ -1422,17 +1422,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814b77cdcd396cb49bef43e9c45acbb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
-  enemyPrefab: {fileID: 4437465612119012727, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
+  meleeEnemyPrefab: {fileID: 4437465612119012727, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
   rangedEnemyPrefab: {fileID: 3032865762932193077, guid: ea567abc96bd8864d8161613f8aff902, type: 3}
-  rangedEnemyChance: 0.15
   spawnPoints:
   - {fileID: 1055112883}
   - {fileID: 1805035280}
   - {fileID: 966089080}
   - {fileID: 819092204}
   door: {fileID: 929290994}
-  wavesCount: 1
+  minWaves: 1
+  maxWaves: 5
   enemiesPerWave: {x: 3, y: 5}
+  delayBeforeNextWave: 1.5
+  rangedEnemyChance: 0.15
+  fireChance: 0.3
+  waterChance: 0.3
 --- !u!4 &2097072942
 Transform:
   m_ObjectHideFlags: 0

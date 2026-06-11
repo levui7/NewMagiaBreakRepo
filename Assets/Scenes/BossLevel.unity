@@ -1214,9 +1214,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   loadVictoryWhenCompleted: 1
-  nextSceneName: 
+  nextSceneName: VictoryScreen
   victorySceneName: VictoryScreen
-  exitPortal: {fileID: 0}
+  exitPortal: {fileID: 147219770}
   requiredEnemies: []
   requiredBosses:
   - {fileID: 2081267607}

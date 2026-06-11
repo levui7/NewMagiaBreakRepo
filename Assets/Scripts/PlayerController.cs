@@ -62,10 +62,16 @@ public class PlayerController : MonoBehaviour
     private float dashCooldownTimer;
     private float fireCooldownTimer;
 
+    private TemporaryBuffController2D temporaryBuffs;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         weaponManager = GetComponent<WeaponManager>();
+
+        temporaryBuffs = GetComponent<TemporaryBuffController2D>();
+        if (temporaryBuffs == null)
+            temporaryBuffs = GetComponentInChildren<TemporaryBuffController2D>();
 
         if (characterAnimation == null)
             characterAnimation = GetComponent<CharacterAnimation2D>();
@@ -160,7 +166,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float speed = isDashing ? dashSpeed : moveSpeed;
+        float speed = isDashing ? dashSpeed : GetEffectiveMoveSpeed();
         rb.linearVelocity = moveInput * speed;
 
         if (characterAnimation != null)
@@ -477,6 +483,16 @@ public class PlayerController : MonoBehaviour
 
         if (UIManager.Instance != null)
             UIManager.Instance.UpdatePlayerHUD(this, weaponManager);
+    }
+
+    private float GetEffectiveMoveSpeed()
+    {
+        float multiplier = 1f;
+
+        if (temporaryBuffs != null)
+            multiplier = temporaryBuffs.GetMoveSpeedMultiplier();
+
+        return moveSpeed * multiplier;
     }
 
     private void Die()

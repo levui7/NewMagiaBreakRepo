@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 1470060190712123917}
   - component: {fileID: 178647369976546633}
   - component: {fileID: 2970940029594068600}
+  - component: {fileID: 4794997873008543600}
   m_Layer: 0
   m_Name: Fire_Resistance_Beer
   m_TagString: Untagged
@@ -272,3 +273,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4794997873008543600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008968801075033819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef556392ed2ea544a1cf87e38c616e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TemporaryBuffPickup2D
+  buffType: 3
+  duration: 12
+  multiplier: 1.25
+  affectAllPlayers: 0
+  destroyAfterPickup: 1

@@ -9,19 +9,19 @@ public class EndScreenController : MonoBehaviour
 
     public void ReturnToLobby()
     {
-        ClearSavedPlayerHealth();
+        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
         SceneManager.LoadScene(lobbySceneName);
     }
 
     public void ReturnToMainMenu()
     {
-        ClearSavedPlayerHealth();
+        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void RestartRun()
     {
-        ClearSavedPlayerHealth();
+        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
         SceneManager.LoadScene(lobbySceneName);
     }
 
@@ -32,12 +32,5 @@ public class EndScreenController : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Выход из игры. В редакторе Unity Application.Quit() не закрывает Play Mode.");
 #endif
-    }
-
-    private void ClearSavedPlayerHealth()
-    {
-        PlayerPrefs.DeleteKey("Player1_HP");
-        PlayerPrefs.DeleteKey("Player2_HP");
-        PlayerPrefs.Save();
     }
 }

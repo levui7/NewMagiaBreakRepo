@@ -52,6 +52,8 @@ public class GameSessionManager : MonoBehaviour
 
         yield return new WaitForSeconds(delayBeforeGameOver);
 
+        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
+
         if (!string.IsNullOrEmpty(gameOverSceneName))
         {
             SceneManager.LoadScene(gameOverSceneName);

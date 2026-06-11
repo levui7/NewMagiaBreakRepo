@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 5873864219509005598}
   - component: {fileID: 4524541642321859272}
   - component: {fileID: 5488767447370217246}
+  - component: {fileID: -7798296137139742962}
   m_Layer: 0
   m_Name: Water_Resistance_Beer
   m_TagString: Untagged
@@ -272,3 +273,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7798296137139742962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539268499350129270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef556392ed2ea544a1cf87e38c616e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TemporaryBuffPickup2D
+  buffType: 4
+  duration: 12
+  multiplier: 1.25
+  affectAllPlayers: 0
+  destroyAfterPickup: 1

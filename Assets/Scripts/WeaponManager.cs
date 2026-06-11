@@ -46,10 +46,14 @@ public class WeaponManager : MonoBehaviour
 
     private bool loadedFromInventory;
 
+    private TemporaryBuffController2D temporaryBuffs;
+
     private void Awake()
     {
         if (playerController == null)
             playerController = GetComponent<PlayerController>();
+
+        temporaryBuffs = playerController != null ? playerController.GetComponent<TemporaryBuffController2D>() : GetComponent<TemporaryBuffController2D>();
 
         if (magazineSize <= 0)
             magazineSize = 6;
@@ -269,18 +273,30 @@ public class WeaponManager : MonoBehaviour
 
     public float GetCurrentDamage()
     {
+        float baseDamage;
+
         switch (currentElement)
         {
             case Element.Fire:
-                return fireDamage;
+                baseDamage = fireDamage;
+                break;
 
             case Element.Water:
-                return waterDamage;
+                baseDamage = waterDamage;
+                break;
 
             case Element.Physical:
             default:
-                return physicalDamage;
+                baseDamage = physicalDamage;
+                break;
         }
+
+        float multiplier = 1f;
+
+        if (temporaryBuffs != null)
+            multiplier = temporaryBuffs.GetDamageMultiplier(currentElement);
+
+        return baseDamage * multiplier;
     }
 
     public void AddAmmo(int amount)

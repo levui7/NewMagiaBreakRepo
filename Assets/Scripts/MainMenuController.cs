@@ -1,46 +1,83 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    [Header("Scene names")]
+    [Header("Scenes")]
     [SerializeField] private string lobbySceneName = "Lobby";
 
-    public void StartSinglePlayer()
+    [Header("Panels")]
+    [SerializeField] private GameObject mainPanel;
+    [SerializeField] private GameObject newGameModePanel;
+
+    [Header("UI")]
+    [SerializeField] private Button continueButton;
+
+    private void Start()
     {
-        PlayerPrefs.SetInt("PlayerMode", 1);
-        ClearSavedRunState();
-        LoadLobby();
+        ShowMainPanel();
+        RefreshContinueButton();
     }
 
-    public void StartCoop()
+    public void ShowNewGamePanel()
     {
-        PlayerPrefs.SetInt("PlayerMode", 2);
-        ClearSavedRunState();
-        LoadLobby();
+        if (mainPanel != null)
+            mainPanel.SetActive(false);
+
+        if (newGameModePanel != null)
+            newGameModePanel.SetActive(true);
+    }
+
+    public void ShowMainPanel()
+    {
+        if (mainPanel != null)
+            mainPanel.SetActive(true);
+
+        if (newGameModePanel != null)
+            newGameModePanel.SetActive(false);
+    }
+
+    public void StartSinglePlayerNewGame()
+    {
+        StartNewGame(1);
+    }
+
+    public void StartTwoPlayerNewGame()
+    {
+        StartNewGame(2);
+    }
+
+    public void ContinueGame()
+    {
+        if (!RunSaveSystem.CanContinue())
+        {
+            RefreshContinueButton();
+            return;
+        }
+
+        string sceneName = RunSaveSystem.GetCheckpointSceneName(lobbySceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+
+#if UNITY_EDITOR
+        Debug.Log("Выход из игры. В редакторе Unity Application.Quit() не закрывает Play Mode.");
+#endif
     }
 
-    private void ClearSavedRunState()
+    private void StartNewGame(int playerMode)
     {
-        PlayerPrefs.DeleteKey("Player1_HP");
-        PlayerPrefs.DeleteKey("Player2_HP");
-        PlayerPrefs.Save();
+        RunSaveSystem.StartNewGame(playerMode, lobbySceneName);
+        SceneManager.LoadScene(lobbySceneName);
     }
 
-    private void LoadLobby()
+    private void RefreshContinueButton()
     {
-        if (string.IsNullOrWhiteSpace(lobbySceneName))
-        {
-            Debug.LogError("MainMenuController: lobbySceneName is empty. Set it to Lobby in Inspector.");
-            return;
-        }
-
-        Debug.Log($"MainMenuController: loading scene '{lobbySceneName}'");
-        SceneManager.LoadScene(lobbySceneName, LoadSceneMode.Single);
+        if (continueButton != null)
+            continueButton.interactable = RunSaveSystem.CanContinue();
     }
 }

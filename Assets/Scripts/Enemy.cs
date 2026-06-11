@@ -113,6 +113,9 @@ public class Enemy : MonoBehaviour
 
     public virtual void TakeDamage(int amount, WeaponManager.Element element)
     {
+        if (isDead)
+            return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -121,11 +124,6 @@ public class Enemy : MonoBehaviour
 
         if (statusEffects != null)
             statusEffects.ApplyElementStatus(element);
-
-        if (isDead)
-            return;
-
-        currentHealth -= amount;
 
         if (characterAnimation != null && currentHealth > 0f)
             characterAnimation.PlayTakeDamage();

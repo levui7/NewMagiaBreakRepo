@@ -984,9 +984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814b77cdcd396cb49bef43e9c45acbb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
-  enemyPrefab: {fileID: 4437465612119012727, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
+  meleeEnemyPrefab: {fileID: 4437465612119012727, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
   rangedEnemyPrefab: {fileID: 3032865762932193077, guid: ea567abc96bd8864d8161613f8aff902, type: 3}
-  rangedEnemyChance: 0.45
   spawnPoints:
   - {fileID: 2121156516}
   - {fileID: 1287995698}
@@ -994,9 +993,14 @@ MonoBehaviour:
   - {fileID: 1158009673}
   - {fileID: 2108290589}
   - {fileID: 1913817699}
-  door: {fileID: 0}
-  wavesCount: 2
+  door: {fileID: 1195140259}
+  minWaves: 1
+  maxWaves: 5
   enemiesPerWave: {x: 4, y: 7}
+  delayBeforeNextWave: 1.5
+  rangedEnemyChance: 0.45
+  fireChance: 0.3
+  waterChance: 0.3
 --- !u!4 &864523900
 Transform:
   m_ObjectHideFlags: 0
@@ -1280,6 +1284,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
+--- !u!1 &1195140259 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6170608206483006650, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
+  m_PrefabInstance: {fileID: 1195140258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1239179037
 PrefabInstance:
   m_ObjectHideFlags: 0

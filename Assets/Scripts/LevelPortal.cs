@@ -14,11 +14,12 @@ public class LevelPortal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (used) return;
+        if (used)
+            return;
 
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player == null) player = other.GetComponentInParent<PlayerController>();
-        if (player == null) return;
+        PlayerController player = other.GetComponentInParent<PlayerController>();
+        if (player == null)
+            return;
 
         used = true;
 
@@ -28,21 +29,16 @@ public class LevelPortal : MonoBehaviour
             foreach (PlayerController p in players)
             {
                 if (p != null && p.gameObject.activeSelf)
-                {
                     p.Heal(healBeforeNextLevel);
-                    PlayerPrefs.SetInt($"Player{p.playerID}_HP", p.GetCurrentHealth());
-                }
             }
         }
         else
         {
             player.Heal(healBeforeNextLevel);
-            PlayerPrefs.SetInt($"Player{player.playerID}_HP", player.GetCurrentHealth());
         }
 
-        PlayerPrefs.Save();
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+        RunSaveSystem.SaveRunState(nextSceneName);
+
         SceneManager.LoadScene(nextSceneName);
     }
 }

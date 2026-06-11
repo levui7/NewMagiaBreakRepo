@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameModeManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameModeManager : MonoBehaviour
 
     private void Start()
     {
+        RunSaveSystem.SaveCheckpoint(SceneManager.GetActiveScene().name);
+
         if (playerPrefab == null)
         {
             Debug.LogError("GameModeManager: Player Prefab не назначен!");
@@ -22,6 +25,8 @@ public class GameModeManager : MonoBehaviour
             Debug.LogError("GameModeManager: не назначен хотя бы PlayerSpawn_1!");
             return;
         }
+
+        RunSaveSystem.SaveCheckpoint(SceneManager.GetActiveScene().name);
 
         if (resetHealthInThisScene)
         {
