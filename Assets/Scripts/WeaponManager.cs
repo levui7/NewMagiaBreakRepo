@@ -291,10 +291,8 @@ public class WeaponManager : MonoBehaviour
                 break;
         }
 
-        float multiplier = 1f;
-
-        if (temporaryBuffs != null)
-            multiplier = temporaryBuffs.GetDamageMultiplier(currentElement);
+        TemporaryBuffController2D buffs = playerController != null ? playerController.GetComponent<TemporaryBuffController2D>() : null;
+        float multiplier = buffs != null ? buffs.GetDamageMultiplier(currentElement) : 1f;
 
         return baseDamage * multiplier;
     }

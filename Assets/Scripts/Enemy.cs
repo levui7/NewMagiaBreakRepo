@@ -30,6 +30,14 @@ public class Enemy : MonoBehaviour
     protected StatusEffectController statusEffects;
     protected float lastContactDamageTime;
 
+    private float baseMoveSpeed;
+    private int baseMaxHealth;
+    private int baseContactDamage;
+    private bool difficultyApplied;
+
+    [Header("Difficulty Scaling")]
+    public bool autoScaleFromProgress = true;
+
     protected virtual void Awake()
     {
         if (characterAnimation == null)
@@ -45,11 +53,26 @@ public class Enemy : MonoBehaviour
         rb.freezeRotation = true;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        baseMoveSpeed = moveSpeed;
+        baseMaxHealth = maxHealth;
+        baseContactDamage = contactDamage;
     }
 
     protected virtual void Start()
     {
-        currentHealth = maxHealth;
+        if (autoScaleFromProgress && PlayerProgressManager.Instance != null)
+        {
+            ApplyProgressDifficulty(
+                PlayerProgressManager.Instance.GetEnemyHealthMultiplier(),
+                PlayerProgressManager.Instance.GetEnemyDamageMultiplier(),
+                PlayerProgressManager.Instance.GetEnemySpeedMultiplier()
+            );
+        }
+
+        if (!difficultyApplied)
+            currentHealth = maxHealth;
+
         UpdateHealthBar();
         FindTarget();
     }
@@ -109,6 +132,22 @@ public class Enemy : MonoBehaviour
 
         //if (characterAnimation != null)
         //    characterAnimation.SetSpeed(0f);
+    }
+
+    public virtual void ApplyProgressDifficulty(float healthMultiplier, float damageMultiplier, float speedMultiplier)
+    {
+        if (difficultyApplied)
+            return;
+
+        difficultyApplied = true;
+
+        maxHealth = Mathf.Max(1, Mathf.RoundToInt(baseMaxHealth * healthMultiplier));
+        currentHealth = maxHealth;
+
+        contactDamage = Mathf.Max(1, Mathf.RoundToInt(baseContactDamage * damageMultiplier));
+        moveSpeed = Mathf.Max(0.1f, baseMoveSpeed * speedMultiplier);
+
+        UpdateHealthBar();
     }
 
     public virtual void TakeDamage(int amount, WeaponManager.Element element)

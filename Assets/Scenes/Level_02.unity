@@ -130,11 +130,11 @@ PrefabInstance:
     - target: {fileID: 4170127990185888893, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4170127990185888893, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -2398152897159946246, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4170127990185888893, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -142,11 +142,11 @@ PrefabInstance:
     - target: {fileID: 4514830251595691107, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4514830251595691107, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -2398152897159946246, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4514830251595691107, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -158,11 +158,11 @@ PrefabInstance:
     - target: {fileID: 5228602819316652294, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5228602819316652294, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -2398152897159946246, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5228602819316652294, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -170,11 +170,11 @@ PrefabInstance:
     - target: {fileID: 5709986341274947987, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5709986341274947987, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -2398152897159946246, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5709986341274947987, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -222,11 +222,11 @@ PrefabInstance:
     - target: {fileID: 7800913070031949892, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 7800913070031949892, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -2398152897159946246, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 7800913070031949892, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -234,11 +234,11 @@ PrefabInstance:
     - target: {fileID: 8898992754411870268, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 8898992754411870268, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -2398152897159946246, guid: ad8f355b54bb72e49bba47e5575ecb8a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 8898992754411870268, guid: a3e5fa2f9fb17a34da22aa4f31e1e112, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -586,9 +586,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   loadVictoryWhenCompleted: 0
-  nextSceneName: Level_03
+  nextSceneName: BossLevel
   victorySceneName: VictoryScreen
-  exitPortal: {fileID: 0}
+  exitPortal: {fileID: 1195140259}
   requiredEnemies: []
   requiredBosses: []
 --- !u!4 &576628290
@@ -984,8 +984,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814b77cdcd396cb49bef43e9c45acbb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
-  meleeEnemyPrefab: {fileID: 4437465612119012727, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
+  enemyPrefab: {fileID: 4437465612119012727, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
   rangedEnemyPrefab: {fileID: 3032865762932193077, guid: ea567abc96bd8864d8161613f8aff902, type: 3}
+  rangedEnemyChance: 0.45
   spawnPoints:
   - {fileID: 2121156516}
   - {fileID: 1287995698}
@@ -994,13 +995,8 @@ MonoBehaviour:
   - {fileID: 2108290589}
   - {fileID: 1913817699}
   door: {fileID: 1195140259}
-  minWaves: 1
-  maxWaves: 5
+  wavesCount: 3
   enemiesPerWave: {x: 4, y: 7}
-  delayBeforeNextWave: 1.5
-  rangedEnemyChance: 0.45
-  fireChance: 0.3
-  waterChance: 0.3
 --- !u!4 &864523900
 Transform:
   m_ObjectHideFlags: 0
@@ -1278,6 +1274,10 @@ PrefabInstance:
     - target: {fileID: 6170608206483006650, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_Name
       value: ExitPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170608206483006650, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

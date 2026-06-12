@@ -215,6 +215,30 @@ public class PlayerProgressManager : MonoBehaviour
             UIManager.Instance.UpdatePlayerHUD(player, weapon);
     }
 
+    public float GetEnemyHealthMultiplier()
+    {
+        return 1f
+               + damageLevel * 0.15f
+               + healthLevel * 0.25f
+               + speedLevel * 0.10f;
+    }
+
+    public float GetEnemyDamageMultiplier()
+    {
+        return 1f
+               + damageLevel * 0.12f
+               + healthLevel * 0.18f
+               + speedLevel * 0.08f;
+    }
+
+    public float GetEnemySpeedMultiplier()
+    {
+        return 1f
+               + damageLevel * 0.05f
+               + healthLevel * 0.05f
+               + speedLevel * 0.12f;
+    }
+
     public int GetDamageCoinCost()
     {
         return 10 + damageLevel * 8;

@@ -15,6 +15,24 @@ public class RangedEnemy2D : Enemy
 
     private float nextFireTime;
 
+    private int baseProjectileDamage;
+    private float baseFireCooldown;
+    private bool rangedDifficultyApplied;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        baseProjectileDamage = projectileDamage;
+        baseFireCooldown = fireCooldown;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        nextFireTime = Time.time + 0.5f;
+    }
+
     protected override void FixedUpdate()
     {
         if (playerTarget == null || !playerTarget.gameObject.activeInHierarchy)
@@ -81,5 +99,18 @@ public class RangedEnemy2D : Enemy
             projectileScript.element = projectileElement;
             projectileScript.Launch(direction);
         }
+    }
+
+    public override void ApplyProgressDifficulty(float healthMultiplier, float damageMultiplier, float speedMultiplier)
+    {
+        base.ApplyProgressDifficulty(healthMultiplier, damageMultiplier, speedMultiplier);
+
+        if (rangedDifficultyApplied)
+            return;
+
+        rangedDifficultyApplied = true;
+
+        projectileDamage = Mathf.Max(1, Mathf.RoundToInt(baseProjectileDamage * damageMultiplier));
+        fireCooldown = Mathf.Max(0.35f, baseFireCooldown / Mathf.Clamp(speedMultiplier, 1f, 1.75f));
     }
 }

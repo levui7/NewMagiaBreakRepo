@@ -143,7 +143,10 @@ public class BulletScript : MonoBehaviour
 
     private void ApplyAoEDamage()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, aoeRadius, damageMask);
+        Collider2D[] hits =
+            Physics2D.OverlapCircleAll(transform.position, aoeRadius, damageMask);
+
+        int damageInt = Mathf.CeilToInt(damage);
 
         foreach (Collider2D hit in hits)
         {
@@ -152,6 +155,15 @@ public class BulletScript : MonoBehaviour
 
             if (owner != null && hit.gameObject == owner)
                 continue;
+
+            WallHitReceiver2D wall =
+                hit.GetComponentInParent<WallHitReceiver2D>();
+
+            if (wall != null)
+            {
+                wall.TakeHit(damageInt);
+                continue;
+            }
 
             ApplyDamageTo(hit);
         }

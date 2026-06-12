@@ -339,6 +339,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   characterAnimation: {fileID: 0}
   deathAnimationDuration: 1
+  autoScaleFromProgress: 1
   enemyProjectilePrefab: {fileID: 0}
   firePoint: {fileID: 0}
   attackRange: 8
@@ -346,7 +347,7 @@ MonoBehaviour:
   fireCooldown: 1.5
   projectileDamage: 8
   projectileElement: 0
-  requireLineOfSight: 1
+  requireLineOfSight: 0
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0

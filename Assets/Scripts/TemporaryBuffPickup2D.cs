@@ -35,7 +35,7 @@ public class TemporaryBuffPickup2D : MonoBehaviour
         if (player == null)
             return;
 
-        ApplyBuff(player);
+        ApplyToPlayer(player);
 
         if (affectAllPlayers)
         {
@@ -43,7 +43,7 @@ public class TemporaryBuffPickup2D : MonoBehaviour
             foreach (PlayerController p in players)
             {
                 if (p != null && p != player)
-                    ApplyBuff(p);
+                    ApplyToPlayer(p);
             }
         }
 
@@ -51,36 +51,31 @@ public class TemporaryBuffPickup2D : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void ApplyBuff(PlayerController player)
+    private void ApplyToPlayer(PlayerController player)
     {
-        if (player == null)
-            return;
-
-        TemporaryBuffController2D buff = player.GetComponent<TemporaryBuffController2D>();
-        if (buff == null)
-            buff = player.gameObject.AddComponent<TemporaryBuffController2D>();
+        TemporaryBuffController2D buffs = player.GetComponent<TemporaryBuffController2D>();
+        if (buffs == null)
+            buffs = player.gameObject.AddComponent<TemporaryBuffController2D>();
 
         switch (buffType)
         {
             case PickupBuffType.Power:
-                buff.AddPowerBuff(duration, multiplier);
+                buffs.AddPowerBuff(duration, multiplier);
                 break;
-
             case PickupBuffType.Speed:
-                buff.AddSpeedBuff(duration, multiplier);
+                buffs.AddSpeedBuff(duration, multiplier);
                 break;
-
             case PickupBuffType.PhysicalDamage:
-                buff.AddPhysicalDamageBuff(duration, multiplier);
+                buffs.AddPhysicalDamageBuff(duration, multiplier);
                 break;
-
             case PickupBuffType.FireDamage:
-                buff.AddFireDamageBuff(duration, multiplier);
+                buffs.AddFireDamageBuff(duration, multiplier);
                 break;
-
             case PickupBuffType.WaterDamage:
-                buff.AddWaterDamageBuff(duration, multiplier);
+                buffs.AddWaterDamageBuff(duration, multiplier);
                 break;
         }
+
+        DamagePopup2D.SpawnStatus(player.transform.position, buffType.ToString(), Color.yellow);
     }
 }

@@ -18,6 +18,9 @@ public class MainMenuController : MonoBehaviour
     {
         ShowMainPanel();
         RefreshContinueButton();
+        // Если нужно сбросить прогресс в игре
+        // PlayerPrefs.DeleteAll();
+        // PlayerPrefs.Save();
     }
 
     public void ShowNewGamePanel()

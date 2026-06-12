@@ -9,19 +9,19 @@ public class EndScreenController : MonoBehaviour
 
     public void ReturnToLobby()
     {
-        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
+        RunSaveSystem.ClearRunState();
         SceneManager.LoadScene(lobbySceneName);
     }
 
     public void ReturnToMainMenu()
     {
-        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
+        RunSaveSystem.ClearRunState();
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void RestartRun()
     {
-        RunSaveSystem.ClearRunState(clearInventory: true, clearHp: true);
+        RunSaveSystem.ClearRunState();
         SceneManager.LoadScene(lobbySceneName);
     }
 

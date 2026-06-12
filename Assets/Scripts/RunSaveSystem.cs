@@ -6,11 +6,27 @@ public static class RunSaveSystem
     private const string HasCheckpointKey = "Run_HasCheckpoint";
     private const string LastSceneKey = "Run_LastScene";
 
-    public static void StartNewGame(int playerMode, string startSceneName)
+    private const string CoinsKey = "Progress_Coins";
+    private const string CrystalsKey = "Progress_Crystals";
+    private const string DamageLevelKey = "Progress_DamageLevel";
+    private const string HealthLevelKey = "Progress_HealthLevel";
+    private const string SpeedLevelKey = "Progress_SpeedLevel";
+
+    private const string Player1HpKey = "Player1_HP";
+    private const string Player2HpKey = "Player2_HP";
+
+    public static void StartNewGame(int playerMode, string lobbySceneName)
     {
         PlayerPrefs.SetInt("PlayerMode", Mathf.Clamp(playerMode, 1, 2));
-        ClearRunState(clearInventory: true, clearHp: true);
-        SaveCheckpoint(startSceneName);
+
+        ResetPermanentProgress();
+        ClearRunState();
+
+        GameSessionManager session = GameSessionManager.Instance;
+        if (session != null)
+            session.ResetSessionState();
+
+        SaveCheckpoint(lobbySceneName);
     }
 
     public static void SaveCheckpoint(string sceneName)
@@ -35,6 +51,16 @@ public static class RunSaveSystem
         return string.IsNullOrWhiteSpace(sceneName) ? fallbackSceneName : sceneName;
     }
 
+    public static void SaveRunState(string nextSceneName)
+    {
+        SavePlayerHealth();
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+
+        SaveCheckpoint(nextSceneName);
+    }
+
     public static void SavePlayerHealth()
     {
         PlayerController[] players = Object.FindObjectsOfType<PlayerController>();
@@ -50,29 +76,50 @@ public static class RunSaveSystem
         PlayerPrefs.Save();
     }
 
-    public static void SaveRunState(string nextSceneName)
-    {
-        SavePlayerHealth();
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+    public static void ClearRunState(bool clearInventory = true)
+{
+    PlayerPrefs.DeleteKey("Run_HasCheckpoint");
+    PlayerPrefs.DeleteKey("Run_LastScene");
 
-        SaveCheckpoint(nextSceneName);
+    PlayerPrefs.DeleteKey("Player1_HP");
+    PlayerPrefs.DeleteKey("Player2_HP");
+
+    PlayerPrefs.Save();
+
+    if (clearInventory)
+    {
+        if (PlayerInventoryManager.Instance != null)
+        {
+            PlayerInventoryManager.Instance.ResetInventory();
+        }
     }
 
-    public static void ClearRunState(bool clearInventory = true, bool clearHp = true)
-    {
-        PlayerPrefs.DeleteKey(HasCheckpointKey);
-        PlayerPrefs.DeleteKey(LastSceneKey);
+    GameSessionManager session = GameSessionManager.Instance;
 
-        if (clearHp)
+    if (session != null)
+    {
+        session.ResetSessionState();
+    }
+}
+
+    public static void ResetPermanentProgress()
+    {
+        // Если singleton уже существует — сбрасываем и живую память, и PlayerPrefs.
+        if (PlayerProgressManager.Instance != null)
         {
-            PlayerPrefs.DeleteKey("Player1_HP");
-            PlayerPrefs.DeleteKey("Player2_HP");
+            PlayerProgressManager.Instance.ResetProgress();
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey(CoinsKey);
+            PlayerPrefs.DeleteKey(CrystalsKey);
+            PlayerPrefs.DeleteKey(DamageLevelKey);
+            PlayerPrefs.DeleteKey(HealthLevelKey);
+            PlayerPrefs.DeleteKey(SpeedLevelKey);
+            PlayerPrefs.Save();
         }
 
-        PlayerPrefs.Save();
-
-        if (clearInventory && PlayerInventoryManager.Instance != null)
+        if (PlayerInventoryManager.Instance != null)
             PlayerInventoryManager.Instance.ResetInventory();
     }
 }
