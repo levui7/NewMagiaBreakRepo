@@ -1,19 +1,22 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using TMPro;
 
 public class UpgradeStationUITrigger : MonoBehaviour
 {
     public LobbyShopUIController shopUI;
 
-    private bool playerInside;
+    public GameObject promptObject;
 
-    public GameObject interactText;
+    private bool playerInside;
 
     private void Update()
     {
         if (!playerInside)
             return;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Keyboard.current != null &&
+            Keyboard.current.eKey.wasPressedThisFrame)
         {
             shopUI.OpenShop();
         }
@@ -21,29 +24,23 @@ public class UpgradeStationUITrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerController player =
-            other.GetComponentInParent<PlayerController>();
-
-        if (player == null)
+        if (other.GetComponentInParent<PlayerController>() == null)
             return;
 
         playerInside = true;
 
-        if (interactText != null)
-            interactText.SetActive(true);
+        if (promptObject != null)
+            promptObject.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        PlayerController player =
-            other.GetComponentInParent<PlayerController>();
-
-        if (player == null)
+        if (other.GetComponentInParent<PlayerController>() == null)
             return;
 
         playerInside = false;
 
-        if (interactText != null)
-            interactText.SetActive(false);
+        if (promptObject != null)
+            promptObject.SetActive(false);
     }
 }
