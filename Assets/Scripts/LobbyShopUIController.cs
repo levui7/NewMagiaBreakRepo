@@ -89,6 +89,9 @@ public class LobbyShopUIController : MonoBehaviour
             progressText.text = PlayerProgressManager.Instance.GetProgressText();
 
         if (helpText != null)
-            helpText.text = PlayerProgressManager.Instance.GetUpgradeHelpText();
+        {
+            helpText.text =
+                "Улучшения действуют на все последующие забеги";
+        }
     }
 }
