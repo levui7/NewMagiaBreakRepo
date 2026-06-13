@@ -139,7 +139,7 @@ public class EnemyProjectile2D : MonoBehaviour
             StatusEffectController status = player.GetComponent<StatusEffectController>();
 
             if (status != null)
-                status.SendMessage("ApplyElement", element, SendMessageOptions.DontRequireReceiver);
+                status.ApplyElementStatus(element);
 
             player.TakeDamage(damage, element);
 

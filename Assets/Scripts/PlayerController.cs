@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
 
     private TemporaryBuffController2D temporaryBuffs;
 
+    private StatusEffectController statusEffects;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -88,6 +90,8 @@ public class PlayerController : MonoBehaviour
         // Если маска не задана, ставим Everything, чтобы автонаведение не зависело от Layer.
         if (autoAimMask.value == 0)
             autoAimMask = ~0;
+
+        statusEffects = GetComponent<StatusEffectController>();
     }
 
     private void Update()
@@ -490,7 +494,10 @@ public class PlayerController : MonoBehaviour
         float multiplier = 1f;
 
         if (temporaryBuffs != null)
-            multiplier = temporaryBuffs.GetMoveSpeedMultiplier();
+            multiplier *= temporaryBuffs.GetMoveSpeedMultiplier();
+
+        if (statusEffects != null)
+            multiplier *= statusEffects.GetSpeedMultiplier();
 
         return moveSpeed * multiplier;
     }

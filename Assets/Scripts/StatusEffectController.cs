@@ -128,29 +128,45 @@ public class StatusEffectController : MonoBehaviour
 
     private void ApplyWater()
     {
-        DamagePopup2D.SpawnStatus(transform.position, "Вода");
         StopRoutine(ref waterRoutine);
+        hasWater = false;
+        DamagePopup2D.SpawnStatus(transform.position, "Вода");
         waterRoutine = StartCoroutine(WaterCoroutine());
     }
 
     private void ApplyFire()
     {
-        DamagePopup2D.SpawnStatus(transform.position, "Огонь");
         StopRoutine(ref fireRoutine);
+        hasFire = false;
+        DamagePopup2D.SpawnStatus(transform.position, "Огонь");
         fireRoutine = StartCoroutine(FireCoroutine());
     }
 
     private void ApplySteam()
     {
-        DamagePopup2D.SpawnStatus(transform.position, "Пар");
+        StopRoutine(ref waterRoutine);
+        StopRoutine(ref fireRoutine);
         StopRoutine(ref steamRoutine);
+
+        hasWater = false;
+        hasFire = false;
+        hasSteam = false;
+
+        DamagePopup2D.SpawnStatus(transform.position, "Пар");
         steamRoutine = StartCoroutine(SteamCoroutine());
     }
 
     private void ApplySmoldering()
     {
-        DamagePopup2D.SpawnStatus(transform.position, "Тление");
+        StopRoutine(ref waterRoutine);
+        StopRoutine(ref fireRoutine);
         StopRoutine(ref smolderingRoutine);
+
+        hasWater = false;
+        hasFire = false;
+        hasSmoldering = false;
+
+        DamagePopup2D.SpawnStatus(transform.position, "Тление");
         smolderingRoutine = StartCoroutine(SmolderingCoroutine());
     }
 
@@ -163,6 +179,8 @@ public class StatusEffectController : MonoBehaviour
 
         hasWater = false;
         RefreshVisuals();
+
+        waterRoutine = null;
     }
 
     private IEnumerator FireCoroutine()
@@ -171,47 +189,60 @@ public class StatusEffectController : MonoBehaviour
         RefreshVisuals();
 
         float timer = fireDuration;
+
         while (timer > 0f)
         {
-            DealStatusDamage(fireTickDamage);
             yield return new WaitForSeconds(tickInterval);
+
+            DealStatusDamage(fireTickDamage);
+
             timer -= tickInterval;
         }
 
         hasFire = false;
         RefreshVisuals();
+
+        fireRoutine = null;
     }
 
     private IEnumerator SteamCoroutine()
     {
         hasSteam = true;
+
         hasWater = false;
         hasFire = false;
+
         RefreshVisuals();
 
         yield return new WaitForSeconds(steamDuration);
 
         hasSteam = false;
+
         RefreshVisuals();
+
+        steamRoutine = null;
     }
 
     private IEnumerator SmolderingCoroutine()
     {
         hasSmoldering = true;
-        hasWater = false;
-        hasFire = false;
         RefreshVisuals();
 
         float timer = smolderingDuration;
+
         while (timer > 0f)
         {
-            DealStatusDamage(smolderingTickDamage);
             yield return new WaitForSeconds(tickInterval);
+
+            DealStatusDamage(smolderingTickDamage);
+
             timer -= tickInterval;
         }
 
         hasSmoldering = false;
         RefreshVisuals();
+
+        smolderingRoutine = null;
     }
 
     private void DealStatusDamage(int amount)

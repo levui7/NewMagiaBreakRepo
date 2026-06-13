@@ -30,7 +30,8 @@ public class ElementalArea2D : MonoBehaviour
             return;
 
         nextTickTime = Time.time + tickInterval;
-        ApplyToTarget(other, periodicDamage, true);
+
+        ApplyToTarget(other, periodicDamage, false);
     }
 
     private void ApplyToTarget(Collider2D other, int damage, bool applyStatus)
@@ -42,12 +43,18 @@ public class ElementalArea2D : MonoBehaviour
 
             if (player != null)
             {
-                if (damage > 0) player.TakeDamage(damage, element);
-                else if (applyStatus)
+                if (damage > 0)
+                    player.TakeDamage(damage, element);
+
+                if (applyStatus)
                 {
-                    StatusEffectController status = player.GetComponent<StatusEffectController>();
-                    if (status != null) status.ApplyElementStatus(element);
+                    StatusEffectController status =
+                        player.GetComponent<StatusEffectController>();
+
+                    if (status != null)
+                        status.ApplyElementStatus(element);
                 }
+
                 return;
             }
         }
@@ -59,11 +66,16 @@ public class ElementalArea2D : MonoBehaviour
 
             if (enemy != null)
             {
-                if (damage > 0) enemy.TakeDamage(damage, element);
-                else if (applyStatus)
+                if (damage > 0)
+                    enemy.TakeDamage(damage, element);
+
+                if (applyStatus)
                 {
-                    StatusEffectController status = enemy.GetComponent<StatusEffectController>();
-                    if (status != null) status.ApplyElementStatus(element);
+                    StatusEffectController status =
+                        enemy.GetComponent<StatusEffectController>();
+
+                    if (status != null)
+                        status.ApplyElementStatus(element);
                 }
             }
         }
