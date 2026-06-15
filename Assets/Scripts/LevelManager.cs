@@ -5,61 +5,55 @@ public class LevelManager : MonoBehaviour
 {
     [Header("Завершение уровня")]
     public bool loadVictoryWhenCompleted = false;
+
     public string nextSceneName = "Level_02";
     public string victorySceneName = "VictoryScreen";
 
-    [Header("Портал выхода")]
+    [Header("Портал")]
     public GameObject exitPortal;
 
-    [Header("Обязательные враги")]
-    public Enemy[] requiredEnemies;
+    [Header("Автопоиск врагов")]
+    public bool autoFindEnemiesOnStart = true;
 
-    [Header("Обязательные боссы")]
-    public BossController[] requiredBosses;
-
-    private bool levelCompleted = false;
+    private bool levelCompleted;
+    private RoomManager roomManager;
 
     private void Start()
     {
+        roomManager = FindObjectOfType<RoomManager>();
+
         if (exitPortal != null)
             exitPortal.SetActive(false);
     }
 
     private void Update()
     {
-        if (levelCompleted) return;
+        if (levelCompleted)
+            return;
+
         CheckLevelCompletion();
     }
 
     private void CheckLevelCompletion()
     {
-        bool allEnemiesDead = true;
-        foreach (Enemy enemy in requiredEnemies)
-        {
-            if (enemy != null)
-            {
-                allEnemiesDead = false;
-                break;
-            }
-        }
+        // Пока волны не закончились — уровень завершить нельзя
+        if (roomManager != null && !roomManager.AllWavesCompleted)
+            return;
 
-        bool allBossesDead = true;
-        foreach (BossController boss in requiredBosses)
-        {
-            if (boss != null)
-            {
-                allBossesDead = false;
-                break;
-            }
-        }
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        BossController[] bosses = FindObjectsOfType<BossController>();
 
-        if (allEnemiesDead && allBossesDead)
+        if (enemies.Length == 0 && bosses.Length == 0)
+        {
             CompleteLevel();
+        }
     }
 
     private void CompleteLevel()
     {
         levelCompleted = true;
+
+        Debug.Log("Level completed");
 
         if (loadVictoryWhenCompleted)
         {
@@ -75,10 +69,19 @@ public class LevelManager : MonoBehaviour
     private void SavePlayersHealth()
     {
         PlayerController[] players = FindObjectsOfType<PlayerController>();
-        foreach (PlayerController p in players)
+
+        foreach (PlayerController player in players)
         {
-            if (p != null && p.gameObject.activeSelf)
-                PlayerPrefs.SetInt($"Player{p.playerID}_HP", p.GetCurrentHealth());
+            if (player == null)
+                continue;
+
+            if (!player.gameObject.activeInHierarchy)
+                continue;
+
+            PlayerPrefs.SetInt(
+                $"Player{player.playerID}_HP",
+                player.GetCurrentHealth()
+            );
         }
 
         PlayerPrefs.Save();

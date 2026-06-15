@@ -233,14 +233,15 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
-        RoomManager roomManager = FindObjectOfType<RoomManager>();
-        if (roomManager != null)
-            roomManager.EnemyDied();
-
         if (isDead)
             return;
 
         isDead = true;
+
+        RoomManager roomManager = FindObjectOfType<RoomManager>();
+
+        if (roomManager != null)
+            roomManager.EnemyDied(this);
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)

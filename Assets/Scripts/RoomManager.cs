@@ -12,13 +12,14 @@ public class RoomManager : MonoBehaviour
 
     [Header("Спавн")]
     public Transform[] spawnPoints;
-    public GameObject door;
     public int wavesCount = 1;
     public Vector2Int enemiesPerWave = new Vector2Int(3, 5);
 
-    private readonly List<GameObject> activeEnemies = new List<GameObject>();
+    private readonly List<Enemy> activeEnemies =
+    new List<Enemy>();
     private int currentWave = 0;
-    private bool doorOpened;
+
+    public bool AllWavesCompleted { get; private set; }
 
     private void Awake()
     {
@@ -39,20 +40,21 @@ public class RoomManager : MonoBehaviour
             return;
         }
 
-        // Портал/дверь должен быть скрыт в начале и открываться только после зачистки.
-        if (door != null)
-            door.SetActive(false);
-
         StartWave();
+
+        if (ItemSpawnManager.Instance != null)
+            ItemSpawnManager.Instance.SpawnItems();
     }
 
     private void StartWave()
     {
+        Debug.Log($"Start wave {currentWave + 1}/{wavesCount}");
+
         activeEnemies.RemoveAll(e => e == null);
 
         if (currentWave >= wavesCount)
         {
-            OpenDoor();
+            AllWavesCompleted = true;
             return;
         }
 
@@ -66,23 +68,29 @@ public class RoomManager : MonoBehaviour
             if (prefab == null)
                 continue;
 
-            GameObject enemy = Instantiate(prefab, point.position, Quaternion.identity);
+            GameObject enemyObject = Instantiate(prefab, point.position, Quaternion.identity);
 
-            // На случай, если enemy появился до старта кадра — масштабируем сразу.
-            Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            if (enemyComponent != null && PlayerProgressManager.Instance != null)
+            Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
+
+            if (enemyComponent != null)
             {
-                enemyComponent.ApplyProgressDifficulty(
-                    PlayerProgressManager.Instance.GetEnemyHealthMultiplier(),
-                    PlayerProgressManager.Instance.GetEnemyDamageMultiplier(),
-                    PlayerProgressManager.Instance.GetEnemySpeedMultiplier()
-                );
-            }
+                activeEnemies.Add(enemyComponent);
 
-            activeEnemies.Add(enemy);
+                if (PlayerProgressManager.Instance != null)
+                {
+                    enemyComponent.ApplyProgressDifficulty(
+                        PlayerProgressManager.Instance.GetEnemyHealthMultiplier(),
+                        PlayerProgressManager.Instance.GetEnemyDamageMultiplier(),
+                        PlayerProgressManager.Instance.GetEnemySpeedMultiplier()
+                    );
+                }
+            }
         }
 
         currentWave++;
+
+        if (ItemSpawnManager.Instance != null)
+            ItemSpawnManager.Instance.SpawnItems();
     }
 
     private GameObject ChooseEnemyPrefab()
@@ -93,22 +101,27 @@ public class RoomManager : MonoBehaviour
         return Random.value < rangedEnemyChance ? rangedEnemyPrefab : enemyPrefab;
     }
 
-    public void EnemyDied()
+    public void EnemyDied(Enemy enemy)
     {
+        if (enemy != null)
+            activeEnemies.Remove(enemy);
+
         activeEnemies.RemoveAll(e => e == null);
 
-        if (activeEnemies.Count == 0)
-            Invoke(nameof(StartWave), 2f);
-    }
+        Debug.Log($"Enemy died. Remaining: {activeEnemies.Count}");
 
-    private void OpenDoor()
-    {
-        if (doorOpened)
+        if (activeEnemies.Count > 0)
             return;
 
-        doorOpened = true;
-
-        if (door != null)
-            door.SetActive(true);
+        if (currentWave >= wavesCount)
+        {
+            AllWavesCompleted = true;
+            Debug.Log("All waves completed");
+        }
+        else
+        {
+            Debug.Log("Starting next wave...");
+            Invoke(nameof(StartWave), 2f);
+        }
     }
 }
