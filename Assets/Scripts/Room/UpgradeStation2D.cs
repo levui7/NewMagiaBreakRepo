@@ -54,9 +54,6 @@ public class UpgradeStation2D : MonoBehaviour
         if (upgraded)
         {
             PlayerProgressManager.Instance.ApplyUpgradesToPlayer(currentPlayer);
-
-            if (MaterialsHUD2D.Instance != null)
-                MaterialsHUD2D.Instance.Refresh();
         }
 
         RefreshPrompt();

@@ -25,6 +25,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI weaponText2;
     public TextMeshProUGUI statusText2;
 
+    [Header("Resources HUD")]
+    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI crystalText;
+
     private Canvas runtimeCanvas;
 
     private void Awake()
@@ -45,6 +49,18 @@ public class UIManager : MonoBehaviour
     {
         if (autoCreateMissingUI)
             EnsureHUDExists();
+
+        Invoke(nameof(RefreshResourceHUD), 0.1f);
+    }
+
+    private void OnEnable()
+    {
+        InvokeRepeating(nameof(RefreshResourceHUD), 0.2f, 0.5f);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(RefreshResourceHUD));
     }
 
     private void EnsureHUDExists()
@@ -270,5 +286,25 @@ public class UIManager : MonoBehaviour
             UpdateStatus(playerID, statusController.ToString());
         else
             UpdateStatus(playerID, "Нет");
+    }
+
+    public void UpdateMaterialsHUD(int coins, int crystals)
+    {
+        if (coinText != null)
+            coinText.text = $"Монеты: {coins}";
+
+        if (crystalText != null)
+            crystalText.text = $"Кристаллы: {crystals}";
+    }
+
+    public void RefreshResourceHUD()
+    {
+        if (PlayerProgressManager.Instance == null)
+            return;
+
+        UpdateMaterialsHUD(
+            PlayerProgressManager.Instance.coins,
+            PlayerProgressManager.Instance.crystals
+        );
     }
 }

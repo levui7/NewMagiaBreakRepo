@@ -55,6 +55,8 @@ public class PlayerProgressManager : MonoBehaviour
 
         if (loadOnAwake)
             LoadProgress();
+
+        OnProgressChanged?.Invoke();
     }
 
     public void AddMaterial(MaterialType type, int amount)
@@ -80,15 +82,14 @@ public class PlayerProgressManager : MonoBehaviour
 
         OnProgressChanged?.Invoke();
 
-        if (MaterialsHUD2D.Instance != null)
-            MaterialsHUD2D.Instance.Refresh();
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.RefreshResourceHUD();
+        }
     }
 
     public bool TrySpend(int coinCost, int crystalCost)
     {
-        coinCost = Mathf.Max(0, coinCost);
-        crystalCost = Mathf.Max(0, crystalCost);
-
         if (coins < coinCost)
             return false;
 
@@ -103,8 +104,10 @@ public class PlayerProgressManager : MonoBehaviour
 
         OnProgressChanged?.Invoke();
 
-        if (MaterialsHUD2D.Instance != null)
-            MaterialsHUD2D.Instance.Refresh();
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.RefreshResourceHUD();
+        }
 
         return true;
     }
@@ -327,10 +330,14 @@ public class PlayerProgressManager : MonoBehaviour
         healthLevel = PlayerPrefs.GetInt(HealthLevelKey, healthLevel);
         speedLevel = PlayerPrefs.GetInt(SpeedLevelKey, speedLevel);
 
+        Debug.Log($"LOAD: coins={coins}, crystals={crystals}");
+
         OnProgressChanged?.Invoke();
 
-        if (MaterialsHUD2D.Instance != null)
-            MaterialsHUD2D.Instance.Refresh();
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.RefreshResourceHUD();
+        }
     }
 
     public void ResetProgress()
@@ -346,8 +353,10 @@ public class PlayerProgressManager : MonoBehaviour
 
         OnProgressChanged?.Invoke();
 
-        if (MaterialsHUD2D.Instance != null)
-            MaterialsHUD2D.Instance.Refresh();
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.RefreshResourceHUD();
+        }
     }
 
     private void OnApplicationPause(bool pause)
