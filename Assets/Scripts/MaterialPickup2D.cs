@@ -125,9 +125,6 @@ public class MaterialPickup2D : MonoBehaviour
             );
         }
 
-        if (MaterialsHUD2D.Instance != null)
-            MaterialsHUD2D.Instance.Refresh();
-
         Destroy(gameObject);
     }
 }
