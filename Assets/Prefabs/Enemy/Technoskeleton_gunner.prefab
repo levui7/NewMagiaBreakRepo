@@ -530,7 +530,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1542233732749094788}
-  - component: {fileID: 3061115635351437007}
   - component: {fileID: 46718570016664469}
   - component: {fileID: 5397978062725268902}
   - component: {fileID: 7575034145137567557}
@@ -538,6 +537,7 @@ GameObject:
   - component: {fileID: 6758788673326173719}
   - component: {fileID: 3770815821581537512}
   - component: {fileID: 7739497182664926754}
+  - component: {fileID: 3309198120411346367}
   m_Layer: 0
   m_Name: Technoskeleton_gunner
   m_TagString: Untagged
@@ -562,28 +562,6 @@ Transform:
   - {fileID: 638281260696645219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3061115635351437007
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6429834287419729908}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ed5257a49336c584089ae93594957eb2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &46718570016664469
 Rigidbody2D:
   serializedVersion: 5
@@ -607,10 +585,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &5397978062725268902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,10 +614,10 @@ MonoBehaviour:
   fireTickDamage: 1
   smolderingTickDamage: 1
   tickInterval: 1
-  waterOverlay: {fileID: 0}
-  fireOverlay: {fileID: 0}
-  steamOverlay: {fileID: 0}
-  smolderingOverlay: {fileID: 0}
+  waterOverlay: {fileID: 1421279636349674248, guid: ace47396374c6254a83fdd40dfa33088, type: 3}
+  fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
+  steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
+  smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
 --- !u!70 &7575034145137567557
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -736,9 +714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemy2D
   maxHealth: 30
-  currentHealth: 0
+  currentHealth: 30
   moveSpeed: 3
-  contactDamage: 10
+  contactDamage: 3
   contactElement: 0
   playerTarget: {fileID: 0}
   contactDamageCooldown: 1
@@ -795,7 +773,31 @@ MonoBehaviour:
   animator: {fileID: 0}
   speedParameter: Speed
   attackTrigger: Attack
+  flipOnMove: 1
+  flipThreshold: 0.1
   useLocalAnimatorIfEmpty: 1
+--- !u!95 &3309198120411346367
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6429834287419729908}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae103793e7a21c248bd84df7b53c83b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6885766017659671683
 GameObject:
   m_ObjectHideFlags: 0

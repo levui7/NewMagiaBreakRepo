@@ -234,7 +234,7 @@ Animator:
   m_GameObject: {fileID: 6429834287419729908}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ed5257a49336c584089ae93594957eb2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1de9ab69bcbb10a43b34d60a55a907e7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -272,7 +272,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5397978062725268902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,10 +298,10 @@ MonoBehaviour:
   fireTickDamage: 1
   smolderingTickDamage: 1
   tickInterval: 1
-  waterOverlay: {fileID: 0}
-  fireOverlay: {fileID: 0}
-  steamOverlay: {fileID: 0}
-  smolderingOverlay: {fileID: 0}
+  waterOverlay: {fileID: 1421279636349674248, guid: ace47396374c6254a83fdd40dfa33088, type: 3}
+  fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
+  steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
+  smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
 --- !u!114 &6758788673326173719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +374,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   speedParameter: Speed
   attackTrigger: Attack
+  flipOnMove: 1
+  flipThreshold: 0.1
   useLocalAnimatorIfEmpty: 1
 --- !u!70 &1550903063309320097
 CapsuleCollider2D:

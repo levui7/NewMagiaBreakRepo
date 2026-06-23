@@ -182,6 +182,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &764438069396738636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2497476206177618858}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2497476206177618858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764438069396738636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.013, y: 0.227, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5767985135502288017}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3255541346275505247
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +593,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 550624002565198001}
+  - {fileID: 2497476206177618858}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3046348905120431904
@@ -574,7 +606,7 @@ Animator:
   m_GameObject: {fileID: 7150824428836959557}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 28090e1a75f3e3348b156a9101b9810c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 04812c0319421454486564bcd13ba9d3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -695,7 +727,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8193680069080252809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,10 +753,10 @@ MonoBehaviour:
   fireTickDamage: 1
   smolderingTickDamage: 1
   tickInterval: 1
-  waterOverlay: {fileID: 0}
-  fireOverlay: {fileID: 0}
-  steamOverlay: {fileID: 0}
-  smolderingOverlay: {fileID: 0}
+  waterOverlay: {fileID: 1421279636349674248, guid: ace47396374c6254a83fdd40dfa33088, type: 3}
+  fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
+  steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
+  smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
 --- !u!114 &3903204927486790199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,8 +778,8 @@ MonoBehaviour:
   preferredDistance: 6
   stopDeadZone: 0.4
   rotateSpeed: 12
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
+  projectilePrefab: {fileID: 3914189515205960991, guid: d69c2e0cec147d7438b3da2985b71e55, type: 3}
+  firePoint: {fileID: 2497476206177618858}
   fireCooldown: 1.4
   phase2FireCooldown: 1.05
   phase3FireCooldown: 0.75
@@ -758,14 +790,14 @@ MonoBehaviour:
   radialAttackCooldown: 6
   radialProjectileCount: 10
   phase3RadialProjectileCount: 16
-  canSummonEnemies: 0
-  enemyPrefab: {fileID: 0}
+  canSummonEnemies: 1
+  enemyPrefab: {fileID: 6758788673326173719, guid: d9729c9669a14ab459237c273a558952, type: 3}
   summonPoints: []
   summonCooldown: 10
   summonsPerWave: 2
-  fireShieldVisual: {fileID: 0}
-  iceFloorVisual: {fileID: 0}
-  enragedVisual: {fileID: 0}
+  fireShieldVisual: {fileID: 6653368390796756548, guid: f81f7ef8366b32844a0a1171f31116f8, type: 3}
+  iceFloorVisual: {fileID: 2838984005858900343, guid: 02b646134beeef3438ddd4f15b154605, type: 3}
+  enragedVisual: {fileID: 6653368390796756548, guid: b2685fbb18611af4c9fd65a332528ec3, type: 3}
   healthBar: {fileID: 0}
   characterAnimation: {fileID: 0}
   deathAnimationDuration: 1.5
@@ -786,7 +818,7 @@ MonoBehaviour:
   dropCoins: 1
   minCoins: 1
   maxCoins: 4
-  crystalDropChance: 0.15
+  crystalDropChance: 0.35
   minCrystals: 1
   maxCrystals: 1
   scatterRadius: 0.6
@@ -805,6 +837,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   speedParameter: Speed
   attackTrigger: Attack
+  flipOnMove: 1
+  flipThreshold: 0.1
   useLocalAnimatorIfEmpty: 1
 --- !u!1 &7325351439522382727
 GameObject:

@@ -110,28 +110,99 @@ public class Enemy : MonoBehaviour
         playerTarget = closestPlayer;
     }
 
+    //protected virtual void MoveToTarget()
+    //{
+    //    if (rb == null || playerTarget == null)
+    //        return;
+
+    //    Vector2 dir = (Vector2)(playerTarget.position - transform.position);
+    //    if (dir.magnitude <= stopDistance)
+    //    {
+    //        rb.linearVelocity = Vector2.zero;
+    //        return;
+    //    }
+
+    //    dir.Normalize();
+    //    float speedMultiplier = statusEffects != null ? statusEffects.GetSpeedMultiplier() : 1f;
+    //    rb.linearVelocity = dir * moveSpeed * speedMultiplier;
+    //    PlayerController.RotateTransformToDirection2D(transform, dir);
+
+    //    if (characterAnimation != null)
+    //        characterAnimation.SetSpeed(dir.magnitude);
+
+    //    //if (characterAnimation != null)
+    //    //    characterAnimation.SetSpeed(0f);
+    //}
+
+    /// <summary>
+    /// Рассчитывает итоговый множитель скорости врага.
+    /// Учитывает статус-эффекты (вода/пар) и временные баффы.
+    /// </summary>
+    protected virtual float GetSpeedMultiplier()
+    {
+        float multiplier = 1f;
+
+        // Проверяем статус-эффекты
+        if (statusEffects != null)
+            multiplier *= statusEffects.GetSpeedMultiplier();
+
+        return multiplier;
+    }
+
+    //protected virtual void MoveToTarget()
+    //{
+    //    if (rb == null || playerTarget == null) return;
+
+    //    Vector2 dir = (Vector2)(playerTarget.position - transform.position);
+
+    //    if (dir.magnitude <= stopDistance)
+    //    {
+    //        rb.linearVelocity = Vector2.zero;
+    //        if (characterAnimation != null)
+    //            characterAnimation.SetSpeed(0f);
+    //        return;
+    //    }
+
+    //    dir.Normalize();
+    //    float speedMultiplier = GetSpeedMultiplier();
+    //    rb.linearVelocity = dir * moveSpeed * speedMultiplier;
+
+    //    // ✅ Поворачиваем врага в сторону игрока
+    //    if (characterAnimation != null)
+    //    {
+    //        characterAnimation.SetDirection(dir);
+    //        characterAnimation.SetSpeed(rb.linearVelocity.magnitude);
+    //    }
+    //}
+
     protected virtual void MoveToTarget()
     {
-        if (rb == null || playerTarget == null)
-            return;
+        if (rb == null || playerTarget == null) return;
 
         Vector2 dir = (Vector2)(playerTarget.position - transform.position);
+
         if (dir.magnitude <= stopDistance)
         {
             rb.linearVelocity = Vector2.zero;
+            if (characterAnimation != null)
+                characterAnimation.SetSpeed(0f);
             return;
         }
 
         dir.Normalize();
-        float speedMultiplier = statusEffects != null ? statusEffects.GetSpeedMultiplier() : 1f;
+
+        // ✅ Сбрасываем rotation и поворот Z
+        transform.rotation = Quaternion.identity;
+        transform.eulerAngles = new Vector3(0, 0, 0);
+
+        float speedMultiplier = GetSpeedMultiplier();
         rb.linearVelocity = dir * moveSpeed * speedMultiplier;
-        PlayerController.RotateTransformToDirection2D(transform, dir);
 
         if (characterAnimation != null)
-            characterAnimation.SetSpeed(dir.magnitude);
-
-        //if (characterAnimation != null)
-        //    characterAnimation.SetSpeed(0f);
+        {
+            characterAnimation.SetDirection(dir);
+            characterAnimation.SetSpeed(rb.linearVelocity.magnitude);
+        }
     }
 
     public virtual void ApplyProgressDifficulty(float healthMultiplier, float damageMultiplier, float speedMultiplier)

@@ -168,13 +168,29 @@ public class PlayerController : MonoBehaviour
             moveInput.Normalize();
     }
 
+    //private void Move()
+    //{
+    //    float speed = isDashing ? dashSpeed : GetEffectiveMoveSpeed();
+    //    rb.linearVelocity = moveInput * speed;
+
+    //    if (characterAnimation != null)
+    //        characterAnimation.SetSpeed(moveInput.magnitude);
+    //}
+
     private void Move()
     {
         float speed = isDashing ? dashSpeed : GetEffectiveMoveSpeed();
         rb.linearVelocity = moveInput * speed;
 
+        // Поворачиваем персонажа в направлении движения
+        if (characterAnimation != null && moveInput.sqrMagnitude > 0.01f)
+        {
+            characterAnimation.SetDirection(moveInput);
+        }
+
+        // Анимация бега
         if (characterAnimation != null)
-            characterAnimation.SetSpeed(moveInput.magnitude);
+            characterAnimation.SetSpeed(rb.linearVelocity.magnitude);
     }
 
     private void HandleDashTimers()
