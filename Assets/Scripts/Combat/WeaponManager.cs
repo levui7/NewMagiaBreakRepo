@@ -69,7 +69,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        //LoadInventoryIfPossible();
+        LoadInventoryIfPossible();
 
         ValidateElementAfterLoad();
         RefreshUI();
@@ -77,7 +77,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
-        //LoadInventoryIfPossible();
+        LoadInventoryIfPossible();
         HandleElementCycle();
     }
 

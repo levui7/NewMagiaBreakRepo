@@ -3757,7 +3757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df313113dd2880d479e4cac0b548abd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponConfigManager
-  currentElement: 0
   selectedAttackMode: 0
 --- !u!4 &723879139
 Transform:
@@ -10193,6 +10192,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074062456}
   m_CullTransparentMesh: 1
+--- !u!1 &2079565099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2079565100}
+  - component: {fileID: 2079565101}
+  m_Layer: 0
+  m_Name: PlayerInventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2079565100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079565099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.795, y: 0.375, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2079565101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079565099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3c74c4de7d2314d9368e13504fc435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryManager
+  p1CurrentAmmo: 6
+  p1FireAmmo: 0
+  p1WaterAmmo: 0
+  p1CurrentElement: 0
+  p2CurrentAmmo: 6
+  p2FireAmmo: 0
+  p2WaterAmmo: 0
+  p2CurrentElement: 0
+  magazineSize: 6
 --- !u!1 &2085373913
 GameObject:
   m_ObjectHideFlags: 0
@@ -10494,3 +10546,4 @@ SceneRoots:
   - {fileID: 723879139}
   - {fileID: 624846401}
   - {fileID: 1570334907}
+  - {fileID: 2079565100}

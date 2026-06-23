@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public static class RunSaveSystem
 {
@@ -11,9 +10,6 @@ public static class RunSaveSystem
     private const string DamageLevelKey = "Progress_DamageLevel";
     private const string HealthLevelKey = "Progress_HealthLevel";
     private const string SpeedLevelKey = "Progress_SpeedLevel";
-
-    private const string Player1HpKey = "Player1_HP";
-    private const string Player2HpKey = "Player2_HP";
 
     public static void StartNewGame(int playerMode, string lobbySceneName)
     {
@@ -77,34 +73,31 @@ public static class RunSaveSystem
     }
 
     public static void ClearRunState(bool clearInventory = true)
-{
-    PlayerPrefs.DeleteKey("Run_HasCheckpoint");
-    PlayerPrefs.DeleteKey("Run_LastScene");
-
-    PlayerPrefs.DeleteKey("Player1_HP");
-    PlayerPrefs.DeleteKey("Player2_HP");
-
-    PlayerPrefs.Save();
-
-    if (clearInventory)
     {
-        if (PlayerInventoryManager.Instance != null)
+        PlayerPrefs.DeleteKey(HasCheckpointKey);
+        PlayerPrefs.DeleteKey(LastSceneKey);
+
+        PlayerPrefs.DeleteKey("Player1_HP");
+        PlayerPrefs.DeleteKey("Player2_HP");
+
+        PlayerPrefs.Save();
+
+        if (clearInventory)
         {
-            PlayerInventoryManager.Instance.ResetInventory();
+            if (PlayerInventoryManager.Instance != null)
+                PlayerInventoryManager.Instance.ResetInventory(false);
+
+            PlayerInventoryManager.ClearSavedInventoryPrefs();
         }
-    }
 
-    GameSessionManager session = GameSessionManager.Instance;
+        GameSessionManager session = GameSessionManager.Instance;
 
-    if (session != null)
-    {
-        session.ResetSessionState();
+        if (session != null)
+            session.ResetSessionState();
     }
-}
 
     public static void ResetPermanentProgress()
     {
-        // Если singleton уже существует — сбрасываем и живую память, и PlayerPrefs.
         if (PlayerProgressManager.Instance != null)
         {
             PlayerProgressManager.Instance.ResetProgress();
@@ -120,6 +113,8 @@ public static class RunSaveSystem
         }
 
         if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.ResetInventory();
+            PlayerInventoryManager.Instance.ResetInventory(false);
+
+        PlayerInventoryManager.ClearSavedInventoryPrefs();
     }
 }
