@@ -4,7 +4,7 @@ using UnityEngine;
 public class ElementalArea2D : MonoBehaviour
 {
     [Header("Эффект зоны")]
-    public WeaponManager.Element element = WeaponManager.Element.Fire;
+    public Element element = Element.Fire;
     public int enterDamage = 0;
     public int periodicDamage = 1;
     public float tickInterval = 1f;

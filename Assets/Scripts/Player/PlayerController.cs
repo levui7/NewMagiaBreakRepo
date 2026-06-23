@@ -21,8 +21,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon")]
     public Transform weaponPivot;
-    public Transform firePoint;
-    public GameObject projectilePrefab;
     public float fireRate = 0.2f;
 
     [Header("Aiming")]
@@ -368,58 +366,23 @@ public class PlayerController : MonoBehaviour
 
     private void Fire()
     {
-        if (projectilePrefab == null)
-        {
-            Debug.LogError("PlayerController: Projectile Prefab не назначен.", this);
-            return;
-        }
-
-        if (firePoint == null)
-        {
-            Debug.LogError("PlayerController: Fire Point не назначен.", this);
-            return;
-        }
-
         if (weaponManager != null && !weaponManager.CanShoot())
         {
-            Debug.LogError("PlayerController: CanShoot = false. " + weaponManager.GetAmmoText(), this);
             return;
         }
 
         if (characterAnimation != null)
             characterAnimation.PlayAttack();
 
-        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
-        BulletScript bulletScript = bullet.GetComponent<BulletScript>();
-
-        if (bulletScript != null)
-        {
-            float damage = weaponManager != null ? weaponManager.GetCurrentDamage() : 10f;
-            WeaponManager.Element element = weaponManager != null ? weaponManager.CurrentElement : WeaponManager.Element.Physical;
-
-            bulletScript.SetDirection(aimDirection);
-            bulletScript.SetDamage(damage);
-            bulletScript.SetElement(element);
-            bulletScript.SetOwner(gameObject);
-        }
-        else
-        {
-            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-
-            if (bulletRb != null)
-                bulletRb.linearVelocity = aimDirection * 12f;
-        }
-
-        weaponManager?.ConsumeAmmo();
+        weaponManager?.Shoot(aimDirection, gameObject);
     }
 
     public void TakeDamage(float amount)
     {
-        TakeDamage(amount, WeaponManager.Element.Physical);
+        TakeDamage(amount, Element.Physical);
     }
 
-    public void TakeDamage(float amount, WeaponManager.Element element)
+    public void TakeDamage(float amount, Element element)
     {
         if (godMode)
             return;
@@ -542,7 +505,6 @@ public class PlayerController : MonoBehaviour
         if (session != null)
             session.OnPlayerDied(this);
         else
-            Debug.LogError("PlayerController: GameSessionManager не найден. Экран смерти не может быть загружен.");
 
         StartCoroutine(DisableAfterDeathAnimation());
     }

@@ -201,8 +201,6 @@ MonoBehaviour:
   currentHealth: 1000
   godMode: 0
   weaponPivot: {fileID: 7698216818562588890}
-  firePoint: {fileID: 3441464347575586267}
-  projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
   fireRate: 0.2
   autoAimEnabled: 1
   autoAimRadius: 12
@@ -231,14 +229,17 @@ MonoBehaviour:
   currentElement: 0
   magazineSize: 6
   currentAmmo: 6
-  reserveAmmo: 24
   fireAmmo: 0
   waterAmmo: 0
+  reloadTime: 2
   physicalDamage: 10
   fireDamage: 8
   waterDamage: 8
-  autoRefillMagazine: 1
   autoFillAmmoOnStart: 0
+  projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
+  firePoint: {fileID: 3441464347575586267}
+  selectedElement: 0
+  attackMode: 0
 --- !u!114 &4414914191249521190
 MonoBehaviour:
   m_ObjectHideFlags: 0

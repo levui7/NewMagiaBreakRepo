@@ -7,7 +7,7 @@ public class BulletScript : MonoBehaviour
     public float speed = 14f;
     public float lifeTime = 3f;
     public float damage = 10f;
-    public WeaponManager.Element element = WeaponManager.Element.Physical;
+    public Element element = Element.Physical;
 
     [Header("AoE")]
     public bool isAoE = false;
@@ -67,9 +67,10 @@ public class BulletScript : MonoBehaviour
         damage = newDamage;
     }
 
-    public void SetElement(WeaponManager.Element newElement)
+    public void SetElement(Element newElement)
     {
         element = newElement;
+
     }
 
     public void SetOwner(GameObject newOwner)

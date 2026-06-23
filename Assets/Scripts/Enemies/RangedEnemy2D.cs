@@ -9,7 +9,7 @@ public class RangedEnemy2D : Enemy
     public float keepDistance = 4f;
     public float fireCooldown = 1.5f;
     public int projectileDamage = 8;
-    public WeaponManager.Element projectileElement = WeaponManager.Element.Physical;
+    public Element projectileElement = Element.Physical;
     public bool requireLineOfSight = true;
     public LayerMask obstacleMask;
 

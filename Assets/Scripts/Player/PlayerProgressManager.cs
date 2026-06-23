@@ -330,8 +330,6 @@ public class PlayerProgressManager : MonoBehaviour
         healthLevel = PlayerPrefs.GetInt(HealthLevelKey, healthLevel);
         speedLevel = PlayerPrefs.GetInt(SpeedLevelKey, speedLevel);
 
-        Debug.Log($"LOAD: coins={coins}, crystals={crystals}");
-
         OnProgressChanged?.Invoke();
 
         if (UIManager.Instance != null)

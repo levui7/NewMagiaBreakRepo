@@ -80,7 +80,7 @@ public class TemporaryBuffController2D : MonoBehaviour
         return result;
     }
 
-    public float GetDamageMultiplier(WeaponManager.Element element)
+    public float GetDamageMultiplier(Element element)
     {
         float result = 1f;
 
@@ -92,13 +92,13 @@ public class TemporaryBuffController2D : MonoBehaviour
             if (buff.type == BuffType.Power)
                 result *= buff.multiplier;
 
-            if (element == WeaponManager.Element.Physical && buff.type == BuffType.PhysicalDamage)
+            if (element == Element.Physical && buff.type == BuffType.PhysicalDamage)
                 result *= buff.multiplier;
 
-            if (element == WeaponManager.Element.Fire && buff.type == BuffType.FireDamage)
+            if (element == Element.Fire && buff.type == BuffType.FireDamage)
                 result *= buff.multiplier;
 
-            if (element == WeaponManager.Element.Water && buff.type == BuffType.WaterDamage)
+            if (element == Element.Water && buff.type == BuffType.WaterDamage)
                 result *= buff.multiplier;
         }
 

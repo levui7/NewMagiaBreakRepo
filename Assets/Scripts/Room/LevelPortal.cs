@@ -37,6 +37,11 @@ public class LevelPortal : MonoBehaviour
             player.Heal(healBeforeNextLevel);
         }
 
+        if (PlayerInventoryManager.Instance != null)
+        {
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+        }
+
         RunSaveSystem.SaveRunState(nextSceneName);
 
         SceneManager.LoadScene(nextSceneName);

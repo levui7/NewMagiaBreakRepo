@@ -16,17 +16,13 @@ public class GameModeManager : MonoBehaviour
 
         if (playerPrefab == null)
         {
-            Debug.LogError("GameModeManager: Player Prefab не назначен!");
             return;
         }
 
         if (spawnPoints == null || spawnPoints.Length == 0 || spawnPoints[0] == null)
         {
-            Debug.LogError("GameModeManager: не назначен хотя бы PlayerSpawn_1!");
             return;
         }
-
-        RunSaveSystem.SaveCheckpoint(SceneManager.GetActiveScene().name);
 
         if (resetHealthInThisScene)
         {
@@ -44,8 +40,6 @@ public class GameModeManager : MonoBehaviour
         {
             if (spawnPoints.Length > 1 && spawnPoints[1] != null)
                 SpawnPlayer(2, spawnPoints[1]);
-            else
-                Debug.LogWarning("GameModeManager: выбран кооператив, но PlayerSpawn_2 не назначен. Второй игрок не создан.");
         }
     }
 
@@ -54,6 +48,8 @@ public class GameModeManager : MonoBehaviour
         GameObject playerObject = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 
         PlayerController player = playerObject.GetComponent<PlayerController>();
+
+        player.playerID = playerID;
 
         if (PlayerProgressManager.Instance != null)
             PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);
@@ -67,7 +63,6 @@ public class GameModeManager : MonoBehaviour
 
         if (player == null)
         {
-            Debug.LogError($"GameModeManager: на префабе игрока нет PlayerController. Объект: {playerObject.name}");
             return;
         }
 
@@ -76,12 +71,20 @@ public class GameModeManager : MonoBehaviour
         if (weapon != null && PlayerInventoryManager.Instance != null)
             PlayerInventoryManager.Instance.LoadToWeapon(weapon);
 
-        player.playerID = playerID;
+        if (weapon != null && WeaponConfigManager.Instance != null)
+        {
+            weapon.attackMode = WeaponConfigManager.Instance.selectedAttackMode;
+        }
 
         string hpKey = $"Player{playerID}_HP";
         if (PlayerPrefs.HasKey(hpKey))
             player.SetHealth(PlayerPrefs.GetInt(hpKey));
 
-        Debug.Log($"GameModeManager: Player {playerID} spawned at {spawnPoint.name}. Active = {playerObject.activeSelf}");
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetPlayer(playerID, playerObject.transform);
+        }
     }
 }

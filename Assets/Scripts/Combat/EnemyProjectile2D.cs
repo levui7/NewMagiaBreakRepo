@@ -7,7 +7,7 @@ public class EnemyProjectile2D : MonoBehaviour
     public float speed = 8f;
     public float lifeTime = 4f;
     public int damage = 8;
-    public WeaponManager.Element element = WeaponManager.Element.Physical;
+    public Element element = Element.Physical;
 
     [Header("Collision")]
     public LayerMask obstacleMask;
@@ -53,17 +53,17 @@ public class EnemyProjectile2D : MonoBehaviour
         Launch(launchDirection, Mathf.CeilToInt(newDamage), element, owner);
     }
 
-    public void Launch(Vector2 launchDirection, int newDamage, WeaponManager.Element newElement)
+    public void Launch(Vector2 launchDirection, int newDamage, Element newElement)
     {
         Launch(launchDirection, newDamage, newElement, owner);
     }
 
-    public void Launch(Vector2 launchDirection, float newDamage, WeaponManager.Element newElement)
+    public void Launch(Vector2 launchDirection, float newDamage, Element newElement)
     {
         Launch(launchDirection, Mathf.CeilToInt(newDamage), newElement, owner);
     }
 
-    public void Launch(Vector2 launchDirection, int newDamage, WeaponManager.Element newElement, GameObject newOwner)
+    public void Launch(Vector2 launchDirection, int newDamage, Element newElement, GameObject newOwner)
     {
         if (launchDirection.sqrMagnitude <= 0.001f)
             launchDirection = Vector2.right;
@@ -83,7 +83,7 @@ public class EnemyProjectile2D : MonoBehaviour
         PlayerController.RotateTransformToDirection2D(transform, direction);
     }
 
-    public void Launch(Vector2 launchDirection, float newDamage, WeaponManager.Element newElement, GameObject newOwner)
+    public void Launch(Vector2 launchDirection, float newDamage, Element newElement, GameObject newOwner)
     {
         Launch(launchDirection, Mathf.CeilToInt(newDamage), newElement, newOwner);
     }
@@ -111,7 +111,7 @@ public class EnemyProjectile2D : MonoBehaviour
         damage = Mathf.CeilToInt(newDamage);
     }
 
-    public void SetElement(WeaponManager.Element newElement)
+    public void SetElement(Element newElement)
     {
         element = newElement;
     }

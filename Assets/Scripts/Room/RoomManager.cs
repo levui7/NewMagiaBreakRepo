@@ -30,13 +30,11 @@ public class RoomManager : MonoBehaviour
     {
         if (enemyPrefab == null && rangedEnemyPrefab == null)
         {
-            Debug.LogError("Нужен хотя бы один префаб врага: enemyPrefab или rangedEnemyPrefab.");
             return;
         }
 
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
-            Debug.LogError("Spawn Points не назначены.");
             return;
         }
 
@@ -48,8 +46,6 @@ public class RoomManager : MonoBehaviour
 
     private void StartWave()
     {
-        Debug.Log($"Start wave {currentWave + 1}/{wavesCount}");
-
         activeEnemies.RemoveAll(e => e == null);
 
         if (currentWave >= wavesCount)
@@ -108,19 +104,15 @@ public class RoomManager : MonoBehaviour
 
         activeEnemies.RemoveAll(e => e == null);
 
-        Debug.Log($"Enemy died. Remaining: {activeEnemies.Count}");
-
         if (activeEnemies.Count > 0)
             return;
 
         if (currentWave >= wavesCount)
         {
             AllWavesCompleted = true;
-            Debug.Log("All waves completed");
         }
         else
         {
-            Debug.Log("Starting next wave...");
             Invoke(nameof(StartWave), 2f);
         }
     }

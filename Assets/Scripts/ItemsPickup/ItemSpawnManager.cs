@@ -75,7 +75,5 @@ public class ItemSpawnManager : MonoBehaviour
 
             spawnedItems.Add(item);
         }
-
-        Debug.Log($"Spawned {count} items");
     }
 }

@@ -28,7 +28,7 @@ public class BossController : MonoBehaviour
     public float phase3FireCooldown = 0.75f;
     public int projectileDamage = 10;
     public float projectileSpeed = 8f;
-    public WeaponManager.Element projectileElement = WeaponManager.Element.Physical;
+    public Element projectileElement = Element.Physical;
 
     [Header("Спецатаки")]
     public bool useRadialAttack = true;
@@ -269,7 +269,7 @@ public class BossController : MonoBehaviour
     private void RadialAttack()
     {
         int count = phase >= 3 ? phase3RadialProjectileCount : radialProjectileCount;
-        WeaponManager.Element element = phase >= 3 ? WeaponManager.Element.Fire : WeaponManager.Element.Water;
+        Element element = phase >= 3 ? Element.Fire : Element.Water;
 
         for (int i = 0; i < count; i++)
         {
@@ -281,7 +281,7 @@ public class BossController : MonoBehaviour
         DamagePopup2D.SpawnText(transform.position + Vector3.up * 1.1f, "Волна", Color.cyan);
     }
 
-    private void SpawnProjectile(Vector2 direction, WeaponManager.Element element, int damage)
+    private void SpawnProjectile(Vector2 direction, Element element, int damage)
     {
         EnemyProjectile2D projectile = null;
 
@@ -355,13 +355,13 @@ public class BossController : MonoBehaviour
         DamagePopup2D.SpawnText(transform.position + Vector3.up * 1.1f, "Призыв", Color.magenta);
     }
 
-    public void TakeDamage(int amount, WeaponManager.Element element)
+    public void TakeDamage(int amount, Element element)
     {
         if (isDead) return;
 
         // В первой фазе огонь слабее из-за щита, но босс всё равно получает часть урона,
         // чтобы игрок видел обратную связь, а бой не казался сломанным.
-        if (phase == 1 && element == WeaponManager.Element.Fire)
+        if (phase == 1 && element == Element.Fire)
             amount = Mathf.Max(1, Mathf.RoundToInt(amount * 0.35f));
 
         currentHealth -= amount;

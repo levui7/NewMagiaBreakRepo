@@ -44,7 +44,7 @@ public class StatusEffectController : MonoBehaviour
     private Coroutine steamRoutine;
     private Coroutine smolderingRoutine;
 
-    private WeaponManager.Element lastElementStatus = WeaponManager.Element.Physical;
+    private Element lastElementStatus = Element.Physical;
     private Enemy enemy;
     private BossController boss;
     private PlayerController player;
@@ -57,28 +57,28 @@ public class StatusEffectController : MonoBehaviour
         RefreshVisuals();
     }
 
-    public void ApplyElementStatus(WeaponManager.Element element)
+    public void ApplyElementStatus(Element element)
     {
-        if (element == WeaponManager.Element.Physical)
+        if (element == Element.Physical)
             return;
 
-        if (element == WeaponManager.Element.Water)
+        if (element == Element.Water)
         {
-            if (lastElementStatus == WeaponManager.Element.Fire || hasFire)
+            if (lastElementStatus == Element.Fire || hasFire)
                 ApplySmoldering();
             else
                 ApplyWater();
 
-            lastElementStatus = WeaponManager.Element.Water;
+            lastElementStatus = Element.Water;
         }
-        else if (element == WeaponManager.Element.Fire)
+        else if (element == Element.Fire)
         {
-            if (lastElementStatus == WeaponManager.Element.Water || hasWater)
+            if (lastElementStatus == Element.Water || hasWater)
                 ApplySteam();
             else
                 ApplyFire();
 
-            lastElementStatus = WeaponManager.Element.Fire;
+            lastElementStatus = Element.Fire;
         }
     }
 
@@ -122,7 +122,7 @@ public class StatusEffectController : MonoBehaviour
         hasFire = false;
         hasSteam = false;
         hasSmoldering = false;
-        lastElementStatus = WeaponManager.Element.Physical;
+        lastElementStatus = Element.Physical;
         RefreshVisuals();
     }
 
@@ -250,11 +250,11 @@ public class StatusEffectController : MonoBehaviour
         if (amount <= 0) return;
 
         if (enemy != null)
-            enemy.TakeDamage(amount, WeaponManager.Element.Physical);
+            enemy.TakeDamage(amount, Element.Physical);
         else if (boss != null)
-            boss.TakeDamage(amount, WeaponManager.Element.Physical);
+            boss.TakeDamage(amount, Element.Physical);
         else if (player != null)
-            player.TakeDamage(amount, WeaponManager.Element.Physical);
+            player.TakeDamage(amount, Element.Physical);
     }
 
     private void RefreshVisuals()

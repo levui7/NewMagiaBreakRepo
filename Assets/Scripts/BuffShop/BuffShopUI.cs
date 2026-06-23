@@ -61,7 +61,6 @@ public class BuffShopUI : MonoBehaviour
         if (!item.CanAfford())
         {
             PlaySound(errorSound);
-            Debug.Log("❌ Недостаточно монет!");
             return;
         }
 
@@ -81,8 +80,6 @@ public class BuffShopUI : MonoBehaviour
 
         PlaySound(buySound);
         RefreshCurrency();
-
-        Debug.Log($"✅ Куплено: {item.buffName} (x{item.multiplier} на {item.duration} сек)");
     }
 
     /// <summary>

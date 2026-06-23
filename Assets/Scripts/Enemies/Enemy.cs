@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [Header("Движение и контактный урон")]
     public float moveSpeed = 3f;
     public int contactDamage = 10;
-    public WeaponManager.Element contactElement = WeaponManager.Element.Physical;
+    public Element contactElement = Element.Physical;
     public Transform playerTarget;
     public float contactDamageCooldown = 1f;
     public float stopDistance = 0.2f;
@@ -221,7 +221,7 @@ public class Enemy : MonoBehaviour
         UpdateHealthBar();
     }
 
-    public virtual void TakeDamage(int amount, WeaponManager.Element element)
+    public virtual void TakeDamage(int amount, Element element)
     {
         if (isDead)
             return;
@@ -255,7 +255,7 @@ public class Enemy : MonoBehaviour
             healthBar.SetHealth(currentHealth, maxHealth);
     }
 
-    protected void ShowDamageNumber(int amount, WeaponManager.Element element)
+    protected void ShowDamageNumber(int amount, Element element)
     {
         // Новый вариант работает даже без заранее созданного prefab DamageNumber.
         DamagePopup2D.SpawnDamage(transform.position, amount, element);
@@ -269,8 +269,8 @@ public class Enemy : MonoBehaviour
         if (dnScript != null)
         {
             Color color = Color.white;
-            if (element == WeaponManager.Element.Fire) color = Color.red;
-            else if (element == WeaponManager.Element.Water) color = Color.blue;
+            if (element == Element.Fire) color = Color.red;
+            else if (element == Element.Water) color = Color.blue;
             dnScript.Setup(amount, color);
         }
     }

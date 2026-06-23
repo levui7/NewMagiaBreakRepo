@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CartridgePickup : MonoBehaviour
 {
-    public WeaponManager.Element element = WeaponManager.Element.Fire;
+    public Element element = Element.Fire;
     public int amount = 3;
 
     private void OnTriggerEnter2D(Collider2D other)

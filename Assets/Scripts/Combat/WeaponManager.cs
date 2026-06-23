@@ -1,17 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class WeaponManager : MonoBehaviour
 {
-    public enum Element
-    {
-        Physical,
-        Fire,
-        Water,
-        Steam,
-        Smoldering
-    }
-
     [Header("Owner")]
     public PlayerController playerController;
 
@@ -21,32 +13,39 @@ public class WeaponManager : MonoBehaviour
     [Header("Ammo")]
     public int magazineSize = 6;
     public int currentAmmo = 6;
-    public int reserveAmmo = 24;
     public int fireAmmo = 0;
     public int waterAmmo = 0;
+
+    [SerializeField]
+    private float reloadTime = 2f;
+
+    private bool isReloading;
+
+    public bool IsReloading => isReloading;
 
     [Header("Damage")]
     public float physicalDamage = 10f;
     public float fireDamage = 8f;
     public float waterDamage = 8f;
 
-    [Header("Auto Ammo")]
-    public bool autoRefillMagazine = true;
-
     [Header("Debug")]
     public bool autoFillAmmoOnStart = false;
+
+    [Header("Shooting")]
+    public GameObject projectilePrefab;
+    public Transform firePoint;
 
     public Element CurrentElement => currentElement;
     public int MagazineSize => magazineSize;
     public int CurrentAmmo => currentAmmo;
-    public int ReserveAmmo => reserveAmmo;
     public int FireAmmo => fireAmmo;
     public int WaterAmmo => waterAmmo;
-    public bool IsReloading => false;
 
     private bool loadedFromInventory;
 
     private TemporaryBuffController2D temporaryBuffs;
+
+    public AttackMode attackMode = AttackMode.Single;
 
     private void Awake()
     {
@@ -63,7 +62,6 @@ public class WeaponManager : MonoBehaviour
         if (autoFillAmmoOnStart)
         {
             currentAmmo = magazineSize;
-            reserveAmmo = Mathf.Max(reserveAmmo, 60);
             fireAmmo = Mathf.Max(fireAmmo, 20);
             waterAmmo = Mathf.Max(waterAmmo, 20);
         }
@@ -71,20 +69,16 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        LoadInventoryIfPossible();
+        //LoadInventoryIfPossible();
 
-        AutoRefillFromReserve();
         ValidateElementAfterLoad();
         RefreshUI();
     }
 
     private void Update()
     {
-        LoadInventoryIfPossible();
+        //LoadInventoryIfPossible();
         HandleElementCycle();
-
-        if (autoRefillMagazine)
-            AutoRefillFromReserve();
     }
 
     private void LoadInventoryIfPossible()
@@ -194,10 +188,7 @@ public class WeaponManager : MonoBehaviour
         switch (currentElement)
         {
             case Element.Physical:
-                if (currentAmmo <= 0 && autoRefillMagazine)
-                    AutoRefillFromReserve();
-
-                return currentAmmo > 0;
+                return currentAmmo > 0 && !isReloading;
 
             case Element.Fire:
                 return fireAmmo > 0;
@@ -206,10 +197,7 @@ public class WeaponManager : MonoBehaviour
                 return waterAmmo > 0;
 
             default:
-                if (currentAmmo <= 0 && autoRefillMagazine)
-                    AutoRefillFromReserve();
-
-                return currentAmmo > 0;
+                return currentAmmo > 0 && !isReloading;
         }
     }
 
@@ -218,10 +206,13 @@ public class WeaponManager : MonoBehaviour
         switch (currentElement)
         {
             case Element.Physical:
-                currentAmmo = Mathf.Max(0, currentAmmo - 1);
+                currentAmmo--;
 
-                if (autoRefillMagazine)
-                    AutoRefillFromReserve();
+                if (currentAmmo <= 0)
+                {
+                    currentAmmo = 0;
+                    StartCoroutine(ReloadRoutine());
+                }
 
                 break;
 
@@ -248,27 +239,8 @@ public class WeaponManager : MonoBehaviour
 
     public void Reload()
     {
-        AutoRefillFromReserve();
         SaveInventory();
         RefreshUI();
-    }
-
-    private void AutoRefillFromReserve()
-    {
-        if (currentElement != Element.Physical)
-            return;
-
-        if (currentAmmo >= magazineSize)
-            return;
-
-        if (reserveAmmo <= 0)
-            return;
-
-        int needAmmo = magazineSize - currentAmmo;
-        int ammoToLoad = Mathf.Min(needAmmo, reserveAmmo);
-
-        currentAmmo += ammoToLoad;
-        reserveAmmo -= ammoToLoad;
     }
 
     public float GetCurrentDamage()
@@ -297,44 +269,14 @@ public class WeaponManager : MonoBehaviour
         return baseDamage * multiplier;
     }
 
-    public void AddAmmo(int amount)
-    {
-        amount = Mathf.Max(0, amount);
-
-        if (amount <= 0)
-            return;
-
-        if (currentElement == Element.Fire && fireAmmo <= 0)
-            currentElement = Element.Physical;
-
-        if (currentElement == Element.Water && waterAmmo <= 0)
-            currentElement = Element.Physical;
-
-        reserveAmmo += amount;
-        AutoRefillFromReserve();
-
-        SaveInventory();
-        RefreshUI();
-    }
-
-    public void AddReserveAmmo(int amount)
-    {
-        AddAmmo(amount);
-    }
-
     public void AddCartridge(Element element, int amount)
     {
         AddElementAmmo(element, amount);
     }
 
-    public void AddCartridge(int amount)
-    {
-        AddAmmo(amount);
-    }
-
     public void AddFireAmmo(int amount)
     {
-        fireAmmo += Mathf.Max(0, amount);
+        fireAmmo = magazineSize;
 
         SaveInventory();
         RefreshUI();
@@ -342,7 +284,7 @@ public class WeaponManager : MonoBehaviour
 
     public void AddWaterAmmo(int amount)
     {
-        waterAmmo += Mathf.Max(0, amount);
+        waterAmmo = magazineSize;
 
         SaveInventory();
         RefreshUI();
@@ -350,6 +292,8 @@ public class WeaponManager : MonoBehaviour
 
     public void AddElementAmmo(Element element, int amount)
     {
+        Debug.Log(
+        $"PICKUP {element} amount={amount}");
         amount = Mathf.Max(0, amount);
 
         switch (element)
@@ -361,11 +305,6 @@ public class WeaponManager : MonoBehaviour
             case Element.Water:
                 waterAmmo += amount;
                 break;
-
-            case Element.Physical:
-            default:
-                AddAmmo(amount);
-                return;
         }
 
         SaveInventory();
@@ -396,7 +335,12 @@ public class WeaponManager : MonoBehaviour
 
     public string GetAmmoText()
     {
-        return $"Патроны: {currentAmmo}/{magazineSize} | Запас: {reserveAmmo} | Огонь: {fireAmmo} | Вода: {waterAmmo} | Перекл.: {(playerController != null && playerController.playerID == 2 ? "RShift" : "Q")}";
+        if (isReloading)
+        {
+            return $"Перезарядка... | Огонь:{fireAmmo} | Вода:{waterAmmo}";
+        }
+
+        return $"Патроны:{currentAmmo}/{magazineSize} | Огонь:{fireAmmo} | Вода:{waterAmmo}";
     }
 
     private void SaveInventory()
@@ -414,5 +358,81 @@ public class WeaponManager : MonoBehaviour
     {
         if (UIManager.Instance != null)
             UIManager.Instance.UpdatePlayerHUD(playerController, this);
+    }
+
+    private IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+
+        RefreshUI();
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = magazineSize;
+        isReloading = false;
+
+        SaveInventory();
+        RefreshUI();
+    }
+
+    public void Shoot(Vector2 direction, GameObject owner)
+    {
+        if (!CanShoot())
+            return;
+
+        if (attackMode == AttackMode.Single)
+        {
+            ShootSingle(direction, owner);
+        }
+        else
+        {
+            ShootArea(direction, owner);
+        }
+
+        ConsumeAmmo();
+    }
+
+    private void ShootSingle(Vector2 direction, GameObject owner)
+    {
+        GameObject bullet = Instantiate(
+            projectilePrefab,
+            firePoint.position,
+            firePoint.rotation);
+
+        BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.SetDirection(direction);
+            bulletScript.SetDamage(GetCurrentDamage());
+            bulletScript.SetElement(CurrentElement);
+            bulletScript.SetOwner(owner);
+        }
+    }
+
+    private void ShootArea(Vector2 direction, GameObject owner)
+    {
+        float[] angles = { -20f, -10f, 0f, 10f, 20f };
+
+        foreach (float angle in angles)
+        {
+            Vector2 rotatedDirection =
+                Quaternion.Euler(0, 0, angle) * direction;
+
+            GameObject bullet = Instantiate(
+                projectilePrefab,
+                firePoint.position,
+                Quaternion.identity);
+
+            BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+
+            if (bulletScript != null)
+            {
+                bulletScript.SetDirection(rotatedDirection.normalized);
+                bulletScript.SetDamage(GetCurrentDamage());
+                bulletScript.SetElement(CurrentElement);
+                bulletScript.SetOwner(owner);
+            }
+        }
     }
 }

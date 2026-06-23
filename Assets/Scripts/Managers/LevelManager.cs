@@ -53,8 +53,6 @@ public class LevelManager : MonoBehaviour
     {
         levelCompleted = true;
 
-        Debug.Log("Level completed");
-
         if (loadVictoryWhenCompleted)
         {
             SavePlayersHealth();
