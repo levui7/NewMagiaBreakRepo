@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7073043703880367044}
   - component: {fileID: 2368605295582045145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 550624002565198001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8340755449694985766}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RobotBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8883983547725751337}
   - component: {fileID: 2544935333275985818}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8354821612833056777}
   - component: {fileID: 4415365644536471178}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,9 +359,9 @@ GameObject:
   - component: {fileID: 3903204927486790199}
   - component: {fileID: 5470014322416518070}
   - component: {fileID: 1937963564916216001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TV_robot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -543,6 +543,7 @@ MonoBehaviour:
   fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
   steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
   smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
+  logDebug: 1
 --- !u!114 &3903204927486790199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 221076647913639329}
   - component: {fileID: 7297563136994363413}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6869624518993607819}
   - component: {fileID: 7543417973616015768}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -818,7 +819,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1101127573821586294}
   - component: {fileID: 4100097658337474119}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

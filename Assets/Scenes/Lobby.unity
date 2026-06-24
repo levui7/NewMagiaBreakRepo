@@ -3304,10 +3304,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training_dummy
       objectReference: {fileID: 0}
+    - target: {fileID: 8450518699188511512, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450518699188511512, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      propertyPath: maxHealth
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450518699188511512, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450518699188511512, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      propertyPath: contactDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450518699188511512, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      propertyPath: currentHealth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450518699188511512, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      propertyPath: contactDamageCooldown
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8002826654508054330, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2091512509}
   m_SourcePrefab: {fileID: 100100000, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
 --- !u!1001 &562809804
 PrefabInstance:
@@ -4441,6 +4468,7 @@ MonoBehaviour:
   selectedInitialElement: 1
   startingFireAmmo: 6
   startingWaterAmmo: 6
+  logDebug: 1
 --- !u!4 &723879139
 Transform:
   m_ObjectHideFlags: 0
@@ -8723,6 +8751,7 @@ MonoBehaviour:
   attackDropdown: {fileID: 1097632118}
   elementDropdown: {fileID: 1837109912}
   resultText: {fileID: 0}
+  logDebug: 1
 --- !u!114 &1570334904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11995,6 +12024,41 @@ Transform:
   - {fileID: 506052005}
   m_Father: {fileID: 1881353198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2091512499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8002826654508054330, guid: f24644bbc44f98c4d877815d41e46b76, type: 3}
+  m_PrefabInstance: {fileID: 559984647}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2091512509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091512499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7b1fc111262a745b4f66aecb305c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectController
+  hasWater: 0
+  hasFire: 0
+  hasSteam: 0
+  hasSmoldering: 0
+  waterDuration: 3
+  fireDuration: 3
+  steamDuration: 5
+  smolderingDuration: 10
+  waterSlowMultiplier: 0.5
+  steamSlowMultiplier: 0.45
+  fireTickDamage: 1
+  smolderingTickDamage: 1
+  tickInterval: 1
+  waterOverlay: {fileID: 0}
+  fireOverlay: {fileID: 0}
+  steamOverlay: {fileID: 0}
+  smolderingOverlay: {fileID: 0}
+  logDebug: 1
 --- !u!1 &2099884213
 GameObject:
   m_ObjectHideFlags: 0

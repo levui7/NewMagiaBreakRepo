@@ -61,25 +61,25 @@ public class PlayerInventoryManager : MonoBehaviour
             p2CurrentAmmo = Mathf.Clamp(weapon.currentAmmo, 0, weapon.magazineSize);
             p2FireAmmo = Mathf.Max(0, weapon.fireAmmo);
             p2WaterAmmo = Mathf.Max(0, weapon.waterAmmo);
-            p2CurrentElement = weapon.currentElement;
+            p2CurrentElement = weapon.CurrentElement;
         }
         else
         {
             p1CurrentAmmo = Mathf.Clamp(weapon.currentAmmo, 0, weapon.magazineSize);
             p1FireAmmo = Mathf.Max(0, weapon.fireAmmo);
             p1WaterAmmo = Mathf.Max(0, weapon.waterAmmo);
-            p1CurrentElement = weapon.currentElement;
+            p1CurrentElement = weapon.CurrentElement;
         }
 
         magazineSize = Mathf.Max(1, weapon.magazineSize);
         SaveInventoryToPrefs();
 
         Debug.Log(
-            $"SAVE P{id}: " +
-            $"Ammo={weapon.currentAmmo} " +
-            $"Fire={weapon.fireAmmo} " +
-            $"Water={weapon.waterAmmo} " +
-            $"Element={weapon.currentElement}");
+            $"PlayerInventoryManager SAVE FROM WEAPON P{id}: " +
+            $"PhysicalAmmo={weapon.currentAmmo}, " +
+            $"FireAmmo={weapon.fireAmmo}, " +
+            $"WaterAmmo={weapon.waterAmmo}, " +
+            $"SavedElement={weapon.CurrentElement}");
     }
 
     public void LoadToWeapon(WeaponManager weapon)
@@ -93,32 +93,33 @@ public class PlayerInventoryManager : MonoBehaviour
 
         weapon.magazineSize = Mathf.Max(1, magazineSize);
 
+        Element loadedElement;
+
         if (id == 2)
         {
             weapon.currentAmmo = Mathf.Clamp(p2CurrentAmmo, 0, weapon.magazineSize);
             weapon.fireAmmo = Mathf.Max(0, p2FireAmmo);
             weapon.waterAmmo = Mathf.Max(0, p2WaterAmmo);
-            weapon.currentElement = p2CurrentElement;
+            loadedElement = p2CurrentElement;
         }
         else
         {
             weapon.currentAmmo = Mathf.Clamp(p1CurrentAmmo, 0, weapon.magazineSize);
             weapon.fireAmmo = Mathf.Max(0, p1FireAmmo);
             weapon.waterAmmo = Mathf.Max(0, p1WaterAmmo);
-            weapon.currentElement = p1CurrentElement;
+            loadedElement = p1CurrentElement;
         }
 
-        weapon.ValidateElementAfterLoad();
+        weapon.ForceSetElementAfterLoad(loadedElement);
         weapon.RefreshUIFromOutside();
 
-        SaveFromWeapon(weapon);
-
         Debug.Log(
-            $"LOAD P{id}: " +
-            $"Ammo={weapon.currentAmmo} " +
-            $"Fire={weapon.fireAmmo} " +
-            $"Water={weapon.waterAmmo} " +
-            $"Element={weapon.currentElement}");
+            $"PlayerInventoryManager LOAD TO WEAPON P{id}: " +
+            $"PhysicalAmmo={weapon.currentAmmo}, " +
+            $"FireAmmo={weapon.fireAmmo}, " +
+            $"WaterAmmo={weapon.waterAmmo}, " +
+            $"LoadedElement={loadedElement}, " +
+            $"FinalElement={weapon.CurrentElement}");
     }
 
     public void SaveAllWeaponsInScene()

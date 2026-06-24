@@ -13,6 +13,9 @@ public class WeaponStationUI : MonoBehaviour
     [Header("Texts")]
     public TextMeshProUGUI resultText;
 
+    [Header("Debug")]
+    public bool logDebug = true;
+
     private void Start()
     {
         PrepareDropdowns();
@@ -40,7 +43,7 @@ public class WeaponStationUI : MonoBehaviour
             panel.SetActive(true);
 
         if (resultText != null)
-            resultText.text = "Выберите режим атаки и стартовую стихию";
+            resultText.text = "Выберите режим атаки и стартовую стихию.";
     }
 
     public void ApplySettings()
@@ -48,28 +51,37 @@ public class WeaponStationUI : MonoBehaviour
         if (WeaponConfigManager.Instance == null)
         {
             if (resultText != null)
-                resultText.text = "Ошибка: WeaponConfigManager не найден";
+                resultText.text = "Ошибка: WeaponConfigManager не найден.";
 
+            Debug.LogError("WeaponStationUI: WeaponConfigManager.Instance == null");
             return;
         }
 
-        AttackMode attackMode = attackDropdown != null && attackDropdown.value == 1
-            ? AttackMode.Area
-            : AttackMode.Single;
+        PrepareDropdowns();
 
-        Element startElement = elementDropdown != null && elementDropdown.value == 1
-            ? Element.Water
-            : Element.Fire;
+        AttackMode selectedMode = GetSelectedAttackMode();
+        Element selectedElement = GetSelectedElement();
 
-        WeaponConfigManager.Instance.SetAttackMode(attackMode);
-        WeaponConfigManager.Instance.SetInitialElement(startElement);
+        if (logDebug)
+        {
+            Debug.Log(
+                $"WeaponStationUI ApplySettings: " +
+                $"DropdownAttackValue={attackDropdown?.value}, " +
+                $"SelectedMode={selectedMode}, " +
+                $"DropdownElementValue={elementDropdown?.value}, " +
+                $"SelectedElement={selectedElement}");
+        }
+
+        WeaponConfigManager.Instance.SetAttackMode(selectedMode);
+        WeaponConfigManager.Instance.SetInitialElement(selectedElement);
+
         WeaponConfigManager.Instance.ApplyConfigToCurrentWeapons();
 
         if (resultText != null)
         {
             resultText.text =
-                $"Выбрано: {WeaponConfigManager.Instance.GetAttackModeNameRu()}, " +
-                $"стихия: {WeaponConfigManager.Instance.GetInitialElementNameRu()}";
+                $"Принято: атака {WeaponConfigManager.Instance.GetAttackModeNameRu()}, " +
+                $"стихия {WeaponConfigManager.Instance.GetInitialElementNameRu()}";
         }
 
         if (panel != null)
@@ -82,20 +94,40 @@ public class WeaponStationUI : MonoBehaviour
             panel.SetActive(false);
     }
 
+    private AttackMode GetSelectedAttackMode()
+    {
+        if (attackDropdown == null)
+            return AttackMode.Single;
+
+        // 0 — одиночный, 1 — по площади.
+        return attackDropdown.value == 1 ? AttackMode.Area : AttackMode.Single;
+    }
+
+    private Element GetSelectedElement()
+    {
+        if (elementDropdown == null)
+            return Element.Fire;
+
+        // 0 — огонь, 1 — вода.
+        return elementDropdown.value == 1 ? Element.Water : Element.Fire;
+    }
+
     private void PrepareDropdowns()
     {
-        if (attackDropdown != null && attackDropdown.options.Count == 0)
+        if (attackDropdown != null)
         {
             attackDropdown.options.Clear();
             attackDropdown.options.Add(new TMP_Dropdown.OptionData("Одиночный выстрел"));
             attackDropdown.options.Add(new TMP_Dropdown.OptionData("Выстрел по площади"));
+            attackDropdown.RefreshShownValue();
         }
 
-        if (elementDropdown != null && elementDropdown.options.Count == 0)
+        if (elementDropdown != null)
         {
             elementDropdown.options.Clear();
             elementDropdown.options.Add(new TMP_Dropdown.OptionData("Огонь"));
             elementDropdown.options.Add(new TMP_Dropdown.OptionData("Вода"));
+            elementDropdown.RefreshShownValue();
         }
     }
 
@@ -106,13 +138,17 @@ public class WeaponStationUI : MonoBehaviour
 
         if (attackDropdown != null)
         {
-            attackDropdown.value = WeaponConfigManager.Instance.selectedAttackMode == AttackMode.Area ? 1 : 0;
+            attackDropdown.value =
+                WeaponConfigManager.Instance.selectedAttackMode == AttackMode.Area ? 1 : 0;
+
             attackDropdown.RefreshShownValue();
         }
 
         if (elementDropdown != null)
         {
-            elementDropdown.value = WeaponConfigManager.Instance.selectedInitialElement == Element.Water ? 1 : 0;
+            elementDropdown.value =
+                WeaponConfigManager.Instance.selectedInitialElement == Element.Water ? 1 : 0;
+
             elementDropdown.RefreshShownValue();
         }
     }

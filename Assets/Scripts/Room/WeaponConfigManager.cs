@@ -14,6 +14,9 @@ public class WeaponConfigManager : MonoBehaviour
     public int startingFireAmmo = 6;
     public int startingWaterAmmo = 6;
 
+    [Header("Debug")]
+    public bool logDebug = true;
+
     private const string AttackModeKey = "WeaponConfig_AttackMode";
     private const string InitialElementKey = "WeaponConfig_InitialElement";
     private const string FireAmmoKey = "WeaponConfig_StartingFireAmmo";
@@ -23,19 +26,33 @@ public class WeaponConfigManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
+            if (logDebug)
+                Debug.Log("WeaponConfigManager: найден дубликат, удаляю его.");
+
             Destroy(gameObject);
             return;
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         LoadConfig();
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"WeaponConfigManager Awake: AttackMode={selectedAttackMode}, " +
+                $"InitialElement={selectedInitialElement}");
+        }
     }
 
     public void SetAttackMode(AttackMode mode)
     {
         selectedAttackMode = mode;
         SaveConfig();
+
+        if (logDebug)
+            Debug.Log("WeaponConfigManager: выбран режим атаки = " + selectedAttackMode);
     }
 
     public void SetInitialElement(Element element)
@@ -45,15 +62,21 @@ public class WeaponConfigManager : MonoBehaviour
 
         selectedInitialElement = element;
         SaveConfig();
+
+        if (logDebug)
+            Debug.Log("WeaponConfigManager: выбрана стартовая стихия = " + selectedInitialElement);
     }
 
     public void ApplyConfigToCurrentWeapons()
     {
-        WeaponManager[] weapons = FindObjectsOfType<WeaponManager>();
+        WeaponManager[] weapons = FindObjectsOfType<WeaponManager>(true);
+
+        if (logDebug)
+            Debug.Log("WeaponConfigManager: найдено WeaponManager = " + weapons.Length);
 
         foreach (WeaponManager weapon in weapons)
         {
-            if (weapon == null || !weapon.gameObject.activeInHierarchy)
+            if (weapon == null)
                 continue;
 
             ApplyConfigToWeapon(weapon, true);
@@ -65,7 +88,14 @@ public class WeaponConfigManager : MonoBehaviour
         if (weapon == null)
             return;
 
-        weapon.attackMode = selectedAttackMode;
+        weapon.SetAttackMode(selectedAttackMode, true);
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"WeaponConfigManager: применён только режим атаки к {weapon.name}: " +
+                $"{selectedAttackMode}");
+        }
     }
 
     public void ApplyConfigToWeapon(WeaponManager weapon, bool applyInitialElement)
@@ -73,34 +103,43 @@ public class WeaponConfigManager : MonoBehaviour
         if (weapon == null)
             return;
 
-        weapon.attackMode = selectedAttackMode;
+        weapon.SetAttackMode(selectedAttackMode, true);
 
-        if (!applyInitialElement)
-            return;
-
-        if (selectedInitialElement == Element.Fire)
+        if (applyInitialElement)
         {
-            weapon.EnsureElementAmmo(Element.Fire, startingFireAmmo);
-            weapon.SetElement(Element.Fire);
-        }
-        else if (selectedInitialElement == Element.Water)
-        {
-            weapon.EnsureElementAmmo(Element.Water, startingWaterAmmo);
-            weapon.SetElement(Element.Water);
+            if (selectedInitialElement == Element.Fire)
+            {
+                weapon.EnsureElementAmmo(Element.Fire, startingFireAmmo);
+                weapon.SetElement(Element.Fire);
+            }
+            else if (selectedInitialElement == Element.Water)
+            {
+                weapon.EnsureElementAmmo(Element.Water, startingWaterAmmo);
+                weapon.SetElement(Element.Water);
+            }
         }
 
         if (PlayerInventoryManager.Instance != null)
             PlayerInventoryManager.Instance.SaveFromWeapon(weapon);
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"WeaponConfigManager: применил конфиг к {weapon.name}. " +
+                $"AttackMode={selectedAttackMode}, " +
+                $"InitialElement={selectedInitialElement}, " +
+                $"ApplyInitialElement={applyInitialElement}");
+        }
     }
 
     public string GetAttackModeNameRu()
     {
-        return selectedAttackMode == AttackMode.Area ? "По площади" : "Одиночный";
+        return selectedAttackMode == AttackMode.Area ? "по площади" : "одиночный";
     }
 
     public string GetInitialElementNameRu()
     {
-        return selectedInitialElement == Element.Water ? "Вода" : "Огонь";
+        return selectedInitialElement == Element.Water ? "вода" : "огонь";
     }
 
     public void SaveConfig()
@@ -114,10 +153,23 @@ public class WeaponConfigManager : MonoBehaviour
 
     public void LoadConfig()
     {
-        selectedAttackMode = IntToAttackMode(PlayerPrefs.GetInt(AttackModeKey, (int)selectedAttackMode));
-        selectedInitialElement = IntToElement(PlayerPrefs.GetInt(InitialElementKey, (int)selectedInitialElement));
-        startingFireAmmo = Mathf.Max(0, PlayerPrefs.GetInt(FireAmmoKey, startingFireAmmo));
-        startingWaterAmmo = Mathf.Max(0, PlayerPrefs.GetInt(WaterAmmoKey, startingWaterAmmo));
+        selectedAttackMode = IntToAttackMode(
+            PlayerPrefs.GetInt(AttackModeKey, (int)selectedAttackMode)
+        );
+
+        selectedInitialElement = IntToElement(
+            PlayerPrefs.GetInt(InitialElementKey, (int)selectedInitialElement)
+        );
+
+        startingFireAmmo = Mathf.Max(
+            0,
+            PlayerPrefs.GetInt(FireAmmoKey, startingFireAmmo)
+        );
+
+        startingWaterAmmo = Mathf.Max(
+            0,
+            PlayerPrefs.GetInt(WaterAmmoKey, startingWaterAmmo)
+        );
 
         if (selectedInitialElement != Element.Fire && selectedInitialElement != Element.Water)
             selectedInitialElement = Element.Fire;

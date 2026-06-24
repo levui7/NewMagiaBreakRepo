@@ -232,9 +232,25 @@ MonoBehaviour:
   fireAmmo: 0
   waterAmmo: 0
   reloadTime: 2
+  basePhysicalSingleDamage: 10
+  baseFireSingleDamage: 8
+  baseWaterSingleDamage: 8
+  basePhysicalAreaDamage: 7
+  baseFireAreaDamage: 6
+  baseWaterAreaDamage: 6
   physicalDamage: 10
   fireDamage: 8
   waterDamage: 8
+  areaPhysicalDamage: 7
+  areaFireDamage: 6
+  areaWaterDamage: 6
+  baseFireCooldown: 0.35
+  currentFireCooldown: 0.35
+  minFireCooldown: 0.12
+  areaRadius: 2.5
+  areaDamageMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   autoFillAmmoOnStart: 0
   projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
   firePoint: {fileID: 3441464347575586267}
@@ -268,6 +284,7 @@ MonoBehaviour:
   fireOverlay: {fileID: 0}
   steamOverlay: {fileID: 0}
   smolderingOverlay: {fileID: 0}
+  logDebug: 1
 --- !u!114 &8362818699511522305
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,12 +39,14 @@ public class StatusEffectController : MonoBehaviour
     public GameObject steamOverlay;
     public GameObject smolderingOverlay;
 
+    [Header("Debug")]
+    public bool logDebug = true;
+
     private Coroutine waterRoutine;
     private Coroutine fireRoutine;
     private Coroutine steamRoutine;
     private Coroutine smolderingRoutine;
 
-    private Element lastElementStatus = Element.Physical;
     private Enemy enemy;
     private BossController boss;
     private PlayerController player;
@@ -54,6 +56,7 @@ public class StatusEffectController : MonoBehaviour
         enemy = GetComponent<Enemy>();
         boss = GetComponent<BossController>();
         player = GetComponent<PlayerController>();
+
         RefreshVisuals();
     }
 
@@ -62,30 +65,74 @@ public class StatusEffectController : MonoBehaviour
         if (element == Element.Physical)
             return;
 
-        if (element == Element.Water)
-        {
-            if (lastElementStatus == Element.Fire || hasFire)
-                ApplySmoldering();
-            else
-                ApplyWater();
+        if (logDebug)
+            Debug.Log($"{name}: получил статусный элемент {element}. До: {GetStatusDebugString()}");
 
-            lastElementStatus = Element.Water;
-        }
-        else if (element == Element.Fire)
+        switch (element)
         {
-            if (lastElementStatus == Element.Water || hasWater)
+            case Element.Fire:
+                ApplyFireElement();
+                break;
+
+            case Element.Water:
+                ApplyWaterElement();
+                break;
+
+            case Element.Steam:
                 ApplySteam();
-            else
-                ApplyFire();
+                break;
 
-            lastElementStatus = Element.Fire;
+            case Element.Smoldering:
+                ApplySmoldering();
+                break;
         }
+
+        if (logDebug)
+            Debug.Log($"{name}: после применения статуса: {GetStatusDebugString()}");
+    }
+
+    private void ApplyFireElement()
+    {
+        if (hasWater)
+        {
+            ApplySteam();
+            return;
+        }
+
+        if (hasSmoldering)
+        {
+            RestartSmoldering();
+            return;
+        }
+
+        ApplyFire();
+    }
+
+    private void ApplyWaterElement()
+    {
+        if (hasFire)
+        {
+            ApplySmoldering();
+            return;
+        }
+
+        if (hasSteam)
+        {
+            RestartSteam();
+            return;
+        }
+
+        ApplyWater();
     }
 
     public float GetSpeedMultiplier()
     {
-        if (hasSteam) return steamSlowMultiplier;
-        if (hasWater) return waterSlowMultiplier;
+        if (hasSteam)
+            return steamSlowMultiplier;
+
+        if (hasWater)
+            return waterSlowMultiplier;
+
         return 1f;
     }
 
@@ -101,14 +148,29 @@ public class StatusEffectController : MonoBehaviour
 
     public string GetStatusDebugString()
     {
-        string result = "Нет";
+        string result = "";
 
-        if (hasWater) result = "Вода: замедление";
-        if (hasFire) result = result == "Нет" ? "Огонь: периодический урон" : result + " | Огонь";
-        if (hasSteam) result = "Пар: сильное замедление";
-        if (hasSmoldering) result = "Тление: длительный урон";
+        if (hasWater)
+            result += "Вода: замедление";
+
+        if (hasFire)
+            result += AddSeparator(result) + "Огонь: периодический урон";
+
+        if (hasSteam)
+            result += AddSeparator(result) + "Пар: сильное замедление";
+
+        if (hasSmoldering)
+            result += AddSeparator(result) + "Тление: длительный урон";
+
+        if (string.IsNullOrEmpty(result))
+            result = "Нет";
 
         return result;
+    }
+
+    private string AddSeparator(string current)
+    {
+        return string.IsNullOrEmpty(current) ? "" : " | ";
     }
 
     public void ClearAllStatuses()
@@ -122,14 +184,16 @@ public class StatusEffectController : MonoBehaviour
         hasFire = false;
         hasSteam = false;
         hasSmoldering = false;
-        lastElementStatus = Element.Physical;
+
         RefreshVisuals();
     }
 
     private void ApplyWater()
     {
         StopRoutine(ref waterRoutine);
+
         hasWater = false;
+
         DamagePopup2D.SpawnStatus(transform.position, "Вода");
         waterRoutine = StartCoroutine(WaterCoroutine());
     }
@@ -137,7 +201,9 @@ public class StatusEffectController : MonoBehaviour
     private void ApplyFire()
     {
         StopRoutine(ref fireRoutine);
+
         hasFire = false;
+
         DamagePopup2D.SpawnStatus(transform.position, "Огонь");
         fireRoutine = StartCoroutine(FireCoroutine());
     }
@@ -167,6 +233,26 @@ public class StatusEffectController : MonoBehaviour
         hasSmoldering = false;
 
         DamagePopup2D.SpawnStatus(transform.position, "Тление");
+        smolderingRoutine = StartCoroutine(SmolderingCoroutine());
+    }
+
+    private void RestartSteam()
+    {
+        StopRoutine(ref steamRoutine);
+
+        hasSteam = false;
+
+        DamagePopup2D.SpawnStatus(transform.position, "Пар+");
+        steamRoutine = StartCoroutine(SteamCoroutine());
+    }
+
+    private void RestartSmoldering()
+    {
+        StopRoutine(ref smolderingRoutine);
+
+        hasSmoldering = false;
+
+        DamagePopup2D.SpawnStatus(transform.position, "Тление+");
         smolderingRoutine = StartCoroutine(SmolderingCoroutine());
     }
 
@@ -217,7 +303,6 @@ public class StatusEffectController : MonoBehaviour
         yield return new WaitForSeconds(steamDuration);
 
         hasSteam = false;
-
         RefreshVisuals();
 
         steamRoutine = null;
@@ -226,6 +311,10 @@ public class StatusEffectController : MonoBehaviour
     private IEnumerator SmolderingCoroutine()
     {
         hasSmoldering = true;
+
+        hasWater = false;
+        hasFire = false;
+
         RefreshVisuals();
 
         float timer = smolderingDuration;
@@ -247,7 +336,8 @@ public class StatusEffectController : MonoBehaviour
 
     private void DealStatusDamage(int amount)
     {
-        if (amount <= 0) return;
+        if (amount <= 0)
+            return;
 
         if (enemy != null)
             enemy.TakeDamage(amount, Element.Physical);
@@ -274,7 +364,9 @@ public class StatusEffectController : MonoBehaviour
 
     private void StopRoutine(ref Coroutine routine)
     {
-        if (routine == null) return;
+        if (routine == null)
+            return;
+
         StopCoroutine(routine);
         routine = null;
     }

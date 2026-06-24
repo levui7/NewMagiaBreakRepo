@@ -55,11 +55,17 @@ public class GameModeManager : MonoBehaviour
 
         WeaponManager weapon = playerObject.GetComponent<WeaponManager>();
 
+        if (weapon == null)
+            weapon = playerObject.GetComponentInChildren<WeaponManager>();
+
         if (weapon != null && PlayerInventoryManager.Instance != null)
             PlayerInventoryManager.Instance.LoadToWeapon(weapon);
 
         if (weapon != null && WeaponConfigManager.Instance != null)
             WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+
+        if (weapon != null)
+            weapon.ValidateElementAfterLoad();
 
         if (PlayerProgressManager.Instance != null)
             PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6261067850661500356}
   - component: {fileID: 1346837940263791804}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5268428845125557400}
   - component: {fileID: 3072154890792487039}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2806883148979089451}
   - component: {fileID: 3416197105900817719}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun_base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8937471561518769645}
   - component: {fileID: 8928710719196481087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arm_broken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6191576171042556403}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RobotBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5543478663673142428}
   - component: {fileID: 9215607528445833137}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 638281260696645219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,9 +540,9 @@ GameObject:
   - component: {fileID: 6758788673326173719}
   - component: {fileID: 3770815821581537512}
   - component: {fileID: 7739497182664926754}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Construct_archaic
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -642,6 +642,7 @@ MonoBehaviour:
   fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
   steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
   smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
+  logDebug: 1
 --- !u!70 &7575034145137567557
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -810,7 +811,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7862129344942390864}
   - component: {fileID: 4041529053224081015}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -900,7 +901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099461802420195659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8238254277624502191}
   - component: {fileID: 2657421338369396506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1026,7 +1027,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8825250592359625991}
   - component: {fileID: 315336439609385456}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

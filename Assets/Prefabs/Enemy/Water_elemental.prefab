@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5239697212154688149}
   - component: {fileID: 2689018796938697383}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,9 +109,9 @@ GameObject:
   - component: {fileID: 1550903063309320097}
   - component: {fileID: 5450632799389094627}
   - component: {fileID: 2931626800544006910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Water_elemental
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -211,6 +211,7 @@ MonoBehaviour:
   fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
   steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
   smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
+  logDebug: 1
 --- !u!114 &6758788673326173719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 86725831058923963}
   - component: {fileID: 8593027416063966942}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099461802420195659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2853290518213863046}
   - component: {fileID: 5765946882269118722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8118302220778943656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

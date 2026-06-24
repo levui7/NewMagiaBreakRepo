@@ -1,76 +1,54 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class BulletScript : MonoBehaviour
 {
-    [Header("Bullet")]
-    public float speed = 14f;
+    [Header("Movement")]
+    public float speed = 12f;
     public float lifeTime = 3f;
-    public float damage = 10f;
-    public Element element = Element.Physical;
+
+    [Header("Damage")]
+    [SerializeField] private float damage = 1f;
+    [SerializeField] private Element element = Element.Physical;
 
     [Header("AoE")]
     public bool isAoE = false;
     public float aoeRadius = 2.5f;
     public LayerMask damageMask;
 
-    [Header("Owner")]
-    public GameObject owner;
+    [Header("Debug")]
+    public bool logDebug = true;
+    public bool drawAoEGizmo = true;
 
-    private Rigidbody2D rb;
     private Vector2 direction = Vector2.right;
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f;
-
-        if (damageMask.value == 0)
-        {
-            int enemyLayer = LayerMask.NameToLayer("Enemy");
-
-            if (enemyLayer >= 0)
-                damageMask = 1 << enemyLayer;
-            else
-                damageMask = ~0;
-        }
-    }
+    private GameObject owner;
+    private bool hasExploded = false;
 
     private void Start()
     {
-        rb.linearVelocity = direction.normalized * speed;
-        PlayerController.RotateTransformToDirection2D(transform, direction);
-
         Destroy(gameObject, lifeTime);
+    }
+
+    private void Update()
+    {
+        transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
     }
 
     public void SetDirection(Vector2 newDirection)
     {
         if (newDirection.sqrMagnitude <= 0.001f)
-            return;
+            newDirection = Vector2.right;
 
         direction = newDirection.normalized;
-
-        if (rb != null)
-            rb.linearVelocity = direction * speed;
-
-        PlayerController.RotateTransformToDirection2D(transform, direction);
     }
 
     public void SetDamage(float newDamage)
     {
-        damage = newDamage;
-    }
-
-    public void SetDamage(int newDamage)
-    {
-        damage = newDamage;
+        damage = Mathf.Max(0f, newDamage);
     }
 
     public void SetElement(Element newElement)
     {
         element = newElement;
-
     }
 
     public void SetOwner(GameObject newOwner)
@@ -80,48 +58,96 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (owner != null && other.gameObject == owner)
+        if (hasExploded)
             return;
 
-        if (other.CompareTag("Player"))
+        if (other == null)
             return;
 
-        if (other.CompareTag("Wall") || other.CompareTag("Obstacle"))
+        if (owner != null)
         {
-            Destroy(gameObject);
+            if (other.gameObject == owner)
+                return;
+
+            if (other.transform.IsChildOf(owner.transform))
+                return;
+        }
+
+        if (isAoE)
+        {
+            ExplodeAoE();
             return;
         }
 
-        if (other.CompareTag("Enemy") ||
-            other.CompareTag("Boss") ||
-            other.GetComponentInParent<Enemy>() != null ||
-            other.GetComponentInParent<BossController>() != null)
-        {
-            if (isAoE)
-                ApplyAoEDamage();
-            else
-                ApplyDamageTo(other);
+        ApplyDamageTo(other);
+        Destroy(gameObject);
+    }
 
-            Destroy(gameObject);
+    private void ExplodeAoE()
+    {
+        if (hasExploded)
+            return;
+
+        hasExploded = true;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, aoeRadius, damageMask);
+        int damageInt = Mathf.CeilToInt(damage);
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"BulletScript AoE explosion: " +
+                $"position={transform.position}, " +
+                $"radius={aoeRadius}, " +
+                $"hits={hits.Length}, " +
+                $"damage={damageInt}, " +
+                $"element={element}");
         }
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit == null)
+                continue;
+
+            if (owner != null)
+            {
+                if (hit.gameObject == owner)
+                    continue;
+
+                if (hit.transform.IsChildOf(owner.transform))
+                    continue;
+            }
+
+            ApplyDamageTo(hit);
+        }
+
+        Destroy(gameObject);
     }
 
     private void ApplyDamageTo(Collider2D target)
     {
+        if (target == null)
+            return;
+
         int damageInt = Mathf.CeilToInt(damage);
-
-        StatusEffectController status = target.GetComponentInParent<StatusEffectController>();
-
-        if (status != null)
-        {
-            status.SendMessage("ApplyElement", element, SendMessageOptions.DontRequireReceiver);
-        }
 
         Enemy enemy = target.GetComponentInParent<Enemy>();
 
         if (enemy != null)
         {
             enemy.TakeDamage(damageInt, element);
+
+            if (logDebug)
+                Debug.Log($"BulletScript: enemy hit {enemy.name}, damage={damageInt}, element={element}");
+
+            return;
+        }
+
+        TrainingDummy dummy = target.GetComponentInParent<TrainingDummy>();
+
+        if (dummy != null)
+        {
+            dummy.TakeDamage(damageInt, element);
             return;
         }
 
@@ -130,6 +156,10 @@ public class BulletScript : MonoBehaviour
         if (boss != null)
         {
             boss.TakeDamage(damageInt, element);
+
+            if (logDebug)
+                Debug.Log($"BulletScript: boss hit {boss.name}, damage={damageInt}, element={element}");
+
             return;
         }
 
@@ -138,35 +168,37 @@ public class BulletScript : MonoBehaviour
         if (player != null)
         {
             player.TakeDamage(damageInt, element);
+
+            if (logDebug)
+                Debug.Log($"BulletScript: player hit {player.name}, damage={damageInt}, element={element}");
+
             return;
         }
+
+        WallHitReceiver2D wall = target.GetComponentInParent<WallHitReceiver2D>();
+
+        if (wall != null)
+        {
+            wall.TakeHit(damageInt);
+
+            if (logDebug)
+                Debug.Log($"BulletScript: wall hit {wall.name}, damage={damageInt}");
+
+            return;
+        }
+
+        if (logDebug)
+            Debug.Log($"BulletScript: collider found, but no damage receiver: {target.name}");
     }
 
-    private void ApplyAoEDamage()
+    private void OnDrawGizmosSelected()
     {
-        Collider2D[] hits =
-            Physics2D.OverlapCircleAll(transform.position, aoeRadius, damageMask);
+        if (!drawAoEGizmo)
+            return;
 
-        int damageInt = Mathf.CeilToInt(damage);
+        if (!isAoE)
+            return;
 
-        foreach (Collider2D hit in hits)
-        {
-            if (hit == null)
-                continue;
-
-            if (owner != null && hit.gameObject == owner)
-                continue;
-
-            WallHitReceiver2D wall =
-                hit.GetComponentInParent<WallHitReceiver2D>();
-
-            if (wall != null)
-            {
-                wall.TakeHit(damageInt);
-                continue;
-            }
-
-            ApplyDamageTo(hit);
-        }
+        Gizmos.DrawWireSphere(transform.position, aoeRadius);
     }
 }

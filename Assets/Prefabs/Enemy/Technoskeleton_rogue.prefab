@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 835151399039235469}
   - component: {fileID: 3405850155108897027}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1839842660062180926}
   - component: {fileID: 4782672754326580957}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8140567280209180342}
   - component: {fileID: 6631041888024310476}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 855784014091020641}
   - component: {fileID: 934814359034146443}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,9 +382,9 @@ GameObject:
   - component: {fileID: 1259025050875469163}
   - component: {fileID: 7592549257116357423}
   - component: {fileID: 6059958223422238536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Technoskeleton_rogue
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -591,6 +591,7 @@ MonoBehaviour:
   fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
   steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
   smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
+  logDebug: 1
 --- !u!114 &7592549257116357423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8410914846275226678}
   - component: {fileID: 8788603662951799514}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: dagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2472292789380935286}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -765,7 +766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3779339566790234151}
   - component: {fileID: 1933624277128007968}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1503286955023159837}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SkeletonBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4692778991081363043}
   - component: {fileID: 1669378727278053871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}

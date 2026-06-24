@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1124912729894079877}
   - component: {fileID: 7641189278687011427}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7097538692217759600}
   - component: {fileID: 6161831261097434047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2497476206177618858}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2755149784405138648}
   - component: {fileID: 8577583589546498982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6155116535105120787}
   - component: {fileID: 6155706949236546674}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 550624002565198001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8340755449694985766}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RobotBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4676841544087713675}
   - component: {fileID: 5736480326112498009}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,9 +572,9 @@ GameObject:
   - component: {fileID: 3903204927486790199}
   - component: {fileID: 5470014322416518070}
   - component: {fileID: 1937963564916216001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Automaton_Prime
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -757,6 +757,7 @@ MonoBehaviour:
   fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
   steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
   smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
+  logDebug: 1
 --- !u!114 &3903204927486790199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,7 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891179777541325410}
   - component: {fileID: 8955411811962018669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
