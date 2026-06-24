@@ -29,6 +29,22 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         Invoke(nameof(RefreshResourceHUD), 0.1f);
+
+        UpdatePlayersHUDVisibility();
+    }
+
+    public void UpdatePlayersHUDVisibility()
+    {
+        PlayerController[] players =
+            FindObjectsOfType<PlayerController>();
+
+        int count = players.Length;
+
+        if (player1HUD != null)
+            player1HUD.gameObject.SetActive(count >= 1);
+
+        if (player2HUD != null)
+            player2HUD.gameObject.SetActive(count >= 2);
     }
 
     private void OnEnable()
@@ -88,5 +104,29 @@ public class UIManager : MonoBehaviour
             PlayerProgressManager.Instance.coins,
             PlayerProgressManager.Instance.crystals
         );
+    }
+
+    public void RefreshPlayersHUD()
+    {
+        bool player1Exists = false;
+        bool player2Exists = false;
+
+        PlayerController[] players =
+            FindObjectsOfType<PlayerController>();
+
+        foreach (PlayerController player in players)
+        {
+            if (player.playerID == 1)
+                player1Exists = true;
+
+            if (player.playerID == 2)
+                player2Exists = true;
+        }
+
+        if (player1HUD != null)
+            player1HUD.gameObject.SetActive(player1Exists);
+
+        if (player2HUD != null)
+            player2HUD.gameObject.SetActive(player2Exists);
     }
 }

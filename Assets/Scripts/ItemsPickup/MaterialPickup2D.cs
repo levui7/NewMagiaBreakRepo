@@ -46,7 +46,6 @@ public class MaterialPickup2D : MonoBehaviour
             );
         }
 
-        // Надёжный подбор без ожидания OnTriggerEnter2D.
         if (distance <= collectDistance)
         {
             PlayerController player = targetPlayer.GetComponent<PlayerController>();
@@ -108,7 +107,6 @@ public class MaterialPickup2D : MonoBehaviour
 
         PlayerProgressManager progress = PlayerProgressManager.Instance;
 
-        // На случай, если уровень запущен напрямую, без Lobby.
         if (progress == null)
         {
             GameObject progressObject = new GameObject("PlayerProgressManager_Runtime");
@@ -120,7 +118,8 @@ public class MaterialPickup2D : MonoBehaviour
         if (debugPickup)
         {
             Debug.Log(
-                $"MaterialPickup2D: collected {amount} {materialType}. Coins={progress.coins}, Crystals={progress.crystals}",
+                $"MaterialPickup2D: collected {amount} {materialType}. " +
+                $"Coins={progress.coins}, Crystals={progress.crystals}",
                 this
             );
         }

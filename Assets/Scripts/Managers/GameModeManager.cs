@@ -78,5 +78,15 @@ public class GameModeManager : MonoBehaviour
 
         if (cameraFollow != null)
             cameraFollow.SetPlayer(playerID, playerObject.transform);
+
+        Debug.Log($"GameModeManager: Player {playerID} spawned");
+
+        if (UIManager.Instance != null)
+        {
+            int playersCount =
+                FindObjectsOfType<PlayerController>().Length;
+
+            UIManager.Instance.SetPlayersCount(playersCount);
+        }
     }
 }

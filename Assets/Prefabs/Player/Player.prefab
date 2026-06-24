@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3688617742346855924}
   - component: {fileID: 8071053466529517499}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4414914191249521190}
   - component: {fileID: 8362818699511522305}
   - component: {fileID: 853070737039634182}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -226,6 +226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   playerController: {fileID: 0}
+  projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
+  areaProjectilePrefab: {fileID: 0}
+  firePoint: {fileID: 3441464347575586267}
+  attackMode: 0
   currentElement: 0
   magazineSize: 6
   currentAmmo: 6
@@ -252,9 +256,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   autoFillAmmoOnStart: 0
-  projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
-  firePoint: {fileID: 3441464347575586267}
-  attackMode: 0
+  logDebug: 1
 --- !u!114 &4414914191249521190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4011329203812902406}
   - component: {fileID: 6816275272328849509}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: robe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +452,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7698216818562588890}
   - component: {fileID: 2549405749828081520}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: gun_basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3545476986091511963}
   - component: {fileID: 98239737323700513}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5751439433685457112}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8275349147321563684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8085183591722813517}
   - component: {fileID: 7983641457894311437}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: arm (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3441464347575586267}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -824,7 +826,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8298603365660182172}
   - component: {fileID: 7217915931072091635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +917,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6866631829450589206}
   - component: {fileID: 1756990881243538983}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
