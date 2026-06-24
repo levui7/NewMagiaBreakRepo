@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3928101c2820f645a8928a87e985b9b, type: 3}
+  m_Name: RunLevelRouteDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::RunLevelRouteDatabase
+  levelPools:
+  - poolName: Level_1
+    orderIndex: 0
+    sceneNames:
+    - Level_01_A
+    - Level_01_B
+    - Level_01_C
+    allowSameAsPreviousStage: 0
+  - poolName: Level_2
+    orderIndex: 1
+    sceneNames:
+    - Level_02_A
+    - Level_02_B
+    - Level_02_C
+    allowSameAsPreviousStage: 0
+  - poolName: Level_3
+    orderIndex: 2
+    sceneNames:
+    - Level_03_A
+    - Level_03_B
+    - Level_03_C
+    allowSameAsPreviousStage: 0
+  finalSceneName: VictoryScreen

@@ -259,13 +259,17 @@ public class StatusEffectController : MonoBehaviour
 
     private void RefreshVisuals()
     {
-        if (waterOverlay != null) waterOverlay.SetActive(hasWater);
-        if (fireOverlay != null) fireOverlay.SetActive(hasFire);
-        if (steamOverlay != null) steamOverlay.SetActive(hasSteam);
-        if (smolderingOverlay != null) smolderingOverlay.SetActive(hasSmoldering);
+        if (waterOverlay != null)
+            waterOverlay.SetActive(hasWater);
 
-        if (player != null && UIManager.instance != null)
-            UIManager.instance.UpdateStatus(player.playerID, GetStatusDebugString());
+        if (fireOverlay != null)
+            fireOverlay.SetActive(hasFire);
+
+        if (steamOverlay != null)
+            steamOverlay.SetActive(hasSteam);
+
+        if (smolderingOverlay != null)
+            smolderingOverlay.SetActive(hasSmoldering);
     }
 
     private void StopRoutine(ref Coroutine routine)

@@ -9,7 +9,12 @@ public class LobbyShopUIController : MonoBehaviour
     public TextMeshProUGUI helpText;
     public TextMeshProUGUI resultText;
 
-    [Header("Buttons")]
+    [Header("New Weapon Upgrade Buttons")]
+    public Button singleDamageButton;
+    public Button areaDamageButton;
+    public Button fireRateButton;
+
+    [Header("Old / Other Upgrade Buttons")]
     public Button damageButton;
     public Button healthButton;
     public Button speedButton;
@@ -22,8 +27,18 @@ public class LobbyShopUIController : MonoBehaviour
     {
         RefreshUI();
 
+        if (singleDamageButton != null)
+            singleDamageButton.onClick.AddListener(BuySingleDamage);
+
+        if (areaDamageButton != null)
+            areaDamageButton.onClick.AddListener(BuyAreaDamage);
+
+        if (fireRateButton != null)
+            fireRateButton.onClick.AddListener(BuyFireRate);
+
+        // Старую кнопку урона можно оставить: она будет покупать одиночный урон.
         if (damageButton != null)
-            damageButton.onClick.AddListener(BuyDamage);
+            damageButton.onClick.AddListener(BuySingleDamage);
 
         if (healthButton != null)
             healthButton.onClick.AddListener(BuyHealth);
@@ -34,17 +49,18 @@ public class LobbyShopUIController : MonoBehaviour
         if (closeButton != null)
             closeButton.onClick.AddListener(CloseShop);
 
-        shopPanel.SetActive(false);
+        if (shopPanel != null)
+            shopPanel.SetActive(false);
     }
 
     public void OpenShop()
-{
-    shopPanel.SetActive(true);
+    {
+        if (shopPanel != null)
+            shopPanel.SetActive(true);
 
-    Time.timeScale = 0f;
-
-    RefreshUI();
-}
+        Time.timeScale = 0f;
+        RefreshUI();
+    }
 
     public void CloseShop()
     {
@@ -54,10 +70,27 @@ public class LobbyShopUIController : MonoBehaviour
             shopPanel.SetActive(false);
     }
 
+    public void BuySingleDamage()
+    {
+        bool ok = PlayerProgressManager.Instance != null && PlayerProgressManager.Instance.UpgradeSingleDamage();
+        ShowResult(ok, "Урон одиночного выстрела улучшен");
+    }
+
+    public void BuyAreaDamage()
+    {
+        bool ok = PlayerProgressManager.Instance != null && PlayerProgressManager.Instance.UpgradeAreaDamage();
+        ShowResult(ok, "Урон выстрела по площади улучшен");
+    }
+
+    public void BuyFireRate()
+    {
+        bool ok = PlayerProgressManager.Instance != null && PlayerProgressManager.Instance.UpgradeFireRate();
+        ShowResult(ok, "Скорострельность улучшена");
+    }
+
     public void BuyDamage()
     {
-        bool ok = PlayerProgressManager.Instance != null && PlayerProgressManager.Instance.UpgradeDamage();
-        ShowResult(ok, "Урон улучшен");
+        BuySingleDamage();
     }
 
     public void BuyHealth()
@@ -69,13 +102,13 @@ public class LobbyShopUIController : MonoBehaviour
     public void BuySpeed()
     {
         bool ok = PlayerProgressManager.Instance != null && PlayerProgressManager.Instance.UpgradeSpeed();
-        ShowResult(ok, "Скорость улучшена");
+        ShowResult(ok, "Скорость передвижения улучшена");
     }
 
     private void ShowResult(bool success, string successText)
     {
         if (resultText != null)
-            resultText.text = success ? successText : "Недостаточно ресурсов";
+            resultText.text = success ? successText : "Недостаточно ресурсов или достигнут максимум";
 
         RefreshUI();
     }
@@ -91,7 +124,8 @@ public class LobbyShopUIController : MonoBehaviour
         if (helpText != null)
         {
             helpText.text =
-                "Улучшения действуют на все последующие забеги";
+                "Улучшения действуют на текущее оружие и следующие забеги\n\n" +
+                PlayerProgressManager.Instance.GetUpgradeHelpText();
         }
     }
 }

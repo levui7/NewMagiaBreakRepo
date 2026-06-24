@@ -16,17 +16,30 @@ public class PlayerProgressManager : MonoBehaviour
     public int crystals = 0;
 
     [Header("Upgrade Levels")]
-    public int damageLevel = 0;
+    public int singleDamageLevel = 0;
+    public int areaDamageLevel = 0;
+    public int fireRateLevel = 0;
     public int healthLevel = 0;
     public int speedLevel = 0;
 
+    // Старое имя оставлено для совместимости со старыми вызовами UpgradeDamage().
+    public int damageLevel
+    {
+        get => singleDamageLevel;
+        set => singleDamageLevel = value;
+    }
+
     [Header("Upgrade Limits")]
-    public int maxDamageLevel = 5;
+    public int maxSingleDamageLevel = 5;
+    public int maxAreaDamageLevel = 5;
+    public int maxFireRateLevel = 5;
     public int maxHealthLevel = 5;
     public int maxSpeedLevel = 5;
 
     [Header("Upgrade Bonuses")]
-    public float damageBonusPerLevel = 2f;
+    public float singleDamageBonusPerLevel = 2f;
+    public float areaDamageBonusPerLevel = 1.5f;
+    public float fireRateBonusPerLevel = 0.08f;
     public float healthBonusPerLevel = 20f;
     public float speedBonusPerLevel = 0.35f;
 
@@ -38,7 +51,11 @@ public class PlayerProgressManager : MonoBehaviour
 
     private const string CoinsKey = "Progress_Coins";
     private const string CrystalsKey = "Progress_Crystals";
-    private const string DamageLevelKey = "Progress_DamageLevel";
+
+    private const string OldDamageLevelKey = "Progress_DamageLevel";
+    private const string SingleDamageLevelKey = "Progress_SingleDamageLevel";
+    private const string AreaDamageLevelKey = "Progress_AreaDamageLevel";
+    private const string FireRateLevelKey = "Progress_FireRateLevel";
     private const string HealthLevelKey = "Progress_HealthLevel";
     private const string SpeedLevelKey = "Progress_SpeedLevel";
 
@@ -83,9 +100,7 @@ public class PlayerProgressManager : MonoBehaviour
         OnProgressChanged?.Invoke();
 
         if (UIManager.Instance != null)
-        {
             UIManager.Instance.RefreshResourceHUD();
-        }
     }
 
     public bool TrySpend(int coinCost, int crystalCost)
@@ -105,32 +120,52 @@ public class PlayerProgressManager : MonoBehaviour
         OnProgressChanged?.Invoke();
 
         if (UIManager.Instance != null)
-        {
             UIManager.Instance.RefreshResourceHUD();
-        }
 
         return true;
     }
 
     public bool UpgradeDamage()
     {
-        if (damageLevel >= maxDamageLevel)
+        return UpgradeSingleDamage();
+    }
+
+    public bool UpgradeSingleDamage()
+    {
+        if (singleDamageLevel >= maxSingleDamageLevel)
             return false;
 
-        int coinCost = GetDamageCoinCost();
-        int crystalCost = GetDamageCrystalCost();
-
-        if (!TrySpend(coinCost, crystalCost))
+        if (!TrySpend(GetSingleDamageCoinCost(), GetSingleDamageCrystalCost()))
             return false;
 
-        damageLevel++;
-        ApplyUpgradesToAllPlayers();
+        singleDamageLevel++;
+        AfterUpgradeChanged();
+        return true;
+    }
 
-        if (saveOnEveryChange)
-            SaveProgress();
+    public bool UpgradeAreaDamage()
+    {
+        if (areaDamageLevel >= maxAreaDamageLevel)
+            return false;
 
-        OnProgressChanged?.Invoke();
+        if (!TrySpend(GetAreaDamageCoinCost(), GetAreaDamageCrystalCost()))
+            return false;
 
+        areaDamageLevel++;
+        AfterUpgradeChanged();
+        return true;
+    }
+
+    public bool UpgradeFireRate()
+    {
+        if (fireRateLevel >= maxFireRateLevel)
+            return false;
+
+        if (!TrySpend(GetFireRateCoinCost(), GetFireRateCrystalCost()))
+            return false;
+
+        fireRateLevel++;
+        AfterUpgradeChanged();
         return true;
     }
 
@@ -139,20 +174,11 @@ public class PlayerProgressManager : MonoBehaviour
         if (healthLevel >= maxHealthLevel)
             return false;
 
-        int coinCost = GetHealthCoinCost();
-        int crystalCost = GetHealthCrystalCost();
-
-        if (!TrySpend(coinCost, crystalCost))
+        if (!TrySpend(GetHealthCoinCost(), GetHealthCrystalCost()))
             return false;
 
         healthLevel++;
-        ApplyUpgradesToAllPlayers();
-
-        if (saveOnEveryChange)
-            SaveProgress();
-
-        OnProgressChanged?.Invoke();
-
+        AfterUpgradeChanged();
         return true;
     }
 
@@ -161,21 +187,22 @@ public class PlayerProgressManager : MonoBehaviour
         if (speedLevel >= maxSpeedLevel)
             return false;
 
-        int coinCost = GetSpeedCoinCost();
-        int crystalCost = GetSpeedCrystalCost();
-
-        if (!TrySpend(coinCost, crystalCost))
+        if (!TrySpend(GetSpeedCoinCost(), GetSpeedCrystalCost()))
             return false;
 
         speedLevel++;
+        AfterUpgradeChanged();
+        return true;
+    }
+
+    private void AfterUpgradeChanged()
+    {
         ApplyUpgradesToAllPlayers();
 
         if (saveOnEveryChange)
             SaveProgress();
 
         OnProgressChanged?.Invoke();
-
-        return true;
     }
 
     public void ApplyUpgradesToAllPlayers()
@@ -197,7 +224,6 @@ public class PlayerProgressManager : MonoBehaviour
         player.moveSpeed = 5f + speedLevel * speedBonusPerLevel;
 
         bool wasFullHealth = player.currentHealth >= player.maxHealth - 0.01f;
-
         player.maxHealth = 100f + healthLevel * healthBonusPerLevel;
 
         if (wasFullHealth)
@@ -209,19 +235,37 @@ public class PlayerProgressManager : MonoBehaviour
 
         if (weapon != null)
         {
-            weapon.physicalDamage = 10f + damageLevel * damageBonusPerLevel;
-            weapon.fireDamage = 8f + damageLevel * damageBonusPerLevel;
-            weapon.waterDamage = 8f + damageLevel * damageBonusPerLevel;
+            weapon.ApplyPermanentUpgrades(
+                GetSingleDamageBonus(),
+                GetAreaDamageBonus(),
+                GetFireCooldownMultiplier());
         }
 
         if (UIManager.Instance != null)
             UIManager.Instance.UpdatePlayerHUD(player, weapon);
     }
 
+    public float GetSingleDamageBonus()
+    {
+        return singleDamageLevel * singleDamageBonusPerLevel;
+    }
+
+    public float GetAreaDamageBonus()
+    {
+        return areaDamageLevel * areaDamageBonusPerLevel;
+    }
+
+    public float GetFireCooldownMultiplier()
+    {
+        return Mathf.Max(0.25f, 1f - fireRateLevel * fireRateBonusPerLevel);
+    }
+
     public float GetEnemyHealthMultiplier()
     {
         return 1f
-               + damageLevel * 0.15f
+               + singleDamageLevel * 0.12f
+               + areaDamageLevel * 0.10f
+               + fireRateLevel * 0.08f
                + healthLevel * 0.25f
                + speedLevel * 0.10f;
     }
@@ -229,7 +273,9 @@ public class PlayerProgressManager : MonoBehaviour
     public float GetEnemyDamageMultiplier()
     {
         return 1f
-               + damageLevel * 0.12f
+               + singleDamageLevel * 0.10f
+               + areaDamageLevel * 0.08f
+               + fireRateLevel * 0.06f
                + healthLevel * 0.18f
                + speedLevel * 0.08f;
     }
@@ -237,19 +283,41 @@ public class PlayerProgressManager : MonoBehaviour
     public float GetEnemySpeedMultiplier()
     {
         return 1f
-               + damageLevel * 0.05f
+               + singleDamageLevel * 0.03f
+               + areaDamageLevel * 0.03f
+               + fireRateLevel * 0.06f
                + healthLevel * 0.05f
                + speedLevel * 0.12f;
     }
 
-    public int GetDamageCoinCost()
+    public int GetSingleDamageCoinCost()
     {
-        return 10 + damageLevel * 8;
+        return 10 + singleDamageLevel * 8;
     }
 
-    public int GetDamageCrystalCost()
+    public int GetSingleDamageCrystalCost()
     {
-        return damageLevel >= 2 ? 1 + damageLevel : 0;
+        return singleDamageLevel >= 2 ? 1 + singleDamageLevel : 0;
+    }
+
+    public int GetAreaDamageCoinCost()
+    {
+        return 12 + areaDamageLevel * 9;
+    }
+
+    public int GetAreaDamageCrystalCost()
+    {
+        return areaDamageLevel >= 2 ? 1 + areaDamageLevel : 0;
+    }
+
+    public int GetFireRateCoinCost()
+    {
+        return 14 + fireRateLevel * 10;
+    }
+
+    public int GetFireRateCrystalCost()
+    {
+        return fireRateLevel >= 2 ? 1 + fireRateLevel : 0;
     }
 
     public int GetHealthCoinCost()
@@ -272,28 +340,56 @@ public class PlayerProgressManager : MonoBehaviour
         return speedLevel >= 3 ? 1 + speedLevel : 0;
     }
 
+    // Старые имена оставлены для совместимости.
+    public int GetDamageCoinCost() => GetSingleDamageCoinCost();
+    public int GetDamageCrystalCost() => GetSingleDamageCrystalCost();
+
     public string GetProgressText()
     {
         return
             $"Монеты: {coins} | Кристаллы: {crystals}\n" +
-            $"Урон: {damageLevel}/{maxDamageLevel} | HP: {healthLevel}/{maxHealthLevel} | Скорость: {speedLevel}/{maxSpeedLevel}";
+            $"Одиночный урон: {singleDamageLevel}/{maxSingleDamageLevel} | " +
+            $"Урон по площади: {areaDamageLevel}/{maxAreaDamageLevel}\n" +
+            $"Скорострельность: {fireRateLevel}/{maxFireRateLevel} | " +
+            $"HP: {healthLevel}/{maxHealthLevel} | " +
+            $"Скорость: {speedLevel}/{maxSpeedLevel}";
     }
 
     public string GetUpgradeHelpText()
     {
         return
-            $"F — Урон: {GetDamageCostText()}\n" +
-            $"G — Здоровье: {GetHealthCostText()}\n" +
-            $"H — Скорость: {GetSpeedCostText()}";
+            $"Одиночный урон: {GetSingleDamageCostText()}\n" +
+            $"Урон по площади: {GetAreaDamageCostText()}\n" +
+            $"Скорострельность: {GetFireRateCostText()}\n" +
+            $"Здоровье: {GetHealthCostText()}\n" +
+            $"Скорость: {GetSpeedCostText()}";
     }
 
-    public string GetDamageCostText()
+    public string GetSingleDamageCostText()
     {
-        if (damageLevel >= maxDamageLevel)
+        if (singleDamageLevel >= maxSingleDamageLevel)
             return "максимум";
 
-        return $"{GetDamageCoinCost()} монет, {GetDamageCrystalCost()} крист.";
+        return $"{GetSingleDamageCoinCost()} монет, {GetSingleDamageCrystalCost()} крист.";
     }
+
+    public string GetAreaDamageCostText()
+    {
+        if (areaDamageLevel >= maxAreaDamageLevel)
+            return "максимум";
+
+        return $"{GetAreaDamageCoinCost()} монет, {GetAreaDamageCrystalCost()} крист.";
+    }
+
+    public string GetFireRateCostText()
+    {
+        if (fireRateLevel >= maxFireRateLevel)
+            return "максимум";
+
+        return $"{GetFireRateCoinCost()} монет, {GetFireRateCrystalCost()} крист.";
+    }
+
+    public string GetDamageCostText() => GetSingleDamageCostText();
 
     public string GetHealthCostText()
     {
@@ -315,9 +411,14 @@ public class PlayerProgressManager : MonoBehaviour
     {
         PlayerPrefs.SetInt(CoinsKey, coins);
         PlayerPrefs.SetInt(CrystalsKey, crystals);
-        PlayerPrefs.SetInt(DamageLevelKey, damageLevel);
+        PlayerPrefs.SetInt(SingleDamageLevelKey, singleDamageLevel);
+        PlayerPrefs.SetInt(AreaDamageLevelKey, areaDamageLevel);
+        PlayerPrefs.SetInt(FireRateLevelKey, fireRateLevel);
         PlayerPrefs.SetInt(HealthLevelKey, healthLevel);
         PlayerPrefs.SetInt(SpeedLevelKey, speedLevel);
+
+        // Дублируем в старый ключ, чтобы старые куски проекта не сломались.
+        PlayerPrefs.SetInt(OldDamageLevelKey, singleDamageLevel);
         PlayerPrefs.Save();
     }
 
@@ -326,16 +427,19 @@ public class PlayerProgressManager : MonoBehaviour
         coins = PlayerPrefs.GetInt(CoinsKey, coins);
         crystals = PlayerPrefs.GetInt(CrystalsKey, crystals);
 
-        damageLevel = PlayerPrefs.GetInt(DamageLevelKey, damageLevel);
+        singleDamageLevel = PlayerPrefs.GetInt(
+            SingleDamageLevelKey,
+            PlayerPrefs.GetInt(OldDamageLevelKey, singleDamageLevel));
+
+        areaDamageLevel = PlayerPrefs.GetInt(AreaDamageLevelKey, areaDamageLevel);
+        fireRateLevel = PlayerPrefs.GetInt(FireRateLevelKey, fireRateLevel);
         healthLevel = PlayerPrefs.GetInt(HealthLevelKey, healthLevel);
         speedLevel = PlayerPrefs.GetInt(SpeedLevelKey, speedLevel);
 
         OnProgressChanged?.Invoke();
 
         if (UIManager.Instance != null)
-        {
             UIManager.Instance.RefreshResourceHUD();
-        }
     }
 
     public void ResetProgress()
@@ -343,18 +447,17 @@ public class PlayerProgressManager : MonoBehaviour
         coins = 0;
         crystals = 0;
 
-        damageLevel = 0;
+        singleDamageLevel = 0;
+        areaDamageLevel = 0;
+        fireRateLevel = 0;
         healthLevel = 0;
         speedLevel = 0;
 
         SaveProgress();
-
         OnProgressChanged?.Invoke();
 
         if (UIManager.Instance != null)
-        {
             UIManager.Instance.RefreshResourceHUD();
-        }
     }
 
     private void OnApplicationPause(bool pause)

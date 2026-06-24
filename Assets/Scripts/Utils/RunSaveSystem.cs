@@ -17,10 +17,14 @@ public static class RunSaveSystem
 
         ResetPermanentProgress();
         ClearRunState();
+        RunLevelRouteManager.ClearSavedRoute();
 
         GameSessionManager session = GameSessionManager.Instance;
         if (session != null)
             session.ResetSessionState();
+
+        if (RunLevelRouteManager.Instance != null)
+            RunLevelRouteManager.Instance.StartNewRoute();
 
         SaveCheckpoint(lobbySceneName);
     }
@@ -80,18 +84,14 @@ public static class RunSaveSystem
         PlayerPrefs.DeleteKey("Player1_HP");
         PlayerPrefs.DeleteKey("Player2_HP");
 
+        RunLevelRouteManager.ClearSavedRoute();
+
         PlayerPrefs.Save();
 
-        if (clearInventory)
-        {
-            if (PlayerInventoryManager.Instance != null)
-                PlayerInventoryManager.Instance.ResetInventory(false);
-
-            PlayerInventoryManager.ClearSavedInventoryPrefs();
-        }
+        if (clearInventory && PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.ResetInventory();
 
         GameSessionManager session = GameSessionManager.Instance;
-
         if (session != null)
             session.ResetSessionState();
     }
@@ -113,8 +113,6 @@ public static class RunSaveSystem
         }
 
         if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.ResetInventory(false);
-
-        PlayerInventoryManager.ClearSavedInventoryPrefs();
+            PlayerInventoryManager.Instance.ResetInventory();
     }
 }

@@ -197,8 +197,8 @@ MonoBehaviour:
   dashSpeed: 15
   dashDuration: 0.2
   dashCooldown: 1
-  maxHealth: 1000
-  currentHealth: 1000
+  maxHealth: 100
+  currentHealth: 100
   godMode: 0
   weaponPivot: {fileID: 7698216818562588890}
   fireRate: 0.2
@@ -238,7 +238,6 @@ MonoBehaviour:
   autoFillAmmoOnStart: 0
   projectilePrefab: {fileID: 8482464033735268548, guid: ae25a63a562d63d41b02eb027c708a20, type: 3}
   firePoint: {fileID: 3441464347575586267}
-  selectedElement: 0
   attackMode: 0
 --- !u!114 &4414914191249521190
 MonoBehaviour:

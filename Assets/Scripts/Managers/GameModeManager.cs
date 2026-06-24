@@ -15,14 +15,10 @@ public class GameModeManager : MonoBehaviour
         RunSaveSystem.SaveCheckpoint(SceneManager.GetActiveScene().name);
 
         if (playerPrefab == null)
-        {
             return;
-        }
 
         if (spawnPoints == null || spawnPoints.Length == 0 || spawnPoints[0] == null)
-        {
             return;
-        }
 
         if (resetHealthInThisScene)
         {
@@ -47,24 +43,15 @@ public class GameModeManager : MonoBehaviour
     {
         GameObject playerObject = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        PlayerController player = playerObject.GetComponent<PlayerController>();
-
-        player.playerID = playerID;
-
-        if (PlayerProgressManager.Instance != null)
-            PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);
-
-        // Важно: если сам prefab Player был сохранён выключенным в Project/Prefabs,
-        // Unity создаёт его тоже выключенным. Из-за этого игрок виден в иерархии серым.
         if (!playerObject.activeSelf)
             playerObject.SetActive(true);
 
-        // PlayerController player = playerObject.GetComponent<PlayerController>();
+        PlayerController player = playerObject.GetComponent<PlayerController>();
 
         if (player == null)
-        {
             return;
-        }
+
+        player.playerID = playerID;
 
         WeaponManager weapon = playerObject.GetComponent<WeaponManager>();
 
@@ -72,19 +59,18 @@ public class GameModeManager : MonoBehaviour
             PlayerInventoryManager.Instance.LoadToWeapon(weapon);
 
         if (weapon != null && WeaponConfigManager.Instance != null)
-        {
-            weapon.attackMode = WeaponConfigManager.Instance.selectedAttackMode;
-        }
+            WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+
+        if (PlayerProgressManager.Instance != null)
+            PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);
 
         string hpKey = $"Player{playerID}_HP";
         if (PlayerPrefs.HasKey(hpKey))
             player.SetHealth(PlayerPrefs.GetInt(hpKey));
 
-        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        CameraFollow cameraFollow = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
 
         if (cameraFollow != null)
-        {
             cameraFollow.SetPlayer(playerID, playerObject.transform);
-        }
     }
 }

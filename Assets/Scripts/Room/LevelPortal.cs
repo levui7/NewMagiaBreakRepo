@@ -4,7 +4,11 @@ using UnityEngine.SceneManagement;
 public class LevelPortal : MonoBehaviour
 {
     [Header("Переход")]
+    [Tooltip("Запасная сцена. Используется, если случайный маршрут не настроен.")]
     public string nextSceneName = "Level_01";
+
+    [Tooltip("Если включено, портал берёт следующую сцену из случайного маршрута забега.")]
+    public bool useRandomRunRoute = true;
 
     [Header("Лечение перед переходом")]
     public int healBeforeNextLevel = 30;
@@ -23,9 +27,23 @@ public class LevelPortal : MonoBehaviour
 
         used = true;
 
+        HealBeforeTransition(player);
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+
+        string targetSceneName = GetTargetSceneName();
+
+        RunSaveSystem.SaveRunState(targetSceneName);
+        SceneManager.LoadScene(targetSceneName);
+    }
+
+    private void HealBeforeTransition(PlayerController triggeringPlayer)
+    {
         if (healAllPlayers)
         {
             PlayerController[] players = FindObjectsOfType<PlayerController>();
+
             foreach (PlayerController p in players)
             {
                 if (p != null && p.gameObject.activeSelf)
@@ -34,16 +52,15 @@ public class LevelPortal : MonoBehaviour
         }
         else
         {
-            player.Heal(healBeforeNextLevel);
+            triggeringPlayer.Heal(healBeforeNextLevel);
         }
+    }
 
-        if (PlayerInventoryManager.Instance != null)
-        {
-            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
-        }
+    private string GetTargetSceneName()
+    {
+        if (useRandomRunRoute && RunLevelRouteManager.Instance != null)
+            return RunLevelRouteManager.Instance.GetNextScene(nextSceneName);
 
-        RunSaveSystem.SaveRunState(nextSceneName);
-
-        SceneManager.LoadScene(nextSceneName);
+        return nextSceneName;
     }
 }
