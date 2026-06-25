@@ -119,9 +119,6 @@ public class WeaponConfigManager : MonoBehaviour
             }
         }
 
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveFromWeapon(weapon);
-
         if (logDebug)
         {
             Debug.Log(

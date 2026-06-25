@@ -54,10 +54,6 @@ public static class RunSaveSystem
     public static void SaveRunState(string nextSceneName)
     {
         SavePlayerHealth();
-
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
-
         SaveCheckpoint(nextSceneName);
     }
 

@@ -398,9 +398,6 @@ public class BossController : MonoBehaviour
         if (lootDropper != null)
             lootDropper.DropLoot();
 
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
-
         if (characterAnimation != null)
             characterAnimation.PlayDeath();
 

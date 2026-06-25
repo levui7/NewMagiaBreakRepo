@@ -166,15 +166,6 @@ public class PlayerController : MonoBehaviour
             moveInput.Normalize();
     }
 
-    //private void Move()
-    //{
-    //    float speed = isDashing ? dashSpeed : GetEffectiveMoveSpeed();
-    //    rb.linearVelocity = moveInput * speed;
-
-    //    if (characterAnimation != null)
-    //        characterAnimation.SetSpeed(moveInput.magnitude);
-    //}
-
     private void Move()
     {
         float speed = isDashing ? dashSpeed : GetEffectiveMoveSpeed();

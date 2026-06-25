@@ -13,9 +13,6 @@ public class IceMine2D : MonoBehaviour
     public float iceZoneLifetime = 5f;
     public float iceTickInterval = 1f;
 
-    //[Header("Visual")]
-    //public GameObject explosionVisualPrefab;
-
     [Header("Visual")]
     [Tooltip("Префаб с партиклами взрыва")]
     public GameObject explosionVisualPrefab;

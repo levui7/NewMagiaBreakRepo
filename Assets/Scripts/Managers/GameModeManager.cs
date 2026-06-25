@@ -67,7 +67,22 @@ public class GameModeManager : MonoBehaviour
 
         if (weapon != null)
         {
-            StartCoroutine(InitializePlayerWeapon(player, weapon));
+            if (PlayerInventoryManager.Instance != null)
+            {
+                if (playerID == 1)
+                {
+                    weapon.BindInventory(
+                        PlayerInventoryManager.Instance.player1);
+                }
+                else
+                {
+                    weapon.BindInventory(
+                        PlayerInventoryManager.Instance.player2);
+                }
+            }
+
+            StartCoroutine(
+                InitializePlayerWeapon(player, weapon));
         }
 
         if (PlayerProgressManager.Instance != null)
@@ -103,13 +118,13 @@ public class GameModeManager : MonoBehaviour
     {
         yield return null;
 
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.LoadToWeapon(weapon);
-
         weapon.ValidateElementAfterLoad();
 
         if (WeaponConfigManager.Instance != null)
-            WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+        {
+            WeaponConfigManager.Instance
+                .ApplyAttackModeOnly(weapon);
+        }
 
         weapon.RefreshUIFromOutside();
     }

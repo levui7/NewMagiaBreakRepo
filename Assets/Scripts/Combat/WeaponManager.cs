@@ -69,6 +69,8 @@ public class WeaponManager : MonoBehaviour
     public int FireAmmo => fireAmmo;
     public int WaterAmmo => waterAmmo;
 
+    private PlayerWeaponData inventoryData;
+
     private void Awake()
     {
         if (playerController == null)
@@ -194,14 +196,12 @@ public class WeaponManager : MonoBehaviour
                 Debug.LogWarning(
                     $"WeaponManager {name}: нельзя переключиться на Fire, FireAmmo={fireAmmo}");
 
-                ValidateElementAfterLoad();
-                SaveInventory();
+                ValidateElementAfterLoad();;
                 RefreshUI();
                 return;
             }
 
             currentElement = Element.Fire;
-            SaveInventory();
             RefreshUI();
 
             if (logDebug)
@@ -218,14 +218,13 @@ public class WeaponManager : MonoBehaviour
                     $"WeaponManager {name}: нельзя переключиться на Water, WaterAmmo={waterAmmo}");
 
                 ValidateElementAfterLoad();
-                SaveInventory();
                 RefreshUI();
                 return;
             }
 
             currentElement = Element.Water;
-            SaveInventory();
             RefreshUI();
+            SyncInventory();
 
             if (logDebug)
                 Debug.Log($"WeaponManager {name}: активная стихия установлена Water");
@@ -234,11 +233,11 @@ public class WeaponManager : MonoBehaviour
         }
 
         currentElement = Element.Physical;
-        SaveInventory();
         RefreshUI();
 
         if (logDebug)
             Debug.Log($"WeaponManager {name}: активная стихия установлена Physical");
+
     }
 
     public void ForceSetElementAfterLoad(Element loadedElement)
@@ -337,7 +336,6 @@ public class WeaponManager : MonoBehaviour
         }
 
         ValidateElementAfterLoad();
-        SaveInventory();
         RefreshUI();
     }
 
@@ -477,9 +475,9 @@ public class WeaponManager : MonoBehaviour
             if (fireAmmo <= 0)
                 ValidateElementAfterLoad();
 
-            SaveInventory();
             RefreshUI();
             return;
+            SyncInventory();
         }
 
         if (currentElement == Element.Water)
@@ -492,7 +490,6 @@ public class WeaponManager : MonoBehaviour
             if (waterAmmo <= 0)
                 ValidateElementAfterLoad();
 
-            SaveInventory();
             RefreshUI();
             return;
         }
@@ -505,13 +502,11 @@ public class WeaponManager : MonoBehaviour
         if (logDebug)
             Debug.Log($"WeaponManager {name}: потрачен физический патрон. CurrentAmmo={currentAmmo}");
 
-        SaveInventory();
         RefreshUI();
     }
 
     public void Reload()
     {
-        SaveInventory();
         RefreshUI();
     }
 
@@ -523,9 +518,8 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = magazineSize;
+        SyncInventory();
         isReloading = false;
-
-        SaveInventory();
         RefreshUI();
     }
 
@@ -587,8 +581,8 @@ public class WeaponManager : MonoBehaviour
         if (currentElement == Element.Physical)
             currentElement = Element.Fire;
 
-        SaveInventory();
         RefreshUI();
+        SyncInventory();
     }
 
     public void AddWaterAmmo(int amount)
@@ -598,8 +592,8 @@ public class WeaponManager : MonoBehaviour
         if (currentElement == Element.Physical)
             currentElement = Element.Water;
 
-        SaveInventory();
         RefreshUI();
+        SyncInventory();
     }
 
     public void AddElementAmmo(Element element, int amount)
@@ -628,8 +622,8 @@ public class WeaponManager : MonoBehaviour
                 $"FireAmmo={fireAmmo}, WaterAmmo={waterAmmo}, CurrentElement={currentElement}");
         }
 
-        SaveInventory();
         RefreshUI();
+        SyncInventory();
     }
 
     public string GetElementNameRu()
@@ -677,12 +671,6 @@ public class WeaponManager : MonoBehaviour
             $"Огонь:{fireAmmo} | Вода:{waterAmmo}";
     }
 
-    private void SaveInventory()
-    {
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveFromWeapon(this);
-    }
-
     public void RefreshUIFromOutside()
     {
         RefreshUI();
@@ -692,5 +680,45 @@ public class WeaponManager : MonoBehaviour
     {
         if (UIManager.Instance != null)
             UIManager.Instance.UpdatePlayerHUD(playerController, this);
+    }
+
+    public void BindInventory(PlayerWeaponData data)
+    {
+        inventoryData = data;
+
+        if (inventoryData == null)
+            return;
+
+        currentAmmo =
+            inventoryData.currentAmmo;
+
+        fireAmmo =
+            inventoryData.fireAmmo;
+
+        waterAmmo =
+            inventoryData.waterAmmo;
+
+        currentElement =
+            inventoryData.currentElement;
+
+        RefreshUI();
+    }
+
+    private void SyncInventory()
+    {
+        if (inventoryData == null)
+            return;
+
+        inventoryData.currentAmmo =
+            currentAmmo;
+
+        inventoryData.fireAmmo =
+            fireAmmo;
+
+        inventoryData.waterAmmo =
+            waterAmmo;
+
+        inventoryData.currentElement =
+            currentElement;
     }
 }

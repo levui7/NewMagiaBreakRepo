@@ -29,9 +29,6 @@ public class LevelPortal : MonoBehaviour
 
         HealBeforeTransition(player);
 
-        if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
-
         string targetSceneName = GetTargetSceneName();
 
         RunSaveSystem.SaveRunState(targetSceneName);

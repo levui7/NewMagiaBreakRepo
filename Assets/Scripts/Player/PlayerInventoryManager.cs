@@ -4,17 +4,13 @@ public class PlayerInventoryManager : MonoBehaviour
 {
     public static PlayerInventoryManager Instance { get; private set; }
 
-    [Header("Player 1 Ammo")]
-    public int p1CurrentAmmo = 6;
-    public int p1FireAmmo = 0;
-    public int p1WaterAmmo = 0;
-    public Element p1CurrentElement = Element.Physical;
+    [Header("Player 1")]
+    public PlayerWeaponData player1 =
+    new PlayerWeaponData();
 
-    [Header("Player 2 Ammo")]
-    public int p2CurrentAmmo = 6;
-    public int p2FireAmmo = 0;
-    public int p2WaterAmmo = 0;
-    public Element p2CurrentElement = Element.Physical;
+    [Header("Player 2")]
+    public PlayerWeaponData player2 =
+        new PlayerWeaponData();
 
     [Header("Magazine")]
     public int magazineSize = 6;
@@ -49,108 +45,21 @@ public class PlayerInventoryManager : MonoBehaviour
         LoadInventoryFromPrefs();
     }
 
-    public void SaveFromWeapon(WeaponManager weapon)
-    {
-        if (weapon == null || weapon.playerController == null)
-        {
-            Debug.Log("LOAD TO WEAPON ABORT");
-            return;
-        }
-
-        int id = weapon.playerController.playerID;
-
-        if (id == 2)
-        {
-            p2CurrentAmmo = Mathf.Clamp(weapon.currentAmmo, 0, weapon.magazineSize);
-            p2FireAmmo = Mathf.Max(0, weapon.fireAmmo);
-            p2WaterAmmo = Mathf.Max(0, weapon.waterAmmo);
-            p2CurrentElement = weapon.CurrentElement;
-        }
-        else
-        {
-            p1CurrentAmmo = Mathf.Clamp(weapon.currentAmmo, 0, weapon.magazineSize);
-            p1FireAmmo = Mathf.Max(0, weapon.fireAmmo);
-            p1WaterAmmo = Mathf.Max(0, weapon.waterAmmo);
-            p1CurrentElement = weapon.CurrentElement;
-        }
-
-        magazineSize = Mathf.Max(1, weapon.magazineSize);
-        SaveInventoryToPrefs();
-
-        Debug.Log(
-            $"PlayerInventoryManager SAVE FROM WEAPON P{id}: " +
-            $"PhysicalAmmo={weapon.currentAmmo}, " +
-            $"FireAmmo={weapon.fireAmmo}, " +
-            $"WaterAmmo={weapon.waterAmmo}, " +
-            $"SavedElement={weapon.CurrentElement}");
-    }
-
-    public void LoadToWeapon(WeaponManager weapon)
-    {
-        if (weapon == null || weapon.playerController == null)
-            return;
-
-        LoadInventoryFromPrefs();
-
-        int id = weapon.playerController.playerID;
-
-        weapon.magazineSize = Mathf.Max(1, magazineSize);
-
-        Element loadedElement;
-
-        if (id == 2)
-        {
-            weapon.currentAmmo = Mathf.Clamp(p2CurrentAmmo, 0, weapon.magazineSize);
-            weapon.fireAmmo = Mathf.Max(0, p2FireAmmo);
-            weapon.waterAmmo = Mathf.Max(0, p2WaterAmmo);
-            loadedElement = p2CurrentElement;
-        }
-        else
-        {
-            weapon.currentAmmo = Mathf.Clamp(p1CurrentAmmo, 0, weapon.magazineSize);
-            weapon.fireAmmo = Mathf.Max(0, p1FireAmmo);
-            weapon.waterAmmo = Mathf.Max(0, p1WaterAmmo);
-            loadedElement = p1CurrentElement;
-        }
-
-        weapon.ForceSetElementAfterLoad(loadedElement);
-        weapon.RefreshUIFromOutside();
-
-        Debug.Log(
-            $"PlayerInventoryManager LOAD TO WEAPON P{id}: " +
-            $"PhysicalAmmo={weapon.currentAmmo}, " +
-            $"FireAmmo={weapon.fireAmmo}, " +
-            $"WaterAmmo={weapon.waterAmmo}, " +
-            $"LoadedElement={loadedElement}, " +
-            $"FinalElement={weapon.CurrentElement}");
-    }
-
-    public void SaveAllWeaponsInScene()
-    {
-        WeaponManager[] weapons = FindObjectsOfType<WeaponManager>();
-
-        foreach (WeaponManager weapon in weapons)
-        {
-            if (weapon != null && weapon.gameObject.activeInHierarchy)
-                SaveFromWeapon(weapon);
-        }
-    }
-
     public void ResetInventory(bool saveToPrefs = true)
     {
         Debug.Log("RESET INVENTORY CALLED");
 
         magazineSize = Mathf.Max(1, magazineSize);
 
-        p1CurrentAmmo = magazineSize;
-        p1FireAmmo = 0;
-        p1WaterAmmo = 0;
-        p1CurrentElement = Element.Physical;
+        player1.currentAmmo = magazineSize;
+        player1.fireAmmo = 0;
+        player1.waterAmmo = 0;
+        player1.currentElement = Element.Physical;
 
-        p2CurrentAmmo = magazineSize;
-        p2FireAmmo = 0;
-        p2WaterAmmo = 0;
-        p2CurrentElement = Element.Physical;
+        player2.currentAmmo = magazineSize;
+        player2.fireAmmo = 0;
+        player2.waterAmmo = 0;
+        player2.currentElement = Element.Physical;
 
         if (saveToPrefs)
             SaveInventoryToPrefs();
@@ -161,15 +70,15 @@ public class PlayerInventoryManager : MonoBehaviour
         PlayerPrefs.SetInt(HasInventoryKey, 1);
         PlayerPrefs.SetInt(MagazineSizeKey, Mathf.Max(1, magazineSize));
 
-        PlayerPrefs.SetInt(P1CurrentAmmoKey, Mathf.Max(0, p1CurrentAmmo));
-        PlayerPrefs.SetInt(P1FireAmmoKey, Mathf.Max(0, p1FireAmmo));
-        PlayerPrefs.SetInt(P1WaterAmmoKey, Mathf.Max(0, p1WaterAmmo));
-        PlayerPrefs.SetInt(P1CurrentElementKey, (int)p1CurrentElement);
+        PlayerPrefs.SetInt(P1CurrentAmmoKey, player1.currentAmmo);
+        PlayerPrefs.SetInt(P1FireAmmoKey, player1.fireAmmo);
+        PlayerPrefs.SetInt(P1WaterAmmoKey, player1.waterAmmo);
+        PlayerPrefs.SetInt(P1CurrentElementKey, (int)player1.currentElement);
 
-        PlayerPrefs.SetInt(P2CurrentAmmoKey, Mathf.Max(0, p2CurrentAmmo));
-        PlayerPrefs.SetInt(P2FireAmmoKey, Mathf.Max(0, p2FireAmmo));
-        PlayerPrefs.SetInt(P2WaterAmmoKey, Mathf.Max(0, p2WaterAmmo));
-        PlayerPrefs.SetInt(P2CurrentElementKey, (int)p2CurrentElement);
+        PlayerPrefs.SetInt(P2CurrentAmmoKey, player2.currentAmmo);
+        PlayerPrefs.SetInt(P2FireAmmoKey, player2.fireAmmo);
+        PlayerPrefs.SetInt(P2WaterAmmoKey, player2.waterAmmo);
+        PlayerPrefs.SetInt(P2CurrentElementKey, (int)player2.currentElement);
 
         PlayerPrefs.Save();
     }
@@ -181,15 +90,15 @@ public class PlayerInventoryManager : MonoBehaviour
 
         magazineSize = Mathf.Max(1, PlayerPrefs.GetInt(MagazineSizeKey, magazineSize));
 
-        p1CurrentAmmo = Mathf.Clamp(PlayerPrefs.GetInt(P1CurrentAmmoKey, p1CurrentAmmo), 0, magazineSize);
-        p1FireAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P1FireAmmoKey, p1FireAmmo));
-        p1WaterAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P1WaterAmmoKey, p1WaterAmmo));
-        p1CurrentElement = IntToElement(PlayerPrefs.GetInt(P1CurrentElementKey, (int)p1CurrentElement));
+        player1.currentAmmo = PlayerPrefs.GetInt(P1CurrentAmmoKey, 6);
+        player1.fireAmmo = PlayerPrefs.GetInt(P1FireAmmoKey, 0);
+        player1.waterAmmo = PlayerPrefs.GetInt(P1WaterAmmoKey, 0);
+        player1.currentElement = IntToElement(PlayerPrefs.GetInt(P1CurrentElementKey, 0));
 
-        p2CurrentAmmo = Mathf.Clamp(PlayerPrefs.GetInt(P2CurrentAmmoKey, p2CurrentAmmo), 0, magazineSize);
-        p2FireAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P2FireAmmoKey, p2FireAmmo));
-        p2WaterAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P2WaterAmmoKey, p2WaterAmmo));
-        p2CurrentElement = IntToElement(PlayerPrefs.GetInt(P2CurrentElementKey, (int)p2CurrentElement));
+        player2.currentAmmo = PlayerPrefs.GetInt(P2CurrentAmmoKey, 6);
+        player2.fireAmmo = PlayerPrefs.GetInt(P2FireAmmoKey, 0);
+        player2.waterAmmo = PlayerPrefs.GetInt(P2WaterAmmoKey, 0);
+        player2.currentElement = IntToElement(PlayerPrefs.GetInt(P2CurrentElementKey, 0));
     }
 
     private Element IntToElement(int value)
