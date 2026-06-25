@@ -13,8 +13,20 @@ public class IceMine2D : MonoBehaviour
     public float iceZoneLifetime = 5f;
     public float iceTickInterval = 1f;
 
+    //[Header("Visual")]
+    //public GameObject explosionVisualPrefab;
+
     [Header("Visual")]
+    [Tooltip("Префаб с партиклами взрыва")]
     public GameObject explosionVisualPrefab;
+
+    [Tooltip("Префаб вспышки")]
+    public GameObject flashPrefab;
+
+    [Header("Audio")]
+    public AudioClip explosionSound;
+    [Range(0f, 1f)]
+    public float explosionVolume = 0.8f;
 
     [Header("Debug")]
     public bool logDebug = true;
@@ -50,6 +62,24 @@ public class IceMine2D : MonoBehaviour
                 continue;
 
             TrapTargetUtility2D.ApplyDamageAndStatus(hit, explosionDamage, Element.Water);
+        }
+
+        // 2. НОВОЕ: Создаём вспышку (быстрый спрайт)
+        if (flashPrefab != null)
+        {
+            Instantiate(flashPrefab, transform.position, Quaternion.identity);
+        }
+
+        // 3. НОВОЕ: Создаём партиклы взрыва
+        if (explosionVisualPrefab != null)
+        {
+            Instantiate(explosionVisualPrefab, transform.position, Quaternion.identity);
+        }
+
+        // 4. НОВОЕ: Проигрываем звук
+        if (explosionSound != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position, explosionVolume);
         }
 
         SpawnIceZone();

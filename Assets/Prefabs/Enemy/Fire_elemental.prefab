@@ -298,10 +298,10 @@ MonoBehaviour:
   fireTickDamage: 1
   smolderingTickDamage: 1
   tickInterval: 1
-  waterOverlay: {fileID: 1421279636349674248, guid: ace47396374c6254a83fdd40dfa33088, type: 3}
-  fireOverlay: {fileID: 1026918325752562563, guid: c65bd88b913793b42814f935b818d575, type: 3}
-  steamOverlay: {fileID: 4534962986961183724, guid: 2035ce8bb57c94041a7f54a9f8286b55, type: 3}
-  smolderingOverlay: {fileID: 6027288959759368959, guid: 848ef6ead985acd43874f46f9f24b73f, type: 3}
+  waterOverlay: {fileID: 2212010114416482722, guid: f93f7cdfdb1a6f447be267367cd913e9, type: 3}
+  fireOverlay: {fileID: 1600947917030196884, guid: 8a762e50cced4464194a6a80f7b1cb3c, type: 3}
+  steamOverlay: {fileID: 6607123402664451412, guid: 61d0bb635acff4d419f4972a745849cb, type: 3}
+  smolderingOverlay: {fileID: 8797501714620322167, guid: 1c2d9d315b43c3049851573f57def106, type: 3}
   logDebug: 1
 --- !u!114 &6758788673326173719
 MonoBehaviour:
@@ -327,11 +327,19 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   characterAnimation: {fileID: 0}
   deathAnimationDuration: 1
+  canDodge: 1
+  dodgeRadius: 2
+  dodgeForce: 5
+  dodgeCooldown: 1.5
+  useZigzagMovement: 1
+  zigzagStrength: 0.7
+  zigzagFrequency: 4
   autoScaleFromProgress: 1
   enemyProjectilePrefab: {fileID: 7337377594433991432, guid: 195ee2d7cee9365459b52b86719695ae, type: 3}
   firePoint: {fileID: 5648191733450936455}
   attackRange: 8
   keepDistance: 4
+  distanceTolerance: 0.8
   fireCooldown: 1.5
   projectileDamage: 15
   projectileElement: 1
@@ -339,6 +347,8 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
+  strafeAroundPlayer: 1
+  strafeSpeed: 2
 --- !u!114 &3770815821581537512
 MonoBehaviour:
   m_ObjectHideFlags: 0

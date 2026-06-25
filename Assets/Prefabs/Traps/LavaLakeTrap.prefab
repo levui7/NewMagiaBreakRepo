@@ -145,4 +145,4 @@ MonoBehaviour:
   tickInterval: 0.7
   targetMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 896

@@ -18,6 +18,14 @@ public class ElementalExplosiveBarrel2D : MonoBehaviour
     public GameObject normalVisual;
     public GameObject explosionVisualPrefab;
 
+    // Вспышка 
+    public GameObject flashPrefab;
+
+    [Header("Audio")]
+    public AudioClip explosionSound;
+    [Range(0f, 1f)]
+    public float explosionVolume = 0.8f;
+
     [Header("Debug")]
     public bool logDebug = true;
 
@@ -73,6 +81,17 @@ public class ElementalExplosiveBarrel2D : MonoBehaviour
                 continue;
 
             TrapTargetUtility2D.ApplyDamageAndStatus(hit, damage, explosionElement);
+        }
+
+        // Вспышка
+        if (flashPrefab != null)
+        {
+            Instantiate(flashPrefab, transform.position, Quaternion.identity);
+        }
+
+        if (explosionSound != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position, explosionVolume);
         }
 
         if (explosionVisualPrefab != null)

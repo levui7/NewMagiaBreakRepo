@@ -149,5 +149,5 @@ MonoBehaviour:
   applyWaterStatus: 1
   targetMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 384
   logDebug: 1

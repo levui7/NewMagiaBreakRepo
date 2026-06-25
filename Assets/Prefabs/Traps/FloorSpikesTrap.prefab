@@ -159,7 +159,7 @@ MonoBehaviour:
   damageCooldownPerTarget: 0.8
   targetMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 896
   hiddenVisual: {fileID: 0}
   warningVisual: {fileID: 0}
   activeVisual: {fileID: 0}
