@@ -52,7 +52,10 @@ public class PlayerInventoryManager : MonoBehaviour
     public void SaveFromWeapon(WeaponManager weapon)
     {
         if (weapon == null || weapon.playerController == null)
+        {
+            Debug.Log("LOAD TO WEAPON ABORT");
             return;
+        }
 
         int id = weapon.playerController.playerID;
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameModeManager : MonoBehaviour
 {
@@ -41,40 +42,46 @@ public class GameModeManager : MonoBehaviour
 
     private void SpawnPlayer(int playerID, Transform spawnPoint)
     {
-        GameObject playerObject = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject playerObject =
+            Instantiate(playerPrefab,
+                        spawnPoint.position,
+                        spawnPoint.rotation);
 
         if (!playerObject.activeSelf)
             playerObject.SetActive(true);
 
-        PlayerController player = playerObject.GetComponent<PlayerController>();
+        PlayerController player =
+            playerObject.GetComponent<PlayerController>();
 
         if (player == null)
             return;
 
         player.playerID = playerID;
 
-        WeaponManager weapon = playerObject.GetComponent<WeaponManager>();
+        WeaponManager weapon =
+            playerObject.GetComponent<WeaponManager>();
 
         if (weapon == null)
-            weapon = playerObject.GetComponentInChildren<WeaponManager>();
-
-        if (weapon != null && PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.LoadToWeapon(weapon);
-
-        if (weapon != null && WeaponConfigManager.Instance != null)
-            WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+            weapon =
+                playerObject.GetComponentInChildren<WeaponManager>();
 
         if (weapon != null)
-            weapon.ValidateElementAfterLoad();
+        {
+            StartCoroutine(InitializePlayerWeapon(player, weapon));
+        }
 
         if (PlayerProgressManager.Instance != null)
             PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);
 
         string hpKey = $"Player{playerID}_HP";
+
         if (PlayerPrefs.HasKey(hpKey))
             player.SetHealth(PlayerPrefs.GetInt(hpKey));
 
-        CameraFollow cameraFollow = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
+        CameraFollow cameraFollow =
+            Camera.main != null
+            ? Camera.main.GetComponent<CameraFollow>()
+            : null;
 
         if (cameraFollow != null)
             cameraFollow.SetPlayer(playerID, playerObject.transform);
@@ -88,5 +95,22 @@ public class GameModeManager : MonoBehaviour
 
             UIManager.Instance.SetPlayersCount(playersCount);
         }
+    }
+
+    private IEnumerator InitializePlayerWeapon(
+    PlayerController player,
+    WeaponManager weapon)
+    {
+        yield return null;
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.LoadToWeapon(weapon);
+
+        weapon.ValidateElementAfterLoad();
+
+        if (WeaponConfigManager.Instance != null)
+            WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+
+        weapon.RefreshUIFromOutside();
     }
 }

@@ -137,8 +137,11 @@ public class BulletScript : MonoBehaviour
         {
             enemy.TakeDamage(damageInt, element);
 
-            if (logDebug)
-                Debug.Log($"BulletScript: enemy hit {enemy.name}, damage={damageInt}, element={element}");
+            StatusEffectController status =
+                enemy.GetComponent<StatusEffectController>();
+
+            if (status != null)
+                status.ApplyElementStatus(element);
 
             return;
         }
@@ -157,8 +160,11 @@ public class BulletScript : MonoBehaviour
         {
             boss.TakeDamage(damageInt, element);
 
-            if (logDebug)
-                Debug.Log($"BulletScript: boss hit {boss.name}, damage={damageInt}, element={element}");
+            StatusEffectController status =
+                boss.GetComponent<StatusEffectController>();
+
+            if (status != null)
+                status.ApplyElementStatus(element);
 
             return;
         }
@@ -169,8 +175,11 @@ public class BulletScript : MonoBehaviour
         {
             player.TakeDamage(damageInt, element);
 
-            if (logDebug)
-                Debug.Log($"BulletScript: player hit {player.name}, damage={damageInt}, element={element}");
+            StatusEffectController status =
+                player.GetComponent<StatusEffectController>();
+
+            if (status != null)
+                status.ApplyElementStatus(element);
 
             return;
         }

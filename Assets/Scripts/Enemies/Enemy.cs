@@ -24,6 +24,19 @@ public class Enemy : MonoBehaviour
     public CharacterAnimation2D characterAnimation;
     public float deathAnimationDuration = 1.0f;
 
+    [Header("Dodging")]
+    public bool canDodge = true;
+    public float dodgeRadius = 2f;
+    public float dodgeForce = 5f;
+    public float dodgeCooldown = 1.5f;
+
+    [Header("Movement AI")]
+    public bool useZigzagMovement = true;
+    public float zigzagStrength = 0.7f;
+    public float zigzagFrequency = 4f;
+
+    private float nextDodgeTime;
+
     private bool isDead;
 
     protected Rigidbody2D rb;
@@ -123,23 +136,46 @@ public class Enemy : MonoBehaviour
 
     protected virtual void MoveToTarget()
     {
-        if (rb == null || playerTarget == null) return;
+        if (TryDodge())
+        {
+            if (characterAnimation != null)
+                characterAnimation.SetSpeed(rb.linearVelocity.magnitude);
+
+            return;
+        }
+
+        if (rb == null || playerTarget == null)
+            return;
 
         Vector2 dir = (Vector2)(playerTarget.position - transform.position);
 
         if (dir.magnitude <= stopDistance)
         {
             rb.linearVelocity = Vector2.zero;
+
             if (characterAnimation != null)
                 characterAnimation.SetSpeed(0f);
+
             return;
         }
 
         dir.Normalize();
 
-        // ✅ Сбрасываем rotation и поворот Z
+        if (useZigzagMovement)
+        {
+            float zigzag =
+                Mathf.Sin(Time.time * zigzagFrequency + GetInstanceID())
+                * zigzagStrength;
+
+            Vector2 side = Vector2.Perpendicular(dir);
+
+            dir += side * zigzag;
+            dir.Normalize();
+        }
+
+        // Сбрасываем поворот
         transform.rotation = Quaternion.identity;
-        transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.eulerAngles = Vector3.zero;
 
         float speedMultiplier = GetSpeedMultiplier();
         rb.linearVelocity = dir * moveSpeed * speedMultiplier;
@@ -247,6 +283,44 @@ public class Enemy : MonoBehaviour
 
         player.TakeDamage(contactDamage, contactElement);
     }
+
+    private bool TryDodge()
+    {
+        if (!canDodge)
+            return false;
+
+        if (Time.time < nextDodgeTime)
+            return false;
+
+        Collider2D[] hits =
+            Physics2D.OverlapCircleAll(transform.position, dodgeRadius);
+
+        foreach (Collider2D hit in hits)
+        {
+            BulletScript bullet = hit.GetComponent<BulletScript>();
+
+            if (bullet == null)
+                continue;
+
+            Vector2 toBullet =
+                bullet.transform.position - transform.position;
+
+            Vector2 dodgeDir =
+                Vector2.Perpendicular(toBullet).normalized;
+
+            rb.linearVelocity =
+                dodgeDir * dodgeForce;
+
+            nextDodgeTime =
+                Time.time + dodgeCooldown;
+
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     protected virtual void Die()
     {

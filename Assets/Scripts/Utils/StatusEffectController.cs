@@ -192,7 +192,7 @@ public class StatusEffectController : MonoBehaviour
     {
         StopRoutine(ref waterRoutine);
 
-        hasWater = false;
+        hasWater = true;
 
         DamagePopup2D.SpawnStatus(transform.position, "Вода");
         waterRoutine = StartCoroutine(WaterCoroutine());
@@ -202,7 +202,7 @@ public class StatusEffectController : MonoBehaviour
     {
         StopRoutine(ref fireRoutine);
 
-        hasFire = false;
+        hasFire = true;
 
         DamagePopup2D.SpawnStatus(transform.position, "Огонь");
         fireRoutine = StartCoroutine(FireCoroutine());
@@ -216,7 +216,7 @@ public class StatusEffectController : MonoBehaviour
 
         hasWater = false;
         hasFire = false;
-        hasSteam = false;
+        hasSteam = true;
 
         DamagePopup2D.SpawnStatus(transform.position, "Пар");
         steamRoutine = StartCoroutine(SteamCoroutine());
@@ -230,7 +230,7 @@ public class StatusEffectController : MonoBehaviour
 
         hasWater = false;
         hasFire = false;
-        hasSmoldering = false;
+        hasSmoldering = true;
 
         DamagePopup2D.SpawnStatus(transform.position, "Тление");
         smolderingRoutine = StartCoroutine(SmolderingCoroutine());

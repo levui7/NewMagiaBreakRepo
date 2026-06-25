@@ -61,7 +61,6 @@ public class WeaponManager : MonoBehaviour
     public bool logDebug = true;
 
     private float lastShotTime = -999f;
-    private bool loadedFromInventory = false;
     private TemporaryBuffController2D temporaryBuffs;
 
     public Element CurrentElement => currentElement;
@@ -99,12 +98,8 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        LoadInventoryIfPossible();
-
         if (WeaponConfigManager.Instance != null)
             WeaponConfigManager.Instance.ApplyAttackModeOnly(this);
-
-        ValidateElementAfterLoad();
 
         if (PlayerProgressManager.Instance != null && playerController != null)
             PlayerProgressManager.Instance.ApplyUpgradesToPlayer(playerController);
@@ -125,20 +120,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
-        LoadInventoryIfPossible();
         HandleElementCycle();
-    }
-
-    private void LoadInventoryIfPossible()
-    {
-        if (loadedFromInventory)
-            return;
-
-        if (PlayerInventoryManager.Instance == null)
-            return;
-
-        PlayerInventoryManager.Instance.LoadToWeapon(this);
-        loadedFromInventory = true;
     }
 
     private void HandleElementCycle()
@@ -263,66 +245,56 @@ public class WeaponManager : MonoBehaviour
     {
         currentElement = loadedElement;
 
-        if (logDebug)
-        {
-            Debug.Log(
-                $"WeaponManager {name}: ForceSetElementAfterLoad = {currentElement}. " +
-                $"FireAmmo={fireAmmo}, WaterAmmo={waterAmmo}");
-        }
-
         ValidateElementAfterLoad();
-    }
 
-    public void ValidateElementAfterLoad()
-    {
+        RefreshUI();
+
         if (logDebug)
         {
             Debug.Log(
-                $"WeaponManager {name}: ValidateElementAfterLoad BEFORE. " +
-                $"CurrentElement={currentElement}, " +
+                $"WeaponManager {name}: inventory loaded. " +
+                $"Element={currentElement}, " +
                 $"PhysicalAmmo={currentAmmo}, " +
                 $"FireAmmo={fireAmmo}, " +
                 $"WaterAmmo={waterAmmo}");
         }
+    }
 
-        if (currentElement == Element.Fire && fireAmmo > 0)
+    public void ValidateElementAfterLoad()
+    {
+        bool fireAvailable = fireAmmo > 0;
+        bool waterAvailable = waterAmmo > 0;
+
+        switch (currentElement)
         {
-            RefreshUI();
-            return;
+            case Element.Fire:
+
+                if (!fireAvailable)
+                {
+                    if (waterAvailable)
+                        currentElement = Element.Water;
+                    else
+                        currentElement = Element.Physical;
+                }
+
+                break;
+
+            case Element.Water:
+
+                if (!waterAvailable)
+                {
+                    if (fireAvailable)
+                        currentElement = Element.Fire;
+                    else
+                        currentElement = Element.Physical;
+                }
+
+                break;
+
+            case Element.Physical:
+            default:
+                break;
         }
-
-        if (currentElement == Element.Water && waterAmmo > 0)
-        {
-            RefreshUI();
-            return;
-        }
-
-        if (fireAmmo > 0)
-        {
-            currentElement = Element.Fire;
-
-            if (logDebug)
-                Debug.Log($"WeaponManager {name}: после загрузки выбираю Fire, потому что FireAmmo > 0");
-
-            RefreshUI();
-            return;
-        }
-
-        if (waterAmmo > 0)
-        {
-            currentElement = Element.Water;
-
-            if (logDebug)
-                Debug.Log($"WeaponManager {name}: после загрузки выбираю Water, потому что WaterAmmo > 0");
-
-            RefreshUI();
-            return;
-        }
-
-        currentElement = Element.Physical;
-
-        if (logDebug)
-            Debug.Log($"WeaponManager {name}: стихийных патронов нет, выбираю Physical");
 
         RefreshUI();
     }
