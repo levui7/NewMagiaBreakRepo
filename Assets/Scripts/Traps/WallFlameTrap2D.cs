@@ -22,10 +22,16 @@ public class WallFlameTrap2D : MonoBehaviour
     [Header("Collider")]
     public Collider2D flameTrigger;
 
+    [Header("Audio")]
+    public AudioClip flameSound;
+    [Range(0f, 1f)]
+    public float volume = 0.6f;
+
     [Header("Debug")]
     public bool logDebug = true;
 
     private HazardZone2D hazardZone;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -45,6 +51,20 @@ public class WallFlameTrap2D : MonoBehaviour
         hazardZone.tickInterval = tickInterval;
         hazardZone.destroyAfterLifetime = false;
         hazardZone.targetMask = targetMask;
+
+        if (flameSound != null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+
+            audioSource.clip = flameSound;
+            audioSource.loop = true;
+            audioSource.playOnAwake = false;
+            audioSource.volume = volume;
+            audioSource.spatialBlend = 1f;
+            audioSource.minDistance = 3f;
+            audioSource.maxDistance = 12f;
+        }
     }
 
     private void Start()
@@ -82,6 +102,14 @@ public class WallFlameTrap2D : MonoBehaviour
 
         if (flameVisual != null)
             flameVisual.SetActive(active);
+
+        if (audioSource != null)
+        {
+            if (active)
+                audioSource.Play();
+            else
+                audioSource.Stop();
+        }
 
         if (logDebug)
             Debug.Log($"WallFlameTrap2D {name}: active={active}");

@@ -20,11 +20,15 @@ public class SteamPipeTrap2D : MonoBehaviour
     [Header("Visual")]
     public GameObject steamVisual;
 
+    [Header("Audio")]
+    public AudioClip steamSound;
+
     [Header("Debug")]
     public bool logDebug = true;
 
     private bool isEmitting;
     private readonly Dictionary<Transform, float> nextTickTimeByTarget = new Dictionary<Transform, float>();
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -33,6 +37,18 @@ public class SteamPipeTrap2D : MonoBehaviour
 
         SetSteamActive(false);
         StartCoroutine(SteamCycle());
+
+        if (steamSound != null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+
+            audioSource.clip = steamSound;
+            audioSource.loop = true;
+            audioSource.playOnAwake = false;
+            audioSource.volume = 0.6f;
+            audioSource.spatialBlend = 1f;
+        }
     }
 
     private IEnumerator SteamCycle()
@@ -55,6 +71,14 @@ public class SteamPipeTrap2D : MonoBehaviour
 
         if (steamVisual != null)
             steamVisual.SetActive(active);
+
+        if (audioSource != null)
+        {
+            if (active)
+                audioSource.Play();
+            else
+                audioSource.Stop();
+        }
 
         if (logDebug)
             Debug.Log($"SteamPipeTrap2D {name}: emitting={active}");

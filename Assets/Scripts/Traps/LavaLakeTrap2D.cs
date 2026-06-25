@@ -7,6 +7,10 @@ public class LavaLakeTrap2D : MonoBehaviour
     public float tickInterval = 0.7f;
     public LayerMask targetMask;
 
+    [Header("Audio")]
+    [Tooltip("Звук лавы")]
+    public AudioClip lavaSound;
+
     private HazardZone2D hazardZone;
 
     private void Awake()
@@ -21,6 +25,19 @@ public class LavaLakeTrap2D : MonoBehaviour
         hazardZone.tickInterval = tickInterval;
         hazardZone.destroyAfterLifetime = false;
         hazardZone.targetMask = targetMask;
+
+        if (lavaSound != null)
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            if (audio == null) audio = gameObject.AddComponent<AudioSource>();
+
+            audio.clip = lavaSound;
+            audio.loop = true;
+            audio.playOnAwake = true;
+            audio.volume = 0.7f;
+            audio.spatialBlend = 1f;
+            audio.Play();
+        }
     }
 
     private void OnValidate()
