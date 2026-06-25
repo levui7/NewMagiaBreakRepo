@@ -62,20 +62,17 @@ public class WeaponStationUI : MonoBehaviour
         AttackMode selectedMode = GetSelectedAttackMode();
         Element selectedElement = GetSelectedElement();
 
-        if (logDebug)
-        {
-            Debug.Log(
-                $"WeaponStationUI ApplySettings: " +
-                $"DropdownAttackValue={attackDropdown?.value}, " +
-                $"SelectedMode={selectedMode}, " +
-                $"DropdownElementValue={elementDropdown?.value}, " +
-                $"SelectedElement={selectedElement}");
-        }
+        Debug.Log(
+            $"WeaponStationUI ApplySettings: " +
+            $"SelectedMode={selectedMode}, SelectedElement={selectedElement}");
 
         WeaponConfigManager.Instance.SetAttackMode(selectedMode);
         WeaponConfigManager.Instance.SetInitialElement(selectedElement);
 
         WeaponConfigManager.Instance.ApplyConfigToCurrentWeapons();
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
 
         if (resultText != null)
         {

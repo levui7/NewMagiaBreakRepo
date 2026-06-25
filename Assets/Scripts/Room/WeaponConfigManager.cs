@@ -27,7 +27,7 @@ public class WeaponConfigManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             if (logDebug)
-                Debug.Log("WeaponConfigManager: найден дубликат, удал€ю его.");
+                Debug.Log("WeaponConfigManager: duplicate destroyed");
 
             Destroy(gameObject);
             return;
@@ -41,8 +41,8 @@ public class WeaponConfigManager : MonoBehaviour
         if (logDebug)
         {
             Debug.Log(
-                $"WeaponConfigManager Awake: AttackMode={selectedAttackMode}, " +
-                $"InitialElement={selectedInitialElement}");
+                $"WeaponConfigManager Awake: " +
+                $"AttackMode={selectedAttackMode}, InitialElement={selectedInitialElement}");
         }
     }
 
@@ -81,6 +81,9 @@ public class WeaponConfigManager : MonoBehaviour
 
             ApplyConfigToWeapon(weapon, true);
         }
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
     }
 
     public void ApplyAttackModeOnly(WeaponManager weapon)
@@ -91,11 +94,7 @@ public class WeaponConfigManager : MonoBehaviour
         weapon.SetAttackMode(selectedAttackMode, true);
 
         if (logDebug)
-        {
-            Debug.Log(
-                $"WeaponConfigManager: применЄн только режим атаки к {weapon.name}: " +
-                $"{selectedAttackMode}");
-        }
+            Debug.Log($"WeaponConfigManager: применЄн только режим атаки к {weapon.name}: {selectedAttackMode}");
     }
 
     public void ApplyConfigToWeapon(WeaponManager weapon, bool applyInitialElement)
@@ -119,13 +118,17 @@ public class WeaponConfigManager : MonoBehaviour
             }
         }
 
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveFromWeapon(weapon);
+
         if (logDebug)
         {
             Debug.Log(
                 $"WeaponConfigManager: применил конфиг к {weapon.name}. " +
                 $"AttackMode={selectedAttackMode}, " +
                 $"InitialElement={selectedInitialElement}, " +
-                $"ApplyInitialElement={applyInitialElement}");
+                $"ApplyInitialElement={applyInitialElement}, " +
+                $"WeaponFinalElement={weapon.CurrentElement}");
         }
     }
 

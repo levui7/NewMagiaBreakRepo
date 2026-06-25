@@ -5,15 +5,16 @@ public class PlayerInventoryManager : MonoBehaviour
     public static PlayerInventoryManager Instance { get; private set; }
 
     [Header("Player 1")]
-    public PlayerWeaponData player1 =
-    new PlayerWeaponData();
+    public PlayerWeaponData player1 = new PlayerWeaponData();
 
     [Header("Player 2")]
-    public PlayerWeaponData player2 =
-        new PlayerWeaponData();
+    public PlayerWeaponData player2 = new PlayerWeaponData();
 
     [Header("Magazine")]
     public int magazineSize = 6;
+
+    [Header("Debug")]
+    public bool logDebug = true;
 
     private const string HasInventoryKey = "Run_HasInventory";
     private const string MagazineSizeKey = "Run_MagazineSize";
@@ -30,11 +31,11 @@ public class PlayerInventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log($"PlayerInventoryManager Awake {GetInstanceID()}");
-
         if (Instance != null && Instance != this)
         {
-            Debug.Log("DESTROY DUPLICATE INVENTORY");
+            if (logDebug)
+                Debug.Log("PlayerInventoryManager: duplicate destroyed");
+
             Destroy(gameObject);
             return;
         }
@@ -43,44 +44,135 @@ public class PlayerInventoryManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         LoadInventoryFromPrefs();
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"PlayerInventoryManager Awake. " +
+                $"P1 Element={player1.currentElement}, Fire={player1.fireAmmo}, Water={player1.waterAmmo}");
+        }
+    }
+
+    public PlayerWeaponData GetDataForPlayer(int playerID)
+    {
+        return playerID == 2 ? player2 : player1;
+    }
+
+    public void SaveFromWeapon(WeaponManager weapon)
+    {
+        if (weapon == null || weapon.playerController == null)
+            return;
+
+        int id = weapon.playerController.playerID;
+        PlayerWeaponData data = GetDataForPlayer(id);
+
+        data.CopyFromWeapon(weapon);
+        magazineSize = Mathf.Max(1, weapon.magazineSize);
+
+        SaveInventoryToPrefs();
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"PlayerInventoryManager SAVE FROM WEAPON P{id}: " +
+                $"PhysicalAmmo={data.currentAmmo}, " +
+                $"FireAmmo={data.fireAmmo}, " +
+                $"WaterAmmo={data.waterAmmo}, " +
+                $"Element={data.currentElement}");
+        }
+    }
+
+    public void LoadToWeapon(WeaponManager weapon)
+    {
+        if (weapon == null || weapon.playerController == null)
+            return;
+
+        LoadInventoryFromPrefs();
+
+        int id = weapon.playerController.playerID;
+        PlayerWeaponData data = GetDataForPlayer(id);
+
+        weapon.magazineSize = Mathf.Max(1, magazineSize);
+        weapon.currentAmmo = Mathf.Clamp(data.currentAmmo, 0, weapon.magazineSize);
+        weapon.fireAmmo = Mathf.Max(0, data.fireAmmo);
+        weapon.waterAmmo = Mathf.Max(0, data.waterAmmo);
+
+        weapon.ForceSetElementAfterLoad(data.currentElement);
+        weapon.RefreshUIFromOutside();
+
+        if (logDebug)
+        {
+            Debug.Log(
+                $"PlayerInventoryManager LOAD TO WEAPON P{id}: " +
+                $"PhysicalAmmo={weapon.currentAmmo}, " +
+                $"FireAmmo={weapon.fireAmmo}, " +
+                $"WaterAmmo={weapon.waterAmmo}, " +
+                $"LoadedElement={data.currentElement}, " +
+                $"FinalElement={weapon.CurrentElement}");
+        }
+    }
+
+    public void SaveAllWeaponsInScene()
+    {
+        WeaponManager[] weapons = FindObjectsOfType<WeaponManager>(true);
+
+        foreach (WeaponManager weapon in weapons)
+        {
+            if (weapon == null)
+                continue;
+
+            if (!weapon.gameObject.activeInHierarchy)
+                continue;
+
+            SaveFromWeapon(weapon);
+        }
+
+        SaveInventoryToPrefs();
     }
 
     public void ResetInventory(bool saveToPrefs = true)
     {
-        Debug.Log("RESET INVENTORY CALLED");
-
         magazineSize = Mathf.Max(1, magazineSize);
 
-        player1.currentAmmo = magazineSize;
-        player1.fireAmmo = 0;
-        player1.waterAmmo = 0;
-        player1.currentElement = Element.Physical;
-
-        player2.currentAmmo = magazineSize;
-        player2.fireAmmo = 0;
-        player2.waterAmmo = 0;
-        player2.currentElement = Element.Physical;
+        player1.Reset(magazineSize);
+        player2.Reset(magazineSize);
 
         if (saveToPrefs)
             SaveInventoryToPrefs();
+
+        if (logDebug)
+            Debug.Log("PlayerInventoryManager: inventory reset");
     }
 
     public void SaveInventoryToPrefs()
     {
+        magazineSize = Mathf.Max(1, magazineSize);
+
         PlayerPrefs.SetInt(HasInventoryKey, 1);
-        PlayerPrefs.SetInt(MagazineSizeKey, Mathf.Max(1, magazineSize));
+        PlayerPrefs.SetInt(MagazineSizeKey, magazineSize);
 
-        PlayerPrefs.SetInt(P1CurrentAmmoKey, player1.currentAmmo);
-        PlayerPrefs.SetInt(P1FireAmmoKey, player1.fireAmmo);
-        PlayerPrefs.SetInt(P1WaterAmmoKey, player1.waterAmmo);
-        PlayerPrefs.SetInt(P1CurrentElementKey, (int)player1.currentElement);
-
-        PlayerPrefs.SetInt(P2CurrentAmmoKey, player2.currentAmmo);
-        PlayerPrefs.SetInt(P2FireAmmoKey, player2.fireAmmo);
-        PlayerPrefs.SetInt(P2WaterAmmoKey, player2.waterAmmo);
-        PlayerPrefs.SetInt(P2CurrentElementKey, (int)player2.currentElement);
+        SavePlayerDataToPrefs(1, player1);
+        SavePlayerDataToPrefs(2, player2);
 
         PlayerPrefs.Save();
+    }
+
+    private void SavePlayerDataToPrefs(int playerID, PlayerWeaponData data)
+    {
+        if (playerID == 2)
+        {
+            PlayerPrefs.SetInt(P2CurrentAmmoKey, Mathf.Max(0, data.currentAmmo));
+            PlayerPrefs.SetInt(P2FireAmmoKey, Mathf.Max(0, data.fireAmmo));
+            PlayerPrefs.SetInt(P2WaterAmmoKey, Mathf.Max(0, data.waterAmmo));
+            PlayerPrefs.SetInt(P2CurrentElementKey, (int)data.currentElement);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(P1CurrentAmmoKey, Mathf.Max(0, data.currentAmmo));
+            PlayerPrefs.SetInt(P1FireAmmoKey, Mathf.Max(0, data.fireAmmo));
+            PlayerPrefs.SetInt(P1WaterAmmoKey, Mathf.Max(0, data.waterAmmo));
+            PlayerPrefs.SetInt(P1CurrentElementKey, (int)data.currentElement);
+        }
     }
 
     public void LoadInventoryFromPrefs()
@@ -90,15 +182,26 @@ public class PlayerInventoryManager : MonoBehaviour
 
         magazineSize = Mathf.Max(1, PlayerPrefs.GetInt(MagazineSizeKey, magazineSize));
 
-        player1.currentAmmo = PlayerPrefs.GetInt(P1CurrentAmmoKey, 6);
-        player1.fireAmmo = PlayerPrefs.GetInt(P1FireAmmoKey, 0);
-        player1.waterAmmo = PlayerPrefs.GetInt(P1WaterAmmoKey, 0);
-        player1.currentElement = IntToElement(PlayerPrefs.GetInt(P1CurrentElementKey, 0));
+        LoadPlayerDataFromPrefs(1, player1);
+        LoadPlayerDataFromPrefs(2, player2);
+    }
 
-        player2.currentAmmo = PlayerPrefs.GetInt(P2CurrentAmmoKey, 6);
-        player2.fireAmmo = PlayerPrefs.GetInt(P2FireAmmoKey, 0);
-        player2.waterAmmo = PlayerPrefs.GetInt(P2WaterAmmoKey, 0);
-        player2.currentElement = IntToElement(PlayerPrefs.GetInt(P2CurrentElementKey, 0));
+    private void LoadPlayerDataFromPrefs(int playerID, PlayerWeaponData data)
+    {
+        if (playerID == 2)
+        {
+            data.currentAmmo = Mathf.Clamp(PlayerPrefs.GetInt(P2CurrentAmmoKey, magazineSize), 0, magazineSize);
+            data.fireAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P2FireAmmoKey, 0));
+            data.waterAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P2WaterAmmoKey, 0));
+            data.currentElement = IntToElement(PlayerPrefs.GetInt(P2CurrentElementKey, (int)Element.Physical));
+        }
+        else
+        {
+            data.currentAmmo = Mathf.Clamp(PlayerPrefs.GetInt(P1CurrentAmmoKey, magazineSize), 0, magazineSize);
+            data.fireAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P1FireAmmoKey, 0));
+            data.waterAmmo = Mathf.Max(0, PlayerPrefs.GetInt(P1WaterAmmoKey, 0));
+            data.currentElement = IntToElement(PlayerPrefs.GetInt(P1CurrentElementKey, (int)Element.Physical));
+        }
     }
 
     private Element IntToElement(int value)

@@ -42,47 +42,45 @@ public class GameModeManager : MonoBehaviour
 
     private void SpawnPlayer(int playerID, Transform spawnPoint)
     {
-        GameObject playerObject =
-            Instantiate(playerPrefab,
-                        spawnPoint.position,
-                        spawnPoint.rotation);
+        GameObject playerObject = Instantiate(
+            playerPrefab,
+            spawnPoint.position,
+            spawnPoint.rotation
+        );
 
         if (!playerObject.activeSelf)
             playerObject.SetActive(true);
 
-        PlayerController player =
-            playerObject.GetComponent<PlayerController>();
+        PlayerController player = playerObject.GetComponent<PlayerController>();
 
         if (player == null)
             return;
 
         player.playerID = playerID;
 
-        WeaponManager weapon =
-            playerObject.GetComponent<WeaponManager>();
+        WeaponManager weapon = playerObject.GetComponent<WeaponManager>();
 
         if (weapon == null)
-            weapon =
-                playerObject.GetComponentInChildren<WeaponManager>();
+            weapon = playerObject.GetComponentInChildren<WeaponManager>();
 
         if (weapon != null)
         {
+            weapon.playerController = player;
+
             if (PlayerInventoryManager.Instance != null)
             {
-                if (playerID == 1)
-                {
-                    weapon.BindInventory(
-                        PlayerInventoryManager.Instance.player1);
-                }
-                else
-                {
-                    weapon.BindInventory(
-                        PlayerInventoryManager.Instance.player2);
-                }
+                PlayerInventoryManager.Instance.LoadToWeapon(weapon);
             }
 
-            StartCoroutine(
-                InitializePlayerWeapon(player, weapon));
+            if (WeaponConfigManager.Instance != null)
+            {
+                WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+            }
+
+            weapon.ValidateElementAfterLoad();
+            weapon.RefreshUIFromOutside();
+
+            StartCoroutine(InitializePlayerWeapon(player, weapon));
         }
 
         if (PlayerProgressManager.Instance != null)
@@ -95,8 +93,8 @@ public class GameModeManager : MonoBehaviour
 
         CameraFollow cameraFollow =
             Camera.main != null
-            ? Camera.main.GetComponent<CameraFollow>()
-            : null;
+                ? Camera.main.GetComponent<CameraFollow>()
+                : null;
 
         if (cameraFollow != null)
             cameraFollow.SetPlayer(playerID, playerObject.transform);
@@ -105,27 +103,36 @@ public class GameModeManager : MonoBehaviour
 
         if (UIManager.Instance != null)
         {
-            int playersCount =
-                FindObjectsOfType<PlayerController>().Length;
-
+            int playersCount = FindObjectsOfType<PlayerController>().Length;
             UIManager.Instance.SetPlayersCount(playersCount);
         }
     }
 
-    private IEnumerator InitializePlayerWeapon(
-    PlayerController player,
-    WeaponManager weapon)
+    private IEnumerator InitializePlayerWeapon(PlayerController player, WeaponManager weapon)
     {
         yield return null;
 
-        weapon.ValidateElementAfterLoad();
+        if (weapon == null)
+            yield break;
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.LoadToWeapon(weapon);
 
         if (WeaponConfigManager.Instance != null)
-        {
-            WeaponConfigManager.Instance
-                .ApplyAttackModeOnly(weapon);
-        }
+            WeaponConfigManager.Instance.ApplyAttackModeOnly(weapon);
+
+        weapon.ValidateElementAfterLoad();
+
+        if (PlayerProgressManager.Instance != null)
+            PlayerProgressManager.Instance.ApplyUpgradesToPlayer(player);
 
         weapon.RefreshUIFromOutside();
+
+        Debug.Log(
+            $"GameModeManager: weapon initialized after frame. " +
+            $"Player={player.playerID}, " +
+            $"AttackMode={weapon.attackMode}, " +
+            $"Element={weapon.CurrentElement}, " +
+            $"Fire={weapon.fireAmmo}, Water={weapon.waterAmmo}");
     }
 }

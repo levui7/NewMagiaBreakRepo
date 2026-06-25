@@ -54,7 +54,15 @@ public static class RunSaveSystem
     public static void SaveRunState(string nextSceneName)
     {
         SavePlayerHealth();
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveAllWeaponsInScene();
+
         SaveCheckpoint(nextSceneName);
+
+        PlayerPrefs.Save();
+
+        Debug.Log("RunSaveSystem: run state saved before scene transition. Next scene = " + nextSceneName);
     }
 
     public static void SavePlayerHealth()
@@ -84,8 +92,13 @@ public static class RunSaveSystem
 
         PlayerPrefs.Save();
 
-        if (clearInventory && PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.ResetInventory();
+        if (clearInventory)
+        {
+            if (PlayerInventoryManager.Instance != null)
+                PlayerInventoryManager.Instance.ResetInventory(false);
+
+            PlayerInventoryManager.ClearSavedInventoryPrefs();
+        }
 
         GameSessionManager session = GameSessionManager.Instance;
         if (session != null)
@@ -109,6 +122,8 @@ public static class RunSaveSystem
         }
 
         if (PlayerInventoryManager.Instance != null)
-            PlayerInventoryManager.Instance.ResetInventory();
+            PlayerInventoryManager.Instance.ResetInventory(false);
+
+        PlayerInventoryManager.ClearSavedInventoryPrefs();
     }
 }
