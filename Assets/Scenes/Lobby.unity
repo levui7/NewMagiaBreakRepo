@@ -487,6 +487,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1245347197}
     m_Modifications:
+    - target: {fileID: 326439163483199524, guid: 174d7552a80a28b4d9cfb9d4e469804e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1557064600015890875, guid: 174d7552a80a28b4d9cfb9d4e469804e, type: 3}
       propertyPath: m_Name
       value: Training_room
