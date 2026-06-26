@@ -65,7 +65,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3326694549994137304}
@@ -158,7 +158,7 @@ MonoBehaviour:
   retractSound: {fileID: 8300000, guid: c92506ebf179abb4fb9e68e99588d597, type: 3}
   warningSound: {fileID: 8300000, guid: 5e4ea5d48879ebf42bf30f748aba806a, type: 3}
   volume: 0.6
-  damageTrigger: {fileID: 0}
+  damageTrigger: {fileID: 1944400807108777120}
   logDebug: 1
 --- !u!70 &1944400807108777120
 CapsuleCollider2D:
@@ -396,6 +396,10 @@ PrefabInstance:
     - target: {fileID: 1661664444034625568, guid: 9ed7590fba7f088448aecb8858396f92, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480527021209299817, guid: 9ed7590fba7f088448aecb8858396f92, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
