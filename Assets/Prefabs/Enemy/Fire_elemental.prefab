@@ -317,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemy2D
   maxHealth: 50
   currentHealth: 50
-  moveSpeed: 2.5
+  moveSpeed: 2
   contactDamage: 8
   contactElement: 1
   playerTarget: {fileID: 0}

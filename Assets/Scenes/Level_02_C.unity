@@ -12803,6 +12803,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3444142496971175321, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3626966032829880905, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01
@@ -12845,7 +12849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5091610937812696863, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: nextSceneName
-      value: BossLevel
+      value: Level_03
       objectReference: {fileID: 0}
     - target: {fileID: 5642038180675999514, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_IsTrigger

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 353198583301125258}
   - component: {fileID: 2421332977628450643}
   - component: {fileID: 3238672171684195326}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: PS_Fire_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 6037437466362678288}
   - component: {fileID: 1272794548304526495}
   - component: {fileID: 4826069267167086094}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: PS_Fire_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9681,7 +9681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7606743567825117567}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Fire_Explosion_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9717,7 +9717,7 @@ GameObject:
   - component: {fileID: 4551157857790248918}
   - component: {fileID: 4908261356617611420}
   - component: {fileID: 2980020370207820822}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: PS_Fire_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

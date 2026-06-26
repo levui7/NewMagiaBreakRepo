@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6060984706674923913}
   - component: {fileID: 5810308929715855588}
   - component: {fileID: 1716908582180706969}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Steam_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 8911425296749762043}
   - component: {fileID: 449854742664688959}
   - component: {fileID: 2736364680206337373}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Steam_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9681,7 +9681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4890314162952096300}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Steam_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9718,7 +9718,7 @@ GameObject:
   - component: {fileID: 1052313009213002285}
   - component: {fileID: 5038100082203821828}
   - component: {fileID: 9142630090801200402}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Steam_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14554,7 +14554,7 @@ GameObject:
   - component: {fileID: 3683940351499085195}
   - component: {fileID: 7899710295362177110}
   - component: {fileID: 4158126042743350819}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Steam_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

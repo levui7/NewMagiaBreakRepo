@@ -4025,8 +4025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814b77cdcd396cb49bef43e9c45acbb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
-  enemyPrefab: {fileID: 3874612298035649889, guid: cd4832335cf1e764ca91438d63e19118, type: 3}
-  rangedEnemyPrefab: {fileID: 6429834287419729908, guid: ea567abc96bd8864d8161613f8aff902, type: 3}
+  enemyPrefab: {fileID: 6429834287419729908, guid: 636377bdc9387bf4dbadceb1c03ef95e, type: 3}
+  rangedEnemyPrefab: {fileID: 6429834287419729908, guid: 8554801b236f50d4c8e178716f43e771, type: 3}
   rangedEnemyChance: 0.35
   spawnPoints:
   - {fileID: 1055112883}
@@ -4129,19 +4129,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3018741549103610499, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_SortingOrder
+<<<<<<< HEAD
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444142496971175321, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+=======
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3444142496971175321, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_SortingOrder
       value: 15
+>>>>>>> 804d05f500f327dc05f7f315a7803ac48097818b
       objectReference: {fileID: 0}
     - target: {fileID: 3626966032829880905, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.97
+      value: 25.3
       objectReference: {fileID: 0}
     - target: {fileID: 3626966032829880905, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3626966032829880905, guid: d9a008618ef958948ba39c9720e1b78f, type: 3}
       propertyPath: m_LocalPosition.z

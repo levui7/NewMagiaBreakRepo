@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7510998746862339306}
   - component: {fileID: 7852215069713332188}
   - component: {fileID: 2218816096078515295}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Smoldering_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 8887272270527097161}
   - component: {fileID: 8820567354685125949}
   - component: {fileID: 2178193769730734621}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Smoldering_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9683,7 +9683,7 @@ GameObject:
   - component: {fileID: 5306913774723071288}
   - component: {fileID: 4508849286307831522}
   - component: {fileID: 4737963656394612201}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Smoldering_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14519,7 +14519,7 @@ GameObject:
   - component: {fileID: 8366929569074621249}
   - component: {fileID: 2482826292936793307}
   - component: {fileID: 2028456408367236158}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Particle_System_Smoldering_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19353,7 +19353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7113343429617217479}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Smoldering_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

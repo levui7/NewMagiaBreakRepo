@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 78e021f25cecb5a48b367b5e6d46ec36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -212,7 +212,8 @@ MonoBehaviour:
   damageMask:
     serializedVersion: 2
     m_Bits: 8
-  owner: {fileID: 0}
+  logDebug: 1
+  drawAoEGizmo: 1
 --- !u!212 &2095229018997249955
 SpriteRenderer:
   serializedVersion: 2
