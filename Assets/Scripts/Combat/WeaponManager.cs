@@ -62,14 +62,13 @@ public class WeaponManager : MonoBehaviour
 
     private float lastShotTime = -999f;
     private TemporaryBuffController2D temporaryBuffs;
+    private PlayerWeaponData inventoryData;
 
     public Element CurrentElement => currentElement;
     public int MagazineSize => magazineSize;
     public int CurrentAmmo => currentAmmo;
     public int FireAmmo => fireAmmo;
     public int WaterAmmo => waterAmmo;
-
-    private PlayerWeaponData inventoryData;
 
     private void Awake()
     {
@@ -100,6 +99,11 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.LoadToWeapon(this);
+        else
+            ValidateElementAfterLoad();
+
         if (WeaponConfigManager.Instance != null)
             WeaponConfigManager.Instance.ApplyAttackModeOnly(this);
 
@@ -123,6 +127,34 @@ public class WeaponManager : MonoBehaviour
     private void Update()
     {
         HandleElementCycle();
+    }
+
+    public void BindInventory(PlayerWeaponData data)
+    {
+        inventoryData = data;
+
+        if (inventoryData == null)
+            return;
+
+        currentAmmo = inventoryData.currentAmmo;
+        fireAmmo = inventoryData.fireAmmo;
+        waterAmmo = inventoryData.waterAmmo;
+
+        ForceSetElementAfterLoad(inventoryData.currentElement);
+    }
+
+    private void SyncInventory()
+    {
+        if (inventoryData != null)
+        {
+            inventoryData.currentAmmo = currentAmmo;
+            inventoryData.fireAmmo = fireAmmo;
+            inventoryData.waterAmmo = waterAmmo;
+            inventoryData.currentElement = currentElement;
+        }
+
+        if (PlayerInventoryManager.Instance != null)
+            PlayerInventoryManager.Instance.SaveFromWeapon(this);
     }
 
     private void HandleElementCycle()
@@ -193,15 +225,15 @@ public class WeaponManager : MonoBehaviour
         {
             if (fireAmmo <= 0)
             {
-                Debug.LogWarning(
-                    $"WeaponManager {name}: нельзя переключиться на Fire, FireAmmo={fireAmmo}");
-
-                ValidateElementAfterLoad();;
+                Debug.LogWarning($"WeaponManager {name}: нельзя переключиться на Fire, FireAmmo={fireAmmo}");
+                ValidateElementAfterLoad();
+                SyncInventory();
                 RefreshUI();
                 return;
             }
 
             currentElement = Element.Fire;
+            SyncInventory();
             RefreshUI();
 
             if (logDebug)
@@ -214,17 +246,16 @@ public class WeaponManager : MonoBehaviour
         {
             if (waterAmmo <= 0)
             {
-                Debug.LogWarning(
-                    $"WeaponManager {name}: нельзя переключиться на Water, WaterAmmo={waterAmmo}");
-
+                Debug.LogWarning($"WeaponManager {name}: нельзя переключиться на Water, WaterAmmo={waterAmmo}");
                 ValidateElementAfterLoad();
+                SyncInventory();
                 RefreshUI();
                 return;
             }
 
             currentElement = Element.Water;
-            RefreshUI();
             SyncInventory();
+            RefreshUI();
 
             if (logDebug)
                 Debug.Log($"WeaponManager {name}: активная стихия установлена Water");
@@ -233,27 +264,25 @@ public class WeaponManager : MonoBehaviour
         }
 
         currentElement = Element.Physical;
+        SyncInventory();
         RefreshUI();
 
         if (logDebug)
             Debug.Log($"WeaponManager {name}: активная стихия установлена Physical");
-
     }
 
     public void ForceSetElementAfterLoad(Element loadedElement)
     {
         currentElement = loadedElement;
-
         ValidateElementAfterLoad();
-
         RefreshUI();
 
         if (logDebug)
         {
             Debug.Log(
-                $"WeaponManager {name}: inventory loaded. " +
-                $"Element={currentElement}, " +
-                $"PhysicalAmmo={currentAmmo}, " +
+                $"WeaponManager {name}: ForceSetElementAfterLoad. " +
+                $"LoadedElement={loadedElement}, " +
+                $"FinalElement={currentElement}, " +
                 $"FireAmmo={fireAmmo}, " +
                 $"WaterAmmo={waterAmmo}");
         }
@@ -264,37 +293,62 @@ public class WeaponManager : MonoBehaviour
         bool fireAvailable = fireAmmo > 0;
         bool waterAvailable = waterAmmo > 0;
 
-        switch (currentElement)
+        if (logDebug)
         {
-            case Element.Fire:
-
-                if (!fireAvailable)
-                {
-                    if (waterAvailable)
-                        currentElement = Element.Water;
-                    else
-                        currentElement = Element.Physical;
-                }
-
-                break;
-
-            case Element.Water:
-
-                if (!waterAvailable)
-                {
-                    if (fireAvailable)
-                        currentElement = Element.Fire;
-                    else
-                        currentElement = Element.Physical;
-                }
-
-                break;
-
-            case Element.Physical:
-            default:
-                break;
+            Debug.Log(
+                $"WeaponManager {name}: ValidateElementAfterLoad BEFORE. " +
+                $"Element={currentElement}, Fire={fireAmmo}, Water={waterAmmo}");
         }
 
+        if (currentElement == Element.Fire && fireAvailable)
+        {
+            RefreshUI();
+            return;
+        }
+
+        if (currentElement == Element.Water && waterAvailable)
+        {
+            RefreshUI();
+            return;
+        }
+
+        if (currentElement == Element.Physical)
+        {
+            Element preferredElement = Element.Physical;
+
+            if (WeaponConfigManager.Instance != null)
+                preferredElement = WeaponConfigManager.Instance.selectedInitialElement;
+
+            if (preferredElement == Element.Fire && fireAvailable)
+            {
+                currentElement = Element.Fire;
+                RefreshUI();
+                return;
+            }
+
+            if (preferredElement == Element.Water && waterAvailable)
+            {
+                currentElement = Element.Water;
+                RefreshUI();
+                return;
+            }
+        }
+
+        if (fireAvailable)
+        {
+            currentElement = Element.Fire;
+            RefreshUI();
+            return;
+        }
+
+        if (waterAvailable)
+        {
+            currentElement = Element.Water;
+            RefreshUI();
+            return;
+        }
+
+        currentElement = Element.Physical;
         RefreshUI();
     }
 
@@ -323,19 +377,16 @@ public class WeaponManager : MonoBehaviour
         if (element == Element.Fire)
         {
             fireAmmo = Mathf.Max(fireAmmo, minimumAmount);
-
-            if (currentElement == Element.Physical)
-                currentElement = Element.Fire;
+            currentElement = Element.Fire;
         }
         else if (element == Element.Water)
         {
             waterAmmo = Mathf.Max(waterAmmo, minimumAmount);
-
-            if (currentElement == Element.Physical)
-                currentElement = Element.Water;
+            currentElement = Element.Water;
         }
 
         ValidateElementAfterLoad();
+        SyncInventory();
         RefreshUI();
     }
 
@@ -349,11 +400,7 @@ public class WeaponManager : MonoBehaviour
         RefreshUI();
 
         if (logDebug)
-        {
-            Debug.Log(
-                $"WeaponManager {name}: режим атаки изменён на {attackMode}. " +
-                $"saveConfig={saveConfig}");
-        }
+            Debug.Log($"WeaponManager {name}: режим атаки изменён на {attackMode}");
     }
 
     public bool CanShoot()
@@ -394,9 +441,7 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.Log(
                 $"WeaponManager {name}: Shoot. " +
-                $"AttackMode={attackMode}, " +
-                $"Element={currentElement}, " +
-                $"Damage={GetCurrentDamage()}");
+                $"AttackMode={attackMode}, Element={currentElement}, Damage={GetCurrentDamage()}");
         }
 
         if (attackMode == AttackMode.Single)
@@ -426,11 +471,7 @@ public class WeaponManager : MonoBehaviour
         bulletScript.SetOwner(owner);
 
         if (logDebug)
-        {
-            Debug.Log(
-                $"WeaponManager {name}: создана одиночная пуля. " +
-                $"Damage={GetCurrentDamage()}, Element={currentElement}");
-        }
+            Debug.Log($"WeaponManager {name}: создана одиночная пуля. Element={currentElement}");
     }
 
     private void ShootArea(Vector2 direction, GameObject owner)
@@ -456,11 +497,7 @@ public class WeaponManager : MonoBehaviour
         bulletScript.SetOwner(owner);
 
         if (logDebug)
-        {
-            Debug.Log(
-                $"WeaponManager {name}: создана AoE-пуля. " +
-                $"Damage={GetCurrentDamage()}, Element={currentElement}, Radius={areaRadius}");
-        }
+            Debug.Log($"WeaponManager {name}: создана AoE-пуля. Element={currentElement}");
     }
 
     public void ConsumeAmmo()
@@ -469,27 +506,22 @@ public class WeaponManager : MonoBehaviour
         {
             fireAmmo = Mathf.Max(0, fireAmmo - 1);
 
-            if (logDebug)
-                Debug.Log($"WeaponManager {name}: потрачен огненный патрон. FireAmmo={fireAmmo}");
-
             if (fireAmmo <= 0)
                 ValidateElementAfterLoad();
 
+            SyncInventory();
             RefreshUI();
             return;
-            SyncInventory();
         }
 
         if (currentElement == Element.Water)
         {
             waterAmmo = Mathf.Max(0, waterAmmo - 1);
 
-            if (logDebug)
-                Debug.Log($"WeaponManager {name}: потрачен водный патрон. WaterAmmo={waterAmmo}");
-
             if (waterAmmo <= 0)
                 ValidateElementAfterLoad();
 
+            SyncInventory();
             RefreshUI();
             return;
         }
@@ -499,14 +531,13 @@ public class WeaponManager : MonoBehaviour
         if (currentAmmo <= 0)
             StartCoroutine(ReloadRoutine());
 
-        if (logDebug)
-            Debug.Log($"WeaponManager {name}: потрачен физический патрон. CurrentAmmo={currentAmmo}");
-
+        SyncInventory();
         RefreshUI();
     }
 
     public void Reload()
     {
+        SyncInventory();
         RefreshUI();
     }
 
@@ -518,8 +549,9 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = magazineSize;
-        SyncInventory();
         isReloading = false;
+
+        SyncInventory();
         RefreshUI();
     }
 
@@ -538,7 +570,6 @@ public class WeaponManager : MonoBehaviour
                 baseDamage = areaShot ? areaWaterDamage : waterDamage;
                 break;
 
-            case Element.Physical:
             default:
                 baseDamage = areaShot ? areaPhysicalDamage : physicalDamage;
                 break;
@@ -576,24 +607,12 @@ public class WeaponManager : MonoBehaviour
 
     public void AddFireAmmo(int amount)
     {
-        fireAmmo = Mathf.Max(fireAmmo, amount);
-
-        if (currentElement == Element.Physical)
-            currentElement = Element.Fire;
-
-        RefreshUI();
-        SyncInventory();
+        AddElementAmmo(Element.Fire, amount);
     }
 
     public void AddWaterAmmo(int amount)
     {
-        waterAmmo = Mathf.Max(waterAmmo, amount);
-
-        if (currentElement == Element.Physical)
-            currentElement = Element.Water;
-
-        RefreshUI();
-        SyncInventory();
+        AddElementAmmo(Element.Water, amount);
     }
 
     public void AddElementAmmo(Element element, int amount)
@@ -603,17 +622,17 @@ public class WeaponManager : MonoBehaviour
         if (element == Element.Fire)
         {
             fireAmmo += amount;
-
-            if (currentElement == Element.Physical)
-                currentElement = Element.Fire;
+            currentElement = Element.Fire;
         }
         else if (element == Element.Water)
         {
             waterAmmo += amount;
-
-            if (currentElement == Element.Physical)
-                currentElement = Element.Water;
+            currentElement = Element.Water;
         }
+
+        ValidateElementAfterLoad();
+        SyncInventory();
+        RefreshUI();
 
         if (logDebug)
         {
@@ -621,9 +640,6 @@ public class WeaponManager : MonoBehaviour
                 $"WeaponManager {name}: AddElementAmmo {element} amount={amount}. " +
                 $"FireAmmo={fireAmmo}, WaterAmmo={waterAmmo}, CurrentElement={currentElement}");
         }
-
-        RefreshUI();
-        SyncInventory();
     }
 
     public string GetElementNameRu()
@@ -642,7 +658,6 @@ public class WeaponManager : MonoBehaviour
             case Element.Smoldering:
                 return "Тление";
 
-            case Element.Physical:
             default:
                 return "Обычный";
         }
@@ -680,45 +695,5 @@ public class WeaponManager : MonoBehaviour
     {
         if (UIManager.Instance != null)
             UIManager.Instance.UpdatePlayerHUD(playerController, this);
-    }
-
-    public void BindInventory(PlayerWeaponData data)
-    {
-        inventoryData = data;
-
-        if (inventoryData == null)
-            return;
-
-        currentAmmo =
-            inventoryData.currentAmmo;
-
-        fireAmmo =
-            inventoryData.fireAmmo;
-
-        waterAmmo =
-            inventoryData.waterAmmo;
-
-        currentElement =
-            inventoryData.currentElement;
-
-        RefreshUI();
-    }
-
-    private void SyncInventory()
-    {
-        if (inventoryData == null)
-            return;
-
-        inventoryData.currentAmmo =
-            currentAmmo;
-
-        inventoryData.fireAmmo =
-            fireAmmo;
-
-        inventoryData.waterAmmo =
-            waterAmmo;
-
-        inventoryData.currentElement =
-            currentElement;
     }
 }

@@ -544,7 +544,7 @@ MonoBehaviour:
   dodgeForce: 5
   dodgeCooldown: 1.5
   useZigzagMovement: 1
-  zigzagStrength: 0.7
+  zigzagStrength: 1
   zigzagFrequency: 4
   autoScaleFromProgress: 1
 --- !u!95 &7682984881040414537
